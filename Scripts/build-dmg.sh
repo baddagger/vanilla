@@ -7,7 +7,6 @@ cd "$(dirname "$0")/.."
 PROJECT_NAME="Vanilla Player"
 SCHEME_NAME="Vanilla Player"
 ARCH=$(uname -m)
-DMG_NAME="VanillaPlayer-$ARCH.dmg"
 BUILD_DIR="build"
 
 echo "🔨 Building $PROJECT_NAME..."
@@ -24,6 +23,10 @@ if [ ! -d "$APP_PATH" ]; then
   echo "❌ Build failed: App not found at $APP_PATH"
   exit 1
 fi
+
+# Extract version from built app
+VERSION=$(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "$APP_PATH/Contents/Info.plist")
+DMG_NAME="VanillaPlayer-${VERSION}-${ARCH}.dmg"
 
 echo "📦 Creating DMG..."
 rm -rf dmg_temp
