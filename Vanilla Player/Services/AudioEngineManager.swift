@@ -237,7 +237,7 @@ class AudioEngineManager: ObservableObject {
 
         let sampleRate = audioFile.processingFormat.sampleRate
         let calculatedTime = Double(startingFrame + playerTime.sampleTime) / sampleRate
-        currentTime = min(calculatedTime, duration)
+        currentTime = max(0, min(calculatedTime, duration))
     }
 
     private func audioPlayerDidFinishPlaying() {
