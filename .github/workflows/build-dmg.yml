@@ -17,11 +17,15 @@ jobs:
       run: sudo xcode-select -switch /Applications/Xcode.app
       
     - name: Build DMG
-      run: ./Scripts/build-dmg.sh
+      id: build
+      run: |
+        ./Scripts/build-dmg.sh
+        VERSION=$(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "build/Build/Products/Release/Vanilla Player.app/Contents/Info.plist")
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
         
     - name: Upload DMG
       uses: actions/upload-artifact@v4
       with:
-        name: VanillaPlayer-DMG
+        name: VanillaPlayer-${{ steps.build.outputs.version }}-DMG
         path: VanillaPlayer-*.dmg
 
