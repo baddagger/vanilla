@@ -16,8 +16,8 @@ struct Vanilla_PlayerApp: App {
                 }
                 .onReceive(
                     NotificationCenter.default.publisher(
-                        for: NSWindow.willCloseNotification
-                    )
+                        for: NSWindow.willCloseNotification,
+                    ),
                 ) { _ in
                     playerViewModel.savePlaybackState()
                 }

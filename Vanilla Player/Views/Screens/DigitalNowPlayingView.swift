@@ -45,7 +45,7 @@ struct DigitalNowPlayingView: View {
                 duration: viewModel.duration,
                 onSeek: { newTime in
                     viewModel.seek(to: newTime)
-                }
+                },
             )
             .padding(24)
         }
@@ -64,7 +64,7 @@ struct SquareCoverView: View {
 
     var body: some View {
         ZStack {
-            if let artwork = artwork {
+            if let artwork {
                 Image(nsImage: artwork)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
@@ -84,7 +84,7 @@ struct SquareCoverView: View {
         .cornerRadius(8)
         .overlay(
             RoundedRectangle(cornerRadius: 12)
-                .stroke(Color.white.opacity(0.1), lineWidth: 1)
+                .stroke(Color.white.opacity(0.1), lineWidth: 1),
         )
         .onChange(of: track) { newTrack in
             loadArtwork(for: newTrack)
@@ -96,7 +96,7 @@ struct SquareCoverView: View {
 
     private func loadArtwork(for track: Track?) {
         artwork = nil // Reset first
-        guard let track = track else { return }
+        guard let track else { return }
 
         if !track.hasArtwork {
             // print("Track \(track.title) has no artwork marked.")
@@ -108,7 +108,7 @@ struct SquareCoverView: View {
             let loaded = track.loadArtwork()
             DispatchQueue.main.async {
                 // print("Loaded artwork for \(track.title): \(loaded != nil)")
-                self.artwork = loaded
+                artwork = loaded
             }
         }
     }

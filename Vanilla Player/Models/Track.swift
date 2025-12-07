@@ -31,10 +31,12 @@ struct Track: Identifiable, Equatable, Codable {
     /// Re-initializes a track from an existing one, refreshing metadata from the file.
     /// - Parameters:
     ///   - track: The original track to update.
-    ///   - url: An optional resolved security-scoped URL. If provided, this is used for metadata access.
+    ///   - url: An optional resolved security-scoped URL. If provided, this is used for metadata
+    /// access.
     init(refreshing track: Track, with url: URL? = nil) {
         id = track.id // Preserve ID
-        // Use the new URL if provided, otherwise fallback to existing (though existing might be stale)
+        // Use the new URL if provided, otherwise fallback to existing (though existing might be
+        // stale)
         let effectiveURL = url ?? track.url
         self.url = effectiveURL
 
@@ -44,7 +46,8 @@ struct Track: Identifiable, Equatable, Codable {
         self.artist = artist
         self.album = album
         self.hasArtwork = hasArtwork
-        // access existing bookmark if new one fails? Usually we want fresh bookmark if accessing file again.
+        // access existing bookmark if new one fails? Usually we want fresh bookmark if accessing
+        // file again.
         bookmarkData = bookmark ?? track.bookmarkData
     }
 
@@ -60,7 +63,11 @@ struct Track: Identifiable, Equatable, Codable {
         // Create a security bookmark to maintain access later
         var bookmark: Data? = nil
         do {
-            bookmark = try url.bookmarkData(options: .withSecurityScope, includingResourceValuesForKeys: nil, relativeTo: nil)
+            bookmark = try url.bookmarkData(
+                options: .withSecurityScope,
+                includingResourceValuesForKeys: nil,
+                relativeTo: nil,
+            )
         } catch {
             print("Failed to create bookmark for \(url): \(error)")
         }
@@ -68,31 +75,31 @@ struct Track: Identifiable, Equatable, Codable {
         let asset = AVAsset(url: url)
         let metadata = asset.commonMetadata
 
-        let title: String
-        if let titleItem = metadata.first(where: { $0.commonKey == .commonKeyTitle }),
-           let titleStr = titleItem.stringValue
+        let title: String = if let titleItem = metadata
+            .first(where: { $0.commonKey == .commonKeyTitle }),
+            let titleStr = titleItem.stringValue
         {
-            title = titleStr
+            titleStr
         } else {
-            title = url.deletingPathExtension().lastPathComponent
+            url.deletingPathExtension().lastPathComponent
         }
 
-        let artist: String
-        if let artistItem = metadata.first(where: { $0.commonKey == .commonKeyArtist }),
-           let artistStr = artistItem.stringValue
+        let artist: String = if let artistItem = metadata
+            .first(where: { $0.commonKey == .commonKeyArtist }),
+            let artistStr = artistItem.stringValue
         {
-            artist = artistStr
+            artistStr
         } else {
-            artist = ""
+            ""
         }
 
-        let album: String
-        if let albumItem = metadata.first(where: { $0.commonKey == .commonKeyAlbumName }),
-           let albumStr = albumItem.stringValue
+        let album: String = if let albumItem = metadata
+            .first(where: { $0.commonKey == .commonKeyAlbumName }),
+            let albumStr = albumItem.stringValue
         {
-            album = albumStr
+            albumStr
         } else {
-            album = ""
+            ""
         }
 
         // Handle Artwork: Extract and Cache
@@ -121,11 +128,16 @@ struct Track: Identifiable, Equatable, Codable {
 
     /// Resolves the URL from the security bookmark if available
     func resolvedURL() -> URL? {
-        guard let bookmarkData = bookmarkData else { return url }
+        guard let bookmarkData else { return url }
 
         var isStale = false
         do {
-            let resolvedURL = try URL(resolvingBookmarkData: bookmarkData, options: .withSecurityScope, relativeTo: nil, bookmarkDataIsStale: &isStale)
+            let resolvedURL = try URL(
+                resolvingBookmarkData: bookmarkData,
+                options: .withSecurityScope,
+                relativeTo: nil,
+                bookmarkDataIsStale: &isStale,
+            )
             return resolvedURL
         } catch {
             print("Failed to resolve bookmark: \(error)")
@@ -142,7 +154,8 @@ struct Track: Identifiable, Equatable, Codable {
 enum ArtworkCache {
     static let directory: URL = {
         let paths = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
-        let cacheDir = paths[0].appendingPathComponent("VanillaPlayer").appendingPathComponent("Artworks")
+        let cacheDir = paths[0].appendingPathComponent("VanillaPlayer")
+            .appendingPathComponent("Artworks")
         do {
             try FileManager.default.createDirectory(at: cacheDir, withIntermediateDirectories: true)
             print("Artwork Cache Directory: \(cacheDir.path)")
@@ -162,8 +175,10 @@ enum ArtworkCache {
         let key = cacheKey(for: url)
         let fileURL = directory.appendingPathComponent(key)
 
-        // Always overwrite to ensure we have the latest artwork content (e.g. if file metadata changed)
-        // If performance becomes an issue, we could compare data hash, but for now correctness is priority.
+        // Always overwrite to ensure we have the latest artwork content (e.g. if file metadata
+        // changed)
+        // If performance becomes an issue, we could compare data hash, but for now correctness is
+        // priority.
 
         do {
             try data.write(to: fileURL)

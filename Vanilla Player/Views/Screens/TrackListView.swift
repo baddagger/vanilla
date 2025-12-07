@@ -13,9 +13,9 @@ struct TrackListView: View {
 
     private var filteredTracks: [Track] {
         if searchText.isEmpty {
-            return viewModel.tracks
+            viewModel.tracks
         } else {
-            return viewModel.tracks.filter { track in
+            viewModel.tracks.filter { track in
                 track.title.localizedCaseInsensitiveContains(searchText)
                     || track.artist.localizedCaseInsensitiveContains(searchText)
             }
@@ -38,7 +38,7 @@ struct TrackListView: View {
 
                         ZStack(alignment: .leading) {
                             Text(
-                                "Search \(viewModel.tracks.count) song\(viewModel.tracks.count == 1 ? "" : "s")..."
+                                "Search \(viewModel.tracks.count) song\(viewModel.tracks.count == 1 ? "" : "s")...",
                             )
                             .foregroundColor(newColor.opacity(0.5))
                             .font(.system(size: 14, design: .serif))
@@ -77,9 +77,9 @@ struct TrackListView: View {
                                 RoundedRectangle(cornerRadius: 8)
                                     .stroke(
                                         newColor.opacity(isSearchFocused ? 0.6 : 0),
-                                        lineWidth: 1
-                                    )
-                            )
+                                        lineWidth: 1,
+                                    ),
+                            ),
                     )
                     .animation(.easeInOut(duration: 0.2), value: isSearchFocused)
 
@@ -88,7 +88,7 @@ struct TrackListView: View {
                         isMenuVisible: $isAddMenuVisible,
                         color: newColor,
                         libraryManager: viewModel.libraryManager,
-                        onSourceManagement: { openWindow(id: "source-management") }
+                        onSourceManagement: { openWindow(id: "source-management") },
                     )
                 }
                 .padding(.horizontal, 32)
@@ -109,11 +109,11 @@ struct TrackListView: View {
                             },
                             onPlay: {
                                 if let index = viewModel.tracks.firstIndex(
-                                    of: track
+                                    of: track,
                                 ) {
                                     viewModel.playTrack(at: index)
                                 }
-                            }
+                            },
                         )
                     }
                 }
@@ -153,7 +153,7 @@ struct SpectrumBar: View {
             .animation(
                 .easeInOut(duration: duration)
                     .repeatForever(autoreverses: true),
-                value: height
+                value: height,
             )
     }
 }
@@ -181,7 +181,7 @@ struct TrackRowView: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text(track.title)
                     .foregroundColor(
-                        isCurrent ? newColor : .white
+                        isCurrent ? newColor : .white,
                     )
                     .font(.system(size: 14, design: .serif))
 
@@ -189,20 +189,20 @@ struct TrackRowView: View {
                     Text(track.artist)
                         .foregroundColor(
                             isCurrent
-                                ? newColor.opacity(0.8) : .white.opacity(0.6)
+                                ? newColor.opacity(0.8) : .white.opacity(0.6),
                         )
                         .font(.system(size: 12, design: .serif))
                 }
             }
 
-            if isCurrent && viewModel.isPlaying {
+            if isCurrent, viewModel.isPlaying {
                 Spacer()
                 MiniSpectrumView(color: newColor)
             } else {
                 Spacer()
             }
 
-            if showRemoveButton && hoveredTrackID == track.id {
+            if showRemoveButton, hoveredTrackID == track.id {
                 RemoveButton(color: newColor, action: onRemove)
             }
         }
@@ -236,13 +236,13 @@ struct TrackRowView: View {
                                     .clear, newColor, .clear,
                                 ]),
                                 startPoint: .leading,
-                                endPoint: .trailing
-                            )
+                                endPoint: .trailing,
+                            ),
                         )
                         .frame(height: 1)
                         .opacity(0.6)
                 }
-            }
+            },
         )
     }
 }
@@ -253,7 +253,7 @@ struct ArtworkView: View {
 
     var body: some View {
         ZStack {
-            if let artwork = artwork {
+            if let artwork {
                 Image(nsImage: artwork)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
@@ -276,7 +276,7 @@ struct ArtworkView: View {
 
     private func loadArtwork(for track: Track?) {
         artwork = nil
-        guard let track = track else { return }
+        guard let track else { return }
 
         if !track.hasArtwork {
             return
@@ -285,7 +285,7 @@ struct ArtworkView: View {
         DispatchQueue.global(qos: .userInitiated).async {
             let loaded = track.loadArtwork()
             DispatchQueue.main.async {
-                self.artwork = loaded
+                artwork = loaded
             }
         }
     }
@@ -311,7 +311,7 @@ struct RemoveButton: View {
             .scaleEffect(isHovering ? 1.1 : 1.0)
             .animation(
                 .spring(response: 0.3, dampingFraction: 0.7),
-                value: isHovering
+                value: isHovering,
             )
         }
         .buttonStyle(.plain)
@@ -344,7 +344,7 @@ struct MoreMenuButton: View {
                 .frame(width: 36, height: 36)
                 .background(
                     Circle()
-                        .fill(color.opacity(isHovering ? 0.15 : 0))
+                        .fill(color.opacity(isHovering ? 0.15 : 0)),
                 )
                 .contentShape(Circle())
         }
@@ -379,7 +379,7 @@ struct MoreMenuButton: View {
                     MenuItem(
                         icon: "doc.badge.plus",
                         title: "Add Song",
-                        color: color
+                        color: color,
                     ) {
                         addFile()
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
@@ -393,7 +393,7 @@ struct MoreMenuButton: View {
                     MenuItem(
                         icon: "folder.badge.plus",
                         title: "Add Folder",
-                        color: color
+                        color: color,
                     ) {
                         addFolder()
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
@@ -407,7 +407,7 @@ struct MoreMenuButton: View {
                     MenuItem(
                         icon: "arrow.clockwise",
                         title: "Rescan",
-                        color: color
+                        color: color,
                     ) {
                         libraryManager.startFullScan()
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
@@ -421,7 +421,7 @@ struct MoreMenuButton: View {
                     MenuItem(
                         icon: "gearshape",
                         title: "Source Management",
-                        color: color
+                        color: color,
                     ) {
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
                             isMenuVisible = false
@@ -436,9 +436,9 @@ struct MoreMenuButton: View {
                         .fill(Color.black.opacity(0.85))
                         .overlay(
                             RoundedRectangle(cornerRadius: 12)
-                                .stroke(color.opacity(0.3), lineWidth: 1)
+                                .stroke(color.opacity(0.3), lineWidth: 1),
                         )
-                        .shadow(color: .black.opacity(0.4), radius: 12, x: 0, y: 4)
+                        .shadow(color: .black.opacity(0.4), radius: 12, x: 0, y: 4),
                 )
                 .cornerRadius(12)
                 .offset(x: 8, y: 40)
@@ -446,7 +446,7 @@ struct MoreMenuButton: View {
                     insertion: .scale(scale: 0.8, anchor: .topTrailing)
                         .combined(with: .opacity),
                     removal: .scale(scale: 0.8, anchor: .topTrailing)
-                        .combined(with: .opacity)
+                        .combined(with: .opacity),
                 ))
             }
         }
@@ -514,7 +514,7 @@ struct MenuItem: View {
             .padding(.vertical, 10)
             .background(
                 Rectangle()
-                    .fill(isHovering ? color.opacity(0.15) : Color.clear)
+                    .fill(isHovering ? color.opacity(0.15) : Color.clear),
             )
             .contentShape(Rectangle())
         }

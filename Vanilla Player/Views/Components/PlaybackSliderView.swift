@@ -31,7 +31,7 @@ struct PlaybackSliderView: View {
                         .fill(trackColor)
                         .frame(
                             width: geometry.size.width * CGFloat(progress),
-                            height: trackHeight
+                            height: trackHeight,
                         )
 
                     // Thumb
@@ -48,11 +48,11 @@ struct PlaybackSliderView: View {
                                 0,
                                 min(
                                     1,
-                                    value.location.x / geometry.size.width
-                                )
+                                    value.location.x / geometry.size.width,
+                                ),
                             )
                             onSeek(Double(percent) * duration)
-                        }
+                        },
                 )
             }
             .frame(height: 20)

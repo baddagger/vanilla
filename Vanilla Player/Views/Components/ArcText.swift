@@ -7,7 +7,7 @@ struct ArcText: View {
     let spacing: CGFloat // Approximate width per character (in degrees)
 
     // Optional: Closure for styling the text (e.g., font, color)
-    var configure: ((Text) -> Text)? = nil
+    var configure: ((Text) -> Text)?
 
     var body: some View {
         ZStack {
@@ -21,8 +21,9 @@ struct ArcText: View {
                 (configure?(Text(String(char))) ?? Text(String(char)))
                     .background(
                         GeometryReader { _ in
-                            Color.clear // Use this if you want to calculate exact widths dynamically
-                        }
+                            Color
+                                .clear // Use this if you want to calculate exact widths dynamically
+                        },
                     )
                     // 1. Move the character to the top of the circle (radius distance)
                     .offset(y: -radius)
@@ -41,7 +42,7 @@ struct ArcText: View {
         spacing: 20,
         configure: { view in
             view.font(.system(size: 20))
-        }
+        },
     )
     .frame(width: 100, height: 100)
     .padding()

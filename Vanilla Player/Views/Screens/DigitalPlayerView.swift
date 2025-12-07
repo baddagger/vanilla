@@ -17,7 +17,7 @@ struct DigitalPlayerView: View {
                 selectedIndex: $selectedTab,
                 selectedTextColor: textColor,
                 unselectedTextColor: textColor.opacity(0.5), // Slightly dimmed for unselected
-                onTabChange: { index in selectedTab = index }
+                onTabChange: { index in selectedTab = index },
             )
 
             // Content Area
@@ -45,15 +45,15 @@ struct DigitalPlayerView: View {
                             Color(hex: "#21160f").opacity(0.52),
                         ],
                         startPoint: .top,
-                        endPoint: .bottom
-                    )
+                        endPoint: .bottom,
+                    ),
                 )
                 .shadow(
                     color: Color.black.opacity(0.8),
                     radius: 10,
                     x: -4,
-                    y: 4
-                )
+                    y: 4,
+                ),
         )
         .overlay(
             RoundedRectangle(cornerRadius: 12)
@@ -63,10 +63,10 @@ struct DigitalPlayerView: View {
                             .white.opacity(0.08), .white.opacity(0.15),
                         ]),
                         startPoint: .top,
-                        endPoint: .bottom
+                        endPoint: .bottom,
                     ),
-                    lineWidth: 2
-                )
+                    lineWidth: 2,
+                ),
         )
     }
 }

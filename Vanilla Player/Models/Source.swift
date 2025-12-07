@@ -23,7 +23,11 @@ struct Source: Identifiable, Codable, Hashable {
 
         var bookmark: Data? = nil
         do {
-            bookmark = try url.bookmarkData(options: .withSecurityScope, includingResourceValuesForKeys: nil, relativeTo: nil)
+            bookmark = try url.bookmarkData(
+                options: .withSecurityScope,
+                includingResourceValuesForKeys: nil,
+                relativeTo: nil,
+            )
         } catch {
             print("Failed to create bookmark for source \(url): \(error)")
         }
@@ -31,10 +35,15 @@ struct Source: Identifiable, Codable, Hashable {
     }
 
     func resolvedURL() -> URL? {
-        guard let bookmarkData = bookmarkData else { return url }
+        guard let bookmarkData else { return url }
         var isStale = false
         do {
-            let resolved = try URL(resolvingBookmarkData: bookmarkData, options: .withSecurityScope, relativeTo: nil, bookmarkDataIsStale: &isStale)
+            let resolved = try URL(
+                resolvingBookmarkData: bookmarkData,
+                options: .withSecurityScope,
+                relativeTo: nil,
+                bookmarkDataIsStale: &isStale,
+            )
             return resolved
         } catch {
             print("Failed to resolve source bookmark: \(error)")

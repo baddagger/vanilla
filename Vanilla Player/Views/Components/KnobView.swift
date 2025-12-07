@@ -20,7 +20,7 @@ struct KnobView: View {
                     color: Color.black.opacity(0.8),
                     radius: 4,
                     x: -1,
-                    y: 2
+                    y: 2,
                 )
                 .gesture(
                     DragGesture()
@@ -35,7 +35,7 @@ struct KnobView: View {
                         .onEnded { _ in
                             onDragEnded()
                             isDragging = false
-                        }
+                        },
                 )
 
             let indicatorColor = Color(hex: "#d6b577")
@@ -96,7 +96,7 @@ struct KnobView: View {
     }
 
     private func calcAngle(x: Double, y: Double) -> Double {
-        return atan2(x - buttonSize / 2, y - buttonSize / 2) * 180 / Double.pi
+        atan2(x - buttonSize / 2, y - buttonSize / 2) * 180 / Double.pi
     }
 
     private func normalizeAngle(_ angle: Double) -> Double {

@@ -25,17 +25,27 @@ struct WindowStateObserver: NSViewRepresentable {
 
         func setupObservation(for view: NSView) {
             DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
+                guard let self else { return }
                 if let window = view.window {
                     self.window = window
-                    self.startObserving(window: window)
+                    startObserving(window: window)
                 }
             }
         }
 
         private func startObserving(window: NSWindow) {
-            NotificationCenter.default.addObserver(self, selector: #selector(windowDidMiniaturize), name: NSWindow.willMiniaturizeNotification, object: window)
-            NotificationCenter.default.addObserver(self, selector: #selector(windowDidDeminiaturize), name: NSWindow.didDeminiaturizeNotification, object: window)
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(windowDidMiniaturize),
+                name: NSWindow.willMiniaturizeNotification,
+                object: window,
+            )
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(windowDidDeminiaturize),
+                name: NSWindow.didDeminiaturizeNotification,
+                object: window,
+            )
 
             // Initial state check
             onWindowStateChange(window.isMiniaturized)

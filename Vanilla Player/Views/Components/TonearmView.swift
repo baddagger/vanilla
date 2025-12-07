@@ -22,7 +22,8 @@ struct TonearmView: View {
     private let handleRotation = 54.0
 
     var body: some View {
-        let angle = playbackProgress < 0 ? idleAngle : startAngle + (endAngle - startAngle) * playbackProgress
+        let angle = playbackProgress < 0 ? idleAngle : startAngle + (endAngle - startAngle) *
+            playbackProgress
 
         ZStack {
             GeometryReader { geometry in
@@ -40,7 +41,7 @@ struct TonearmView: View {
                         color: Color.black.opacity(0.8),
                         radius: 6,
                         x: -4,
-                        y: 6
+                        y: 6,
                     )
 
                 Image("tonearm")
@@ -50,34 +51,43 @@ struct TonearmView: View {
                         color: Color.black.opacity(0.8),
                         radius: 6,
                         x: -4,
-                        y: 6
+                        y: 6,
                     )
                     .overlay(
                         // Drag handle visualization (for debugging, keep transparent)
                         Color.clear
                             .contentShape(Rectangle())
-                            .frame(width: height * handleWidthRatio, height: height * handleHeightRatio)
+                            .frame(
+                                width: height * handleWidthRatio,
+                                height: height * handleHeightRatio,
+                            )
                             .rotationEffect(.degrees(handleRotation))
-                            .offset(x: height * handleOffsetXRatio, y: height * handleOffsetYRatio)
+                            .offset(x: height * handleOffsetXRatio, y: height * handleOffsetYRatio),
                     )
                     .rotationEffect(
                         .degrees(angle),
-                        anchor: UnitPoint(x: rotationAnchorX, y: rotationAnchorY)
+                        anchor: UnitPoint(x: rotationAnchorX, y: rotationAnchorY),
                     )
                     .gesture(
                         DragGesture()
                             .onChanged { value in
                                 if isDragging {
                                     onDragging(value: value, geometry: geometry)
-                                } else if isInsideDragHandle(location: value.startLocation, geometry: geometry) {
-                                    lastDragAngle = calcAngle(location: value.location, geometry: geometry)
+                                } else if isInsideDragHandle(
+                                    location: value.startLocation,
+                                    geometry: geometry,
+                                ) {
+                                    lastDragAngle = calcAngle(
+                                        location: value.location,
+                                        geometry: geometry,
+                                    )
                                     isDragging = true
                                 }
                             }
                             .onEnded { _ in
                                 lastDragAngle = 0
                                 isDragging = false
-                            }
+                            },
                     )
             }
         }
@@ -111,7 +121,8 @@ struct TonearmView: View {
         let anchorY = height * rotationAnchorY
 
         // Current tonearm angle
-        let angle = playbackProgress < 0 ? idleAngle : startAngle + (endAngle - startAngle) * playbackProgress
+        let angle = playbackProgress < 0 ? idleAngle : startAngle + (endAngle - startAngle) *
+            playbackProgress
         let angleRadians = angle * .pi / 180
 
         // Rotate the handle center around the tonearm anchor
@@ -133,7 +144,8 @@ struct TonearmView: View {
 
         // Check if inside the handle bounds (with tolerance for easier targeting)
         let tolerance = 1.5
-        return abs(unrotatedX) <= handleWidth / 2 * tolerance && abs(unrotatedY) <= handleHeight / 2 * tolerance
+        return abs(unrotatedX) <= handleWidth / 2 * tolerance && abs(unrotatedY) <= handleHeight /
+            2 * tolerance
     }
 
     private func calcAngle(location: CGPoint, geometry: GeometryProxy) -> Double {
@@ -161,7 +173,7 @@ struct TonearmView: View {
         startAngle: -13,
         endAngle: 13,
         idleAngle: -28,
-        playbackProgress: $progress
+        playbackProgress: $progress,
     )
     .frame(height: 450)
     .padding(56)

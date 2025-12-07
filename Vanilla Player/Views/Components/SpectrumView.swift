@@ -7,27 +7,27 @@ struct SpectrumView: View {
         gradient: Gradient(stops: [
             .init(
                 color: Color(hex: "#dbbe83"),
-                location: 0.0
+                location: 0.0,
             ), // Bright cream at top
             .init(
                 color: Color(hex: "#d8b86c"),
-                location: 0.15
+                location: 0.15,
             ), // Light gold
             .init(
                 color: Color(hex: "#af905d"),
-                location: 0.5
+                location: 0.5,
             ), // Darker gold in middle
             .init(
                 color: Color(hex: "#d8b86c"),
-                location: 0.85
+                location: 0.85,
             ), // Light gold
             .init(
                 color: Color(hex: "#dbbe83"),
-                location: 1.0
+                location: 1.0,
             ), // Bright cream at bottom
         ]),
         startPoint: .top,
-        endPoint: .bottom
+        endPoint: .bottom,
     )
 
     var body: some View {
