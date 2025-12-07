@@ -61,7 +61,7 @@ struct Track: Identifiable, Equatable, Codable {
         }
 
         // Create a security bookmark to maintain access later
-        var bookmark: Data? = nil
+        var bookmark: Data?
         do {
             bookmark = try url.bookmarkData(
                 options: .withSecurityScope,

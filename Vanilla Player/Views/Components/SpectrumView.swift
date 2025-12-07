@@ -34,8 +34,7 @@ struct SpectrumView: View {
         GeometryReader { geometry in
             HStack {
                 let levels = viewModel.meteringLevels
-                ForEach(0 ..< levels.count, id: \.self) {
-                    index in
+                ForEach(0 ..< levels.count, id: \.self) { index in
                     let height = geometry.size.height
                     let level = CGFloat(levels[index])
                     let barHeight = max(6, height * level)

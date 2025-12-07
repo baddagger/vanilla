@@ -21,7 +21,7 @@ struct Source: Identifiable, Codable, Hashable {
         let isSecured = url.startAccessingSecurityScopedResource()
         defer { if isSecured { url.stopAccessingSecurityScopedResource() } }
 
-        var bookmark: Data? = nil
+        var bookmark: Data?
         do {
             bookmark = try url.bookmarkData(
                 options: .withSecurityScope,
