@@ -26,9 +26,9 @@ struct VinylNowPlayingView: View {
                             configure: { view in
                                 view.font(.system(size: 7))
                                     .foregroundColor(
-                                        Color(hex: "#c0a06c").opacity(0.6)
+                                        Color(hex: "#c0a06c").opacity(0.6),
                                     )
-                            }
+                            },
                         )
                         .frame(width: vinylSize, height: vinylSize)
 
@@ -38,12 +38,12 @@ struct VinylNowPlayingView: View {
                             endAngle: 0,
                             progress: Binding(
                                 get: { Double(viewModel.volume) },
-                                set: { viewModel.volume = Float($0) }
-                            )
+                                set: { viewModel.volume = Float($0) },
+                            ),
                         )
                         .offset(
                             x: -vinylSize / 2 + buttonSize / 2,
-                            y: -vinylSize / 2 + buttonSize / 2
+                            y: -vinylSize / 2 + buttonSize / 2,
                         )
 
                         ArcText(
@@ -54,9 +54,9 @@ struct VinylNowPlayingView: View {
                             configure: { view in
                                 view.font(.system(size: 7))
                                     .foregroundColor(
-                                        Color(hex: "#c0a06c").opacity(0.6)
+                                        Color(hex: "#c0a06c").opacity(0.6),
                                     )
-                            }
+                            },
                         )
                         .frame(width: vinylSize, height: vinylSize)
 
@@ -66,12 +66,12 @@ struct VinylNowPlayingView: View {
                             endAngle: 0,
                             progress: Binding(
                                 get: { Double(viewModel.bass + 1) / 2 }, // Map -1...1 to 0...1
-                                set: { viewModel.bass = Float($0 * 2 - 1) } // Map 0...1 to -1...1
-                            )
+                                set: { viewModel.bass = Float($0 * 2 - 1) }, // Map 0...1 to -1...1
+                            ),
                         )
                         .offset(
                             x: -vinylSize / 2 + buttonSize / 2,
-                            y: vinylSize / 2 - buttonSize / 2
+                            y: vinylSize / 2 - buttonSize / 2,
                         )
                         .onTapGesture(count: 2) {
                             withAnimation {
@@ -83,19 +83,19 @@ struct VinylNowPlayingView: View {
                             .resizable()
                             .frame(
                                 width: buttonSize * 0.6,
-                                height: buttonSize * 1.1
+                                height: buttonSize * 1.1,
                             )
                             .cornerRadius(buttonSize * 1.1)
                             .shadow(
                                 color: Color.black.opacity(0.6),
                                 radius: 1,
                                 x: -0.5,
-                                y: 0.5
+                                y: 0.5,
                             )
                             .rotationEffect(.degrees(30))
                             .offset(
                                 x: vinylSize / 2 + buttonSize * 0.02,
-                                y: vinylSize / 2 - buttonSize * 0.8
+                                y: vinylSize / 2 - buttonSize * 0.8,
                             )
 
                         let tonearmHeight = vinylSize * 0.85
@@ -113,12 +113,14 @@ struct VinylNowPlayingView: View {
                                 set: { newValue in
                                     let newTime = newValue * viewModel.duration
                                     viewModel.seek(to: newTime)
-                                }
-                            )
+                                },
+                            ),
                         )
                         .frame(height: tonearmHeight)
                         .offset(x: tonearmHeight * 0.52, y: -tonearmHeight / 12)
-                        .animation(.linear(duration: 0.5), value: viewModel.currentTime == 0) // Animate when moving to/from idle
+                        .animation(.linear(duration: 0.5),
+                                   value: viewModel
+                                       .currentTime == 0) // Animate when moving to/from idle
                     }
                     .frame(width: vinylSize, height: vinylSize)
 
@@ -159,7 +161,9 @@ struct Vinyl: View {
                 .resizable()
                 .frame(width: coverSize, height: coverSize)
 
-            TimelineView(.animation(paused: !viewModel.isPlaying || !viewModel.isWindowVisible)) { timeline in
+            TimelineView(.animation(paused: !viewModel.isPlaying || !viewModel
+                    .isWindowVisible))
+            { timeline in
                 VinylCoverView(track: viewModel.currentTrack)
                     .frame(width: coverSize, height: coverSize)
                     .clipShape(Circle())
@@ -174,7 +178,7 @@ struct Vinyl: View {
                     for provider in providers {
                         // Attempt to load as URL directly
                         _ = provider.loadObject(ofClass: URL.self) { url, _ in
-                            if let url = url {
+                            if let url {
                                 print("Dropped URL: \(url)")
                                 DispatchQueue.main.async {
                                     viewModel.addFiles(urls: [url])
@@ -184,12 +188,12 @@ struct Vinyl: View {
                                 provider.loadItem(
                                     forTypeIdentifier: UTType.fileURL
                                         .identifier,
-                                    options: nil
+                                    options: nil,
                                 ) { item, _ in
                                     if let data = item as? Data,
                                        let url = URL(
                                            dataRepresentation: data,
-                                           relativeTo: nil
+                                           relativeTo: nil,
                                        )
                                     {
                                         print("Dropped URL (data): \(url)")
@@ -245,7 +249,7 @@ struct VinylCoverView: View {
 
     var body: some View {
         ZStack {
-            if let artwork = artwork {
+            if let artwork {
                 Image(nsImage: artwork)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
@@ -261,7 +265,7 @@ struct VinylCoverView: View {
 
     private func loadArtwork(for track: Track?) {
         artwork = nil
-        guard let track = track else { return }
+        guard let track else { return }
 
         if !track.hasArtwork {
             return
@@ -270,7 +274,7 @@ struct VinylCoverView: View {
         DispatchQueue.global(qos: .userInitiated).async {
             let loaded = track.loadArtwork()
             DispatchQueue.main.async {
-                self.artwork = loaded
+                artwork = loaded
             }
         }
     }
@@ -313,7 +317,7 @@ struct Controls: View {
                         .resizable()
                         .frame(
                             width: buttonSizeLarge * 0.7,
-                            height: buttonSizeLarge * 0.7
+                            height: buttonSizeLarge * 0.7,
                         )
                 }
             }
@@ -347,19 +351,19 @@ struct Controls: View {
                             Color(hex: "#21160f").opacity(0.52),
                         ],
                         startPoint: .top,
-                        endPoint: .bottom
-                    )
+                        endPoint: .bottom,
+                    ),
                 )
                 .shadow(
                     color: Color.black.opacity(0.8),
                     radius: 10,
                     x: -4,
-                    y: 4
-                )
+                    y: 4,
+                ),
         )
         .overlay(
             RoundedRectangle(cornerRadius: 12)
-                .stroke(Color.white.opacity(0.12), lineWidth: 2)
+                .stroke(Color.white.opacity(0.12), lineWidth: 2),
         )
     }
 }
@@ -374,7 +378,7 @@ struct DebugAnchorView: View {
                 .frame(width: 10, height: 10)
                 .position(
                     x: geometry.size.width * anchor.x,
-                    y: geometry.size.height * anchor.y
+                    y: geometry.size.height * anchor.y,
                 )
         }
     }

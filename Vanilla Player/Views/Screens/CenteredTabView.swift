@@ -23,7 +23,7 @@ struct CenteredTabView: View {
         tabSpacing: CGFloat = 40,
         selectedTextColor: Color = .primary,
         unselectedTextColor: Color = .secondary,
-        onTabChange: ((Int) -> Void)? = nil
+        onTabChange: ((Int) -> Void)? = nil,
     ) {
         self.tabs = tabs
         _selectedIndex = selectedIndex
@@ -46,12 +46,12 @@ struct CenteredTabView: View {
                                 .system(
                                     size: selectedIndex == index
                                         ? selectedFontSize : normalFontSize,
-                                    design: .serif
-                                )
+                                    design: .serif,
+                                ),
                             )
                             .foregroundColor(
                                 selectedIndex == index
-                                    ? selectedTextColor : unselectedTextColor
+                                    ? selectedTextColor : unselectedTextColor,
                             )
                             .id(index)
                             .onTapGesture {
@@ -72,7 +72,7 @@ struct CenteredTabView: View {
                         .onChange(of: geo.size.width) { width in
                             containerWidth = width
                         }
-                }
+                },
             )
             .onChange(of: selectedIndex) { newIndex in
                 withAnimation {
@@ -103,7 +103,7 @@ struct CenteredTabViewExample: View {
                 unselectedTextColor: .secondary,
                 onTabChange: { index in
                     selectedTab = index
-                }
+                },
             )
         }
     }

@@ -137,10 +137,14 @@ class PlayerViewModel: NSObject, ObservableObject {
                 if sourceURL.startAccessingSecurityScopedResource() {
                     currentSecurityScopedURL = sourceURL
                 } else {
-                    print("ERROR: Failed to access both track URL and parent Source URL for: \(track.title)")
+                    print(
+                        "ERROR: Failed to access both track URL and parent Source URL for: \(track.title)",
+                    )
                 }
             } else {
-                print("WARNING: Track startAccessingSecurityScopedResource failed and no parent source found for: \(track.title)")
+                print(
+                    "WARNING: Track startAccessingSecurityScopedResource failed and no parent source found for: \(track.title)",
+                )
             }
         }
 
@@ -216,7 +220,8 @@ class PlayerViewModel: NSObject, ObservableObject {
             return
         }
 
-        let savedPosition = UserDefaults.standard.double(forKey: UserDefaultsKeys.lastPlaybackPosition)
+        let savedPosition = UserDefaults.standard
+            .double(forKey: UserDefaultsKeys.lastPlaybackPosition)
 
         // Find the track in the current library
         if let index = tracks.firstIndex(where: { $0.url == savedURL }) {
@@ -242,10 +247,14 @@ class PlayerViewModel: NSObject, ObservableObject {
                     if sourceURL.startAccessingSecurityScopedResource() {
                         currentSecurityScopedURL = sourceURL
                     } else {
-                        print("ERROR: Failed to access both track URL and parent Source URL for restored track: \(track.title)")
+                        print(
+                            "ERROR: Failed to access both track URL and parent Source URL for restored track: \(track.title)",
+                        )
                     }
                 } else {
-                    print("WARNING: Track startAccessingSecurityScopedResource failed and no parent source found for restored track: \(track.title)")
+                    print(
+                        "WARNING: Track startAccessingSecurityScopedResource failed and no parent source found for restored track: \(track.title)",
+                    )
                 }
             }
 

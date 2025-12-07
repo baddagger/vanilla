@@ -66,7 +66,11 @@ struct SourceManagementView: View {
         }
         .overlay {
             if libraryManager.sources.isEmpty {
-                ContentUnavailableView("No Sources", systemImage: "music.note.list", description: Text("Add file or folder sources."))
+                ContentUnavailableView(
+                    "No Sources",
+                    systemImage: "music.note.list",
+                    description: Text("Add file or folder sources."),
+                )
             }
         }
     }

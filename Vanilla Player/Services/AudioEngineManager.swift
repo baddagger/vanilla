@@ -84,9 +84,12 @@ class AudioEngineManager: ObservableObject {
         let mixer = engine.mainMixerNode
         let format = mixer.outputFormat(forBus: 0)
         // Ensure buffer size is power of 2 suitable for FFT
-        mixer.installTap(onBus: 0, bufferSize: UInt32(fftSize), format: format) { [weak self] buffer, _ in
-            self?.processAudioBuffer(buffer)
-        }
+        mixer
+            .installTap(onBus: 0, bufferSize: UInt32(fftSize),
+                        format: format)
+            { [weak self] buffer, _ in
+                self?.processAudioBuffer(buffer)
+            }
 
         do {
             try engine.start()
@@ -107,7 +110,7 @@ class AudioEngineManager: ObservableObject {
 
             // Load new file
             audioFile = try AVAudioFile(forReading: url)
-            guard let audioFile = audioFile else { return }
+            guard let audioFile else { return }
 
             // Reconnect with correct format
             engine.disconnectNodeOutput(playerNode)
@@ -119,7 +122,7 @@ class AudioEngineManager: ObservableObject {
             // Schedule file with ID check
             playerNode.scheduleFile(audioFile, at: nil) { [weak self] in
                 DispatchQueue.main.async {
-                    guard let self = self else { return }
+                    guard let self else { return }
                     // Only trigger finish if this matches the current session
                     if self.currentPlaybackID == sessionID {
                         self.audioPlayerDidFinishPlaying()
@@ -171,7 +174,7 @@ class AudioEngineManager: ObservableObject {
     }
 
     func seek(to time: TimeInterval) {
-        guard let audioFile = audioFile else { return }
+        guard let audioFile else { return }
 
         // Create new session ID because seeking effectively restarts the scheduling
         currentPlaybackID = UUID()
@@ -185,14 +188,20 @@ class AudioEngineManager: ObservableObject {
 
         playerNode.stop()
 
-        playerNode.scheduleSegment(audioFile, startingFrame: newFrame, frameCount: framesRemaining, at: nil) { [weak self] in
-            DispatchQueue.main.async {
-                guard let self = self else { return }
-                if self.currentPlaybackID == sessionID {
-                    self.audioPlayerDidFinishPlaying()
+        playerNode
+            .scheduleSegment(
+                audioFile,
+                startingFrame: newFrame,
+                frameCount: framesRemaining,
+                at: nil,
+            ) { [weak self] in
+                DispatchQueue.main.async {
+                    guard let self else { return }
+                    if self.currentPlaybackID == sessionID {
+                        self.audioPlayerDidFinishPlaying()
+                    }
                 }
             }
-        }
 
         startingFrame = newFrame
         currentTime = time
@@ -222,7 +231,7 @@ class AudioEngineManager: ObservableObject {
     }
 
     private func updateCurrentTime() {
-        guard let audioFile = audioFile,
+        guard let audioFile,
               let nodeTime = playerNode.lastRenderTime,
               let playerTime = playerNode.playerTime(forNodeTime: nodeTime) else { return }
 
@@ -241,7 +250,7 @@ class AudioEngineManager: ObservableObject {
 
     private func processAudioBuffer(_ buffer: AVAudioPCMBuffer) {
         guard isActive else { return }
-        guard let channelData = buffer.floatChannelData?[0], let fftSetup = fftSetup else { return }
+        guard let channelData = buffer.floatChannelData?[0], let fftSetup else { return }
 
         let frameCount = Int(buffer.frameLength)
         let sampleRate = Float(buffer.format.sampleRate)
@@ -292,7 +301,13 @@ class AudioEngineManager: ObservableObject {
                         guard let imagOutputBase = imagOutputPtr.baseAddress else { return }
 
                         // Execute FFT
-                        vDSP_DFT_Execute(fftSetup, realInputBase, imagInputBase, realOutputBase, imagOutputBase)
+                        vDSP_DFT_Execute(
+                            fftSetup,
+                            realInputBase,
+                            imagInputBase,
+                            realOutputBase,
+                            imagOutputBase,
+                        )
 
                         // 4. MAGNITUDE CALCULATION
                         // We do this inside these closures to keep the output pointers valid
@@ -347,13 +362,13 @@ class AudioEngineManager: ObservableObject {
         if now - lastUIUpdateTime >= uiUpdateInterval {
             lastUIUpdateTime = now
             DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
+                guard let self else { return }
 
                 // Optimized Update: Smooth interpolation
                 // We create a new array to avoid modifying state in a loop if possible,
                 // but since we need previous values for decay, we map it.
 
-                var updatedLevels = self.meteringLevels
+                var updatedLevels = meteringLevels
 
                 for i in 0 ..< updatedLevels.count {
                     let current = updatedLevels[i]
@@ -368,7 +383,7 @@ class AudioEngineManager: ObservableObject {
                 }
 
                 // SINGLE ASSIGNMENT to trigger Publisher only once per frame
-                self.meteringLevels = updatedLevels
+                meteringLevels = updatedLevels
             }
         }
     }
@@ -399,11 +414,11 @@ class AudioEngineManager: ObservableObject {
     }
 
     private func freqToMel(_ freq: Float) -> Float {
-        return 2595.0 * log10f(1.0 + freq / 700.0)
+        2595.0 * log10f(1.0 + freq / 700.0)
     }
 
     private func melToFreq(_ mel: Float) -> Float {
-        return 700.0 * (powf(10.0, mel / 2595.0) - 1.0)
+        700.0 * (powf(10.0, mel / 2595.0) - 1.0)
     }
 
     // Public method to set the player volume
@@ -419,7 +434,7 @@ class AudioEngineManager: ObservableObject {
 
     deinit {
         timer?.invalidate()
-        if let fftSetup = fftSetup {
+        if let fftSetup {
             vDSP_DFT_DestroySetup(fftSetup)
         }
     }

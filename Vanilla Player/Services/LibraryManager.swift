@@ -12,10 +12,18 @@ class LibraryManager: ObservableObject {
 
     // Application Support Directory
     private var libraryFileURL: URL? {
-        guard let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else { return nil }
+        guard let appSupport = FileManager.default.urls(
+            for: .applicationSupportDirectory,
+            in: .userDomainMask,
+        ).first
+        else { return nil }
         let appDir = appSupport.appendingPathComponent("VanillaPlayer")
         // Ensure dir exists
-        try? FileManager.default.createDirectory(at: appDir, withIntermediateDirectories: true, attributes: nil)
+        try? FileManager.default.createDirectory(
+            at: appDir,
+            withIntermediateDirectories: true,
+            attributes: nil,
+        )
         return appDir.appendingPathComponent(libraryFileName)
     }
 
@@ -57,7 +65,9 @@ class LibraryManager: ObservableObject {
             sources.remove(at: index)
             // Remove tracks belonging to this source
             // Note: simple removal is tricky if tracks are mixed.
-            // Better strategy: Re-scan remaining, OR simpler: Remove tracks whose URL starts with source URL (for folder) or matches (for file).
+            // Better strategy: Re-scan remaining, OR simpler: Remove tracks whose URL starts with
+            // source URL (for
+            // folder) or matches (for file).
             cleanupTracks(forRemovedSource: source)
             saveLibrary()
         }
@@ -168,7 +178,8 @@ class LibraryManager: ObservableObject {
                     }
                     if isSecured { resolved.stopAccessingSecurityScopedResource() }
                 } else {
-                    // Try checking if it exists at original URL (unlikely if sandboxed, but fallback)
+                    // Try checking if it exists at original URL (unlikely if sandboxed, but
+                    // fallback)
                     if FileManager.default.fileExists(atPath: track.url.path) {
                         validatedTracks.append(track)
                     }
@@ -183,11 +194,15 @@ class LibraryManager: ObservableObject {
             var newlyFoundTracks: [Track] = []
 
             // We need to scan sources and create tracks for NEW items while source is open.
-            // We can't do the simple diff approach anymore because we need the Scope to be open for Track creation.
+            // We can't do the simple diff approach anymore because we need the Scope to be open for
+            // Track creation.
 
             for source in sources {
                 // Pass currentTracks so we don't recreate existing ones
-                let (newTracks, sourceURLs) = collectTracks(from: source, existingTracks: currentTracks)
+                let (newTracks, sourceURLs) = collectTracks(
+                    from: source,
+                    existingTracks: currentTracks,
+                )
                 newlyFoundTracks.append(contentsOf: newTracks)
                 allFoundURLs.formUnion(sourceURLs)
             }
@@ -217,7 +232,7 @@ class LibraryManager: ObservableObject {
 
         var newTracks: [Track] = []
         var allURLs: [URL] = []
-        let existingURLs = Set(existingTracks.map { $0.url })
+        let existingURLs = Set(existingTracks.map(\.url))
 
         let supportedExtensions = ["mp3", "m4a", "wav", "aiff", "aif", "aac", "flac", "caf"]
 
@@ -227,7 +242,7 @@ class LibraryManager: ObservableObject {
                 if let enumerator = FileManager.default.enumerator(
                     at: url,
                     includingPropertiesForKeys: [.isRegularFileKey],
-                    options: [.skipsHiddenFiles, .skipsPackageDescendants]
+                    options: [.skipsHiddenFiles, .skipsPackageDescendants],
                 ) {
                     for case let fileURL as URL in enumerator {
                         if supportedExtensions.contains(fileURL.pathExtension.lowercased()) {
@@ -279,7 +294,8 @@ class LibraryManager: ObservableObject {
     }
 
     private func loadLibrary() {
-        guard let url = libraryFileURL, FileManager.default.fileExists(atPath: url.path) else { return }
+        guard let url = libraryFileURL,
+              FileManager.default.fileExists(atPath: url.path) else { return }
 
         do {
             let data = try Data(contentsOf: url)
