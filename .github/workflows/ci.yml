@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Select Xcode
+      run: sudo xcode-select -switch /Applications/Xcode.app
+      
+    - name: Build
+      run: |
+        xcodebuild clean build \
+          -project "Vanilla Player.xcodeproj" \
+          -scheme "Vanilla Player" \
+          -destination 'platform=macOS' \
+          -configuration Debug
