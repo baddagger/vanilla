@@ -8,23 +8,23 @@ struct SpectrumView: View {
             .init(
                 color: Color(hex: "#dbbe83"),
                 location: 0.0
-            ),  // Bright cream at top
+            ), // Bright cream at top
             .init(
                 color: Color(hex: "#d8b86c"),
                 location: 0.15
-            ),  // Light gold
+            ), // Light gold
             .init(
                 color: Color(hex: "#af905d"),
                 location: 0.5
-            ),  // Darker gold in middle
+            ), // Darker gold in middle
             .init(
                 color: Color(hex: "#d8b86c"),
                 location: 0.85
-            ),  // Light gold
+            ), // Light gold
             .init(
                 color: Color(hex: "#dbbe83"),
                 location: 1.0
-            ),  // Bright cream at bottom
+            ), // Bright cream at bottom
         ]),
         startPoint: .top,
         endPoint: .bottom
@@ -34,7 +34,7 @@ struct SpectrumView: View {
         GeometryReader { geometry in
             HStack {
                 let levels = viewModel.meteringLevels
-                ForEach(0..<levels.count, id: \.self) {
+                ForEach(0 ..< levels.count, id: \.self) {
                     index in
                     let height = geometry.size.height
                     let level = CGFloat(levels[index])
@@ -60,7 +60,7 @@ struct SpectrumView: View {
                     }
                     .animation(.linear(duration: 0.04), value: barHeight)
                     .frame(height: height)
-                    
+
                     if index < levels.count - 1 {
                         Spacer()
                     }

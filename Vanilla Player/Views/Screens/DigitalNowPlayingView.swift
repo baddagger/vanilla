@@ -2,13 +2,13 @@ import SwiftUI
 
 struct DigitalNowPlayingView: View {
     @EnvironmentObject var viewModel: PlayerViewModel
-    
+
     var body: some View {
         VStack(alignment: .center) {
             Spacer()
-            
+
             SquareCoverView(track: viewModel.currentTrack)
-            
+
             Spacer()
                 .frame(height: 56)
 
@@ -25,7 +25,7 @@ struct DigitalNowPlayingView: View {
                     .foregroundColor(textColor)
                     .multilineTextAlignment(.center)
             }
-            
+
             if let album = viewModel.currentTrack?.album, !album.isEmpty {
                 Text(album)
                     .font(.system(size: 14, weight: .light, design: .serif))
@@ -33,9 +33,8 @@ struct DigitalNowPlayingView: View {
                     .multilineTextAlignment(.center)
                     .padding(.top, 2)
             }
-            
-            Spacer()
 
+            Spacer()
 
             SpectrumView(viewModel: viewModel.visualizerViewModel)
                 .frame(height: 80)
@@ -51,7 +50,7 @@ struct DigitalNowPlayingView: View {
             .padding(24)
         }
     }
-    
+
     func formatTime(_ time: TimeInterval) -> String {
         let minutes = Int(time) / 60
         let seconds = Int(time) % 60
@@ -59,10 +58,10 @@ struct DigitalNowPlayingView: View {
     }
 }
 
-struct SquareCoverView : View {
+struct SquareCoverView: View {
     let track: Track?
     @State private var artwork: NSImage?
-    
+
     var body: some View {
         ZStack {
             if let artwork = artwork {
@@ -94,16 +93,16 @@ struct SquareCoverView : View {
             loadArtwork(for: track)
         }
     }
-    
+
     private func loadArtwork(for track: Track?) {
         artwork = nil // Reset first
         guard let track = track else { return }
-        
+
         if !track.hasArtwork {
-             // print("Track \(track.title) has no artwork marked.")
-             return
+            // print("Track \(track.title) has no artwork marked.")
+            return
         }
-        
+
         // Async load
         DispatchQueue.global(qos: .userInitiated).async {
             let loaded = track.loadArtwork()

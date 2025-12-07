@@ -13,7 +13,7 @@ struct TonearmView: View {
     // Layout constants
     private let rotationAnchorX = 0.76
     private let rotationAnchorY = 0.2
-    
+
     // Drag handle constants (relative to height)
     private let handleWidthRatio = 0.08
     private let handleHeightRatio = 0.22
@@ -89,7 +89,7 @@ struct TonearmView: View {
         let angleChange = normalizeAngle(currAngle - lastDragAngle)
         let progressChange = angleChange / (endAngle - startAngle)
         let currentProgress = playbackProgress < 0 ? 0 : playbackProgress
-        
+
         playbackProgress = min(1, max(0, currentProgress + progressChange))
         lastDragAngle = currAngle
     }
@@ -97,40 +97,40 @@ struct TonearmView: View {
     private func isInsideDragHandle(location: CGPoint, geometry: GeometryProxy) -> Bool {
         let height = geometry.size.height
         let width = geometry.size.width
-        
+
         // Handle center position (relative to image center, before tonearm rotation)
         let handleCenterX = width / 2 + height * handleOffsetXRatio
         let handleCenterY = height / 2 + height * handleOffsetYRatio
-        
+
         // Handle dimensions
         let handleWidth = height * handleWidthRatio
         let handleHeight = height * handleHeightRatio
-        
+
         // Rotation anchor in pixels
         let anchorX = width * rotationAnchorX
         let anchorY = height * rotationAnchorY
-        
+
         // Current tonearm angle
         let angle = playbackProgress < 0 ? idleAngle : startAngle + (endAngle - startAngle) * playbackProgress
         let angleRadians = angle * .pi / 180
-        
+
         // Rotate the handle center around the tonearm anchor
         let dx = handleCenterX - anchorX
         let dy = handleCenterY - anchorY
         let rotatedHandleCenterX = anchorX + dx * cos(angleRadians) - dy * sin(angleRadians)
         let rotatedHandleCenterY = anchorY + dx * sin(angleRadians) + dy * cos(angleRadians)
-        
+
         // Combined rotation: handle's own rotation + tonearm angle
         let combinedAngle = (handleRotation + angle) * .pi / 180
-        
+
         // Transform location to handle's local coordinate system
         let localX = location.x - rotatedHandleCenterX
         let localY = location.y - rotatedHandleCenterY
-        
+
         // Rotate back by the combined angle
         let unrotatedX = localX * cos(-combinedAngle) - localY * sin(-combinedAngle)
         let unrotatedY = localX * sin(-combinedAngle) + localY * cos(-combinedAngle)
-        
+
         // Check if inside the handle bounds (with tolerance for easier targeting)
         let tolerance = 1.5
         return abs(unrotatedX) <= handleWidth / 2 * tolerance && abs(unrotatedY) <= handleHeight / 2 * tolerance
@@ -144,8 +144,12 @@ struct TonearmView: View {
 
     private func normalizeAngle(_ angle: Double) -> Double {
         var normalized = angle
-        while normalized > 180 { normalized -= 360 }
-        while normalized < -180 { normalized += 360 }
+        while normalized > 180 {
+            normalized -= 360
+        }
+        while normalized < -180 {
+            normalized += 360
+        }
         return normalized
     }
 }
@@ -162,4 +166,3 @@ struct TonearmView: View {
     .frame(height: 450)
     .padding(56)
 }
-

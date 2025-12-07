@@ -16,7 +16,7 @@ struct DigitalPlayerView: View {
                 tabs: ["Now Playing", "Songs"],
                 selectedIndex: $selectedTab,
                 selectedTextColor: textColor,
-                unselectedTextColor: textColor.opacity(0.5),  // Slightly dimmed for unselected
+                unselectedTextColor: textColor.opacity(0.5), // Slightly dimmed for unselected
                 onTabChange: { index in selectedTab = index }
             )
 

@@ -26,7 +26,7 @@ struct CenteredTabView: View {
         onTabChange: ((Int) -> Void)? = nil
     ) {
         self.tabs = tabs
-        self._selectedIndex = selectedIndex
+        _selectedIndex = selectedIndex
         self.normalFontSize = normalFontSize
         self.selectedFontSize = selectedFontSize
         self.tabSpacing = tabSpacing
@@ -39,7 +39,7 @@ struct CenteredTabView: View {
         ScrollViewReader { proxy in
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: tabSpacing) {
-                    ForEach(0..<tabs.count, id: \.self) { index in
+                    ForEach(0 ..< tabs.count, id: \.self) { index in
                         Text(tabs[index])
                             .italic()
                             .font(

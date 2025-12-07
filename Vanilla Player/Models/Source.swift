@@ -10,26 +10,26 @@ struct Source: Identifiable, Codable, Hashable {
     let url: URL
     let type: SourceType
     let bookmarkData: Data?
-    
+
     init(url: URL, type: SourceType) {
-        self.id = UUID()
+        id = UUID()
         self.url = url
         self.type = type
-        
+
         // Create security bookmark for persistence
         // Ensure we explicitly access the resource to render the bookmark valid
         let isSecured = url.startAccessingSecurityScopedResource()
         defer { if isSecured { url.stopAccessingSecurityScopedResource() } }
-        
+
         var bookmark: Data? = nil
         do {
             bookmark = try url.bookmarkData(options: .withSecurityScope, includingResourceValuesForKeys: nil, relativeTo: nil)
         } catch {
             print("Failed to create bookmark for source \(url): \(error)")
         }
-        self.bookmarkData = bookmark
+        bookmarkData = bookmark
     }
-    
+
     func resolvedURL() -> URL? {
         guard let bookmarkData = bookmarkData else { return url }
         var isStale = false

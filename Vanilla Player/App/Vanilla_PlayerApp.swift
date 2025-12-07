@@ -28,7 +28,6 @@ struct Vanilla_PlayerApp: App {
         .windowStyle(.hiddenTitleBar)
         .defaultSize(width: 1200, height: 800)
         .handlesExternalEvents(matching: ["*"])
-
         .commands {
             CommandGroup(replacing: .newItem) {
                 Button("Add Song...") {

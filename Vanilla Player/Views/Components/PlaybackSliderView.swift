@@ -4,7 +4,7 @@ struct PlaybackSliderView: View {
     @Binding var currentTime: TimeInterval
     let duration: TimeInterval
     let onSeek: (TimeInterval) -> Void
-    
+
     var body: some View {
         VStack(spacing: 4) {
             let trackColor = Color(hex: "#c0a06c")
@@ -14,7 +14,7 @@ struct PlaybackSliderView: View {
             GeometryReader { geometry in
                 let progress =
                     duration > 0
-                    ? currentTime / duration : 0
+                        ? currentTime / duration : 0
                 let thumbSize: CGFloat = 16
                 let trackHeight: CGFloat = 4
                 let thumbOffset =
@@ -66,7 +66,7 @@ struct PlaybackSliderView: View {
             .foregroundColor(newColor)
         }
     }
-    
+
     private func formatTime(_ time: TimeInterval) -> String {
         let minutes = Int(time) / 60
         let seconds = Int(time) % 60
