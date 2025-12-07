@@ -7,8 +7,27 @@ on:
     branches: [ "main" ]
 
 jobs:
+  lint:
+    runs-on: macos-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install SwiftFormat
+      run: brew install swiftformat
+      
+    - name: Install SwiftLint
+      run: brew install swiftlint
+      
+    - name: Run SwiftFormat
+      run: swiftformat --lint .
+      
+    - name: Run SwiftLint
+      run: swiftlint lint --strict
+
   build:
     runs-on: macos-latest
+    needs: lint
     
     steps:
     - uses: actions/checkout@v4
