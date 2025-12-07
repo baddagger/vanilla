@@ -38,7 +38,8 @@ struct TrackListView: View {
 
                         ZStack(alignment: .leading) {
                             let count = viewModel.tracks.count
-                            Text("Search \(count) song\(count == 1 ? "" : "s")...")
+                            let format = count == 1 ? NSLocalizedString("Search %d song...", comment: "Search Placeholder Singular") : NSLocalizedString("Search %d songs...", comment: "Search Placeholder Plural")
+                            Text(String(format: format, count))
                                 .foregroundColor(newColor.opacity(0.5))
                                 .font(.system(size: 14, design: .serif))
                                 .opacity(searchText.isEmpty ? 1 : 0)
@@ -377,7 +378,7 @@ struct MoreMenuButton: View {
                 VStack(alignment: .leading, spacing: 0) {
                     MenuItem(
                         icon: "doc.badge.plus",
-                        title: "Add Song",
+                        title: NSLocalizedString("Add Song", comment: "Menu Item"),
                         color: color,
                     ) {
                         addFile()
@@ -391,7 +392,7 @@ struct MoreMenuButton: View {
 
                     MenuItem(
                         icon: "folder.badge.plus",
-                        title: "Add Folder",
+                        title: NSLocalizedString("Add Folder", comment: "Menu Item"),
                         color: color,
                     ) {
                         addFolder()
@@ -405,7 +406,7 @@ struct MoreMenuButton: View {
 
                     MenuItem(
                         icon: "arrow.clockwise",
-                        title: "Rescan",
+                        title: NSLocalizedString("Rescan", comment: "Menu Item"),
                         color: color,
                     ) {
                         libraryManager.startFullScan()
@@ -419,7 +420,7 @@ struct MoreMenuButton: View {
 
                     MenuItem(
                         icon: "gearshape",
-                        title: "Source Management",
+                        title: NSLocalizedString("Source Management", comment: "Menu Item"),
                         color: color,
                     ) {
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
@@ -456,7 +457,7 @@ struct MoreMenuButton: View {
         panel.canChooseFiles = false
         panel.canChooseDirectories = true
         panel.allowsMultipleSelection = true
-        panel.prompt = "Add Source"
+        panel.prompt = NSLocalizedString("Add Source", comment: "Panel Button")
 
         if panel.runModal() == .OK {
             let urls = panel.urls
@@ -474,7 +475,7 @@ struct MoreMenuButton: View {
         panel.canChooseDirectories = false
         panel.allowsMultipleSelection = true
         panel.allowedContentTypes = [.audio]
-        panel.prompt = "Add Song"
+        panel.prompt = NSLocalizedString("Add Song", comment: "Panel Button")
 
         if panel.runModal() == .OK {
             let urls = panel.urls

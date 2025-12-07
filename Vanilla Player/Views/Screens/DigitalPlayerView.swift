@@ -13,7 +13,10 @@ struct DigitalPlayerView: View {
             let textColor = Color(hex: "#c0a06c")
 
             CenteredTabView(
-                tabs: ["Now Playing", "Songs"],
+                tabs: [
+                    NSLocalizedString("Now Playing", comment: "Tab Title"),
+                    NSLocalizedString("Songs", comment: "Tab Title"),
+                ],
                 selectedIndex: $selectedTab,
                 selectedTextColor: textColor,
                 unselectedTextColor: textColor.opacity(0.5), // Slightly dimmed for unselected

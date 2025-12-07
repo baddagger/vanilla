@@ -1,0 +1,17 @@
+"VOLUME" = "音量";
+"BASS" = "低音";
+"Now Playing" = "正在播放";
+"Songs" = "歌曲";
+"Search %d song..." = "搜索 %d 首歌...";
+"Search %d songs..." = "搜索 %d 首歌...";
+"Add Song" = "添加歌曲";
+"Add Folder" = "添加文件夹";
+"Rescan" = "重新扫描";
+"Source Management" = "来源管理";
+"Add Source" = "添加来源";
+"Scan" = "扫描";
+"Full Scan" = "完整扫描";
+"Remove" = "移除";
+"No Sources" = "无来源";
+"Add file or folder sources." = "添加文件或文件夹来源。";
+"Ready to Play" = "准备播放";

@@ -80,7 +80,7 @@ struct SourceManagementView: View {
         panel.canChooseFiles = false
         panel.canChooseDirectories = true
         panel.allowsMultipleSelection = true
-        panel.prompt = "Add Source"
+        panel.prompt = NSLocalizedString("Add Source", comment: "Panel Button")
 
         if panel.runModal() == .OK {
             let urls = panel.urls
@@ -98,7 +98,7 @@ struct SourceManagementView: View {
         panel.canChooseDirectories = false
         panel.allowsMultipleSelection = true
         panel.allowedContentTypes = [.audio]
-        panel.prompt = "Add Song"
+        panel.prompt = NSLocalizedString("Add Song", comment: "Panel Button")
 
         if panel.runModal() == .OK {
             let urls = panel.urls
