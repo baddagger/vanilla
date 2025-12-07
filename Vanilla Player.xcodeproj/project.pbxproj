@@ -1,0 +1,548 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		1F3155032EE0181800C236E4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F3154EC2EE0181700C236E4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1F3154F32EE0181700C236E4;
+			remoteInfo = "Vanilla Player";
+		};
+		1F31550D2EE0181800C236E4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F3154EC2EE0181700C236E4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1F3154F32EE0181700C236E4;
+			remoteInfo = "Vanilla Player";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1F3154F42EE0181700C236E4 /* Vanilla Player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Vanilla Player.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F3155022EE0181800C236E4 /* Vanilla PlayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Vanilla PlayerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F31550C2EE0181800C236E4 /* Vanilla PlayerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Vanilla PlayerUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		1F3154F62EE0181700C236E4 /* Vanilla Player */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Vanilla Player";
+			sourceTree = "<group>";
+		};
+		1F3155052EE0181800C236E4 /* Vanilla PlayerTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Vanilla PlayerTests";
+			sourceTree = "<group>";
+		};
+		1F31550F2EE0181800C236E4 /* Vanilla PlayerUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Vanilla PlayerUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1F3154F12EE0181700C236E4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1F3154FF2EE0181800C236E4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1F3155092EE0181800C236E4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1F3154EB2EE0181700C236E4 = {
+			isa = PBXGroup;
+			children = (
+				1F3154F62EE0181700C236E4 /* Vanilla Player */,
+				1F3155052EE0181800C236E4 /* Vanilla PlayerTests */,
+				1F31550F2EE0181800C236E4 /* Vanilla PlayerUITests */,
+				1F3154F52EE0181700C236E4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1F3154F52EE0181700C236E4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1F3154F42EE0181700C236E4 /* Vanilla Player.app */,
+				1F3155022EE0181800C236E4 /* Vanilla PlayerTests.xctest */,
+				1F31550C2EE0181800C236E4 /* Vanilla PlayerUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1F3154F32EE0181700C236E4 /* Vanilla Player */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1F3155162EE0181800C236E4 /* Build configuration list for PBXNativeTarget "Vanilla Player" */;
+			buildPhases = (
+				1F3154F02EE0181700C236E4 /* Sources */,
+				1F3154F12EE0181700C236E4 /* Frameworks */,
+				1F3154F22EE0181700C236E4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				1F3154F62EE0181700C236E4 /* Vanilla Player */,
+			);
+			name = "Vanilla Player";
+			packageProductDependencies = (
+			);
+			productName = "Vanilla Player";
+			productReference = 1F3154F42EE0181700C236E4 /* Vanilla Player.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1F3155012EE0181800C236E4 /* Vanilla PlayerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1F3155192EE0181800C236E4 /* Build configuration list for PBXNativeTarget "Vanilla PlayerTests" */;
+			buildPhases = (
+				1F3154FE2EE0181800C236E4 /* Sources */,
+				1F3154FF2EE0181800C236E4 /* Frameworks */,
+				1F3155002EE0181800C236E4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1F3155042EE0181800C236E4 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				1F3155052EE0181800C236E4 /* Vanilla PlayerTests */,
+			);
+			name = "Vanilla PlayerTests";
+			packageProductDependencies = (
+			);
+			productName = "Vanilla PlayerTests";
+			productReference = 1F3155022EE0181800C236E4 /* Vanilla PlayerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		1F31550B2EE0181800C236E4 /* Vanilla PlayerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1F31551C2EE0181800C236E4 /* Build configuration list for PBXNativeTarget "Vanilla PlayerUITests" */;
+			buildPhases = (
+				1F3155082EE0181800C236E4 /* Sources */,
+				1F3155092EE0181800C236E4 /* Frameworks */,
+				1F31550A2EE0181800C236E4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1F31550E2EE0181800C236E4 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				1F31550F2EE0181800C236E4 /* Vanilla PlayerUITests */,
+			);
+			name = "Vanilla PlayerUITests";
+			packageProductDependencies = (
+			);
+			productName = "Vanilla PlayerUITests";
+			productReference = 1F31550C2EE0181800C236E4 /* Vanilla PlayerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1F3154EC2EE0181700C236E4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1640;
+				LastUpgradeCheck = 1640;
+				TargetAttributes = {
+					1F3154F32EE0181700C236E4 = {
+						CreatedOnToolsVersion = 16.4;
+					};
+					1F3155012EE0181800C236E4 = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = 1F3154F32EE0181700C236E4;
+					};
+					1F31550B2EE0181800C236E4 = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = 1F3154F32EE0181700C236E4;
+					};
+				};
+			};
+			buildConfigurationList = 1F3154EF2EE0181700C236E4 /* Build configuration list for PBXProject "Vanilla Player" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1F3154EB2EE0181700C236E4;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 1F3154F52EE0181700C236E4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1F3154F32EE0181700C236E4 /* Vanilla Player */,
+				1F3155012EE0181800C236E4 /* Vanilla PlayerTests */,
+				1F31550B2EE0181800C236E4 /* Vanilla PlayerUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1F3154F22EE0181700C236E4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1F3155002EE0181800C236E4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1F31550A2EE0181800C236E4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1F3154F02EE0181700C236E4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1F3154FE2EE0181800C236E4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1F3155082EE0181800C236E4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1F3155042EE0181800C236E4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1F3154F32EE0181700C236E4 /* Vanilla Player */;
+			targetProxy = 1F3155032EE0181800C236E4 /* PBXContainerItemProxy */;
+		};
+		1F31550E2EE0181800C236E4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1F3154F32EE0181700C236E4 /* Vanilla Player */;
+			targetProxy = 1F31550D2EE0181800C236E4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1F3155142EE0181800C236E4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.3;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		1F3155152EE0181800C236E4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		1F3155172EE0181800C236E4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Vanilla Player/App/Vanilla_Player.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Vanilla Player/Info.plist";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "me.Vanilla-Player";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		1F3155182EE0181800C236E4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Vanilla Player/App/Vanilla_Player.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Vanilla Player/Info.plist";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "me.Vanilla-Player";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		1F31551A2EE0181800C236E4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "me.Vanilla-PlayerTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Vanilla Player.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Vanilla Player";
+			};
+			name = Debug;
+		};
+		1F31551B2EE0181800C236E4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "me.Vanilla-PlayerTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Vanilla Player.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Vanilla Player";
+			};
+			name = Release;
+		};
+		1F31551D2EE0181800C236E4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "me.Vanilla-PlayerUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "Vanilla Player";
+			};
+			name = Debug;
+		};
+		1F31551E2EE0181800C236E4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "me.Vanilla-PlayerUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "Vanilla Player";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1F3154EF2EE0181700C236E4 /* Build configuration list for PBXProject "Vanilla Player" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1F3155142EE0181800C236E4 /* Debug */,
+				1F3155152EE0181800C236E4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1F3155162EE0181800C236E4 /* Build configuration list for PBXNativeTarget "Vanilla Player" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1F3155172EE0181800C236E4 /* Debug */,
+				1F3155182EE0181800C236E4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1F3155192EE0181800C236E4 /* Build configuration list for PBXNativeTarget "Vanilla PlayerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1F31551A2EE0181800C236E4 /* Debug */,
+				1F31551B2EE0181800C236E4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1F31551C2EE0181800C236E4 /* Build configuration list for PBXNativeTarget "Vanilla PlayerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1F31551D2EE0181800C236E4 /* Debug */,
+				1F31551E2EE0181800C236E4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1F3154EC2EE0181700C236E4 /* Project object */;
+}
