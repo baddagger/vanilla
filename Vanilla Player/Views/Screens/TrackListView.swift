@@ -26,7 +26,6 @@ struct TrackListView: View {
         let newColor = Color(hex: "#d2af74")
 
         ZStack {
-            
             VStack {
                 // Search bar row
                 HStack(spacing: 8) {
@@ -83,7 +82,7 @@ struct TrackListView: View {
                             )
                     )
                     .animation(.easeInOut(duration: 0.2), value: isSearchFocused)
-                    
+
                     // More Button
                     MoreMenuButton(
                         isMenuVisible: $isAddMenuVisible,
@@ -329,9 +328,9 @@ struct MoreMenuButton: View {
     let color: Color
     @ObservedObject var libraryManager: LibraryManager
     let onSourceManagement: () -> Void
-    
+
     @State private var isHovering = false
-    
+
     var body: some View {
         // More Button
         Button {
@@ -387,10 +386,10 @@ struct MoreMenuButton: View {
                             isMenuVisible = false
                         }
                     }
-                    
+
                     Divider()
                         .background(color.opacity(0.2))
-                    
+
                     MenuItem(
                         icon: "folder.badge.plus",
                         title: "Add Folder",
@@ -401,10 +400,10 @@ struct MoreMenuButton: View {
                             isMenuVisible = false
                         }
                     }
-                    
+
                     Divider()
                         .background(color.opacity(0.2))
-                    
+
                     MenuItem(
                         icon: "arrow.clockwise",
                         title: "Rescan",
@@ -415,10 +414,10 @@ struct MoreMenuButton: View {
                             isMenuVisible = false
                         }
                     }
-                    
+
                     Divider()
                         .background(color.opacity(0.2))
-                    
+
                     MenuItem(
                         icon: "gearshape",
                         title: "Source Management",
@@ -452,14 +451,14 @@ struct MoreMenuButton: View {
             }
         }
     }
-    
+
     private func addFolder() {
         let panel = NSOpenPanel()
         panel.canChooseFiles = false
         panel.canChooseDirectories = true
         panel.allowsMultipleSelection = true
         panel.prompt = "Add Source"
-        
+
         if panel.runModal() == .OK {
             let urls = panel.urls
             Task {
@@ -469,7 +468,7 @@ struct MoreMenuButton: View {
             }
         }
     }
-    
+
     private func addFile() {
         let panel = NSOpenPanel()
         panel.canChooseFiles = true
@@ -477,7 +476,7 @@ struct MoreMenuButton: View {
         panel.allowsMultipleSelection = true
         panel.allowedContentTypes = [.audio]
         panel.prompt = "Add Song"
-        
+
         if panel.runModal() == .OK {
             let urls = panel.urls
             Task {
@@ -494,9 +493,9 @@ struct MenuItem: View {
     let title: String
     let color: Color
     let action: () -> Void
-    
+
     @State private var isHovering = false
-    
+
     var body: some View {
         Button(action: action) {
             HStack(spacing: 12) {
@@ -504,11 +503,11 @@ struct MenuItem: View {
                     .font(.system(size: 14))
                     .foregroundColor(color)
                     .frame(width: 20)
-                
+
                 Text(title)
                     .font(.system(size: 14, design: .serif))
                     .foregroundColor(color)
-                
+
                 Spacer()
             }
             .padding(.horizontal, 16)

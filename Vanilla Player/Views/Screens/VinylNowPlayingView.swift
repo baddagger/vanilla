@@ -28,7 +28,6 @@ struct VinylNowPlayingView: View {
                                     .foregroundColor(
                                         Color(hex: "#c0a06c").opacity(0.6)
                                     )
-
                             }
                         )
                         .frame(width: vinylSize, height: vinylSize)
@@ -40,13 +39,13 @@ struct VinylNowPlayingView: View {
                             progress: Binding(
                                 get: { Double(viewModel.volume) },
                                 set: { viewModel.volume = Float($0) }
-                            ),
+                            )
                         )
                         .offset(
                             x: -vinylSize / 2 + buttonSize / 2,
                             y: -vinylSize / 2 + buttonSize / 2
                         )
-                        
+
                         ArcText(
                             text: "BASS",
                             radius: vinylSize * 0.546,
@@ -57,11 +56,10 @@ struct VinylNowPlayingView: View {
                                     .foregroundColor(
                                         Color(hex: "#c0a06c").opacity(0.6)
                                     )
-
                             }
                         )
                         .frame(width: vinylSize, height: vinylSize)
-                        
+
                         KnobView(
                             buttonSize: buttonSize,
                             startAngle: -180,
@@ -69,7 +67,7 @@ struct VinylNowPlayingView: View {
                             progress: Binding(
                                 get: { Double(viewModel.bass + 1) / 2 }, // Map -1...1 to 0...1
                                 set: { viewModel.bass = Float($0 * 2 - 1) } // Map 0...1 to -1...1
-                            ),
+                            )
                         )
                         .offset(
                             x: -vinylSize / 2 + buttonSize / 2,
@@ -109,8 +107,8 @@ struct VinylNowPlayingView: View {
                             playbackProgress: Binding(
                                 get: {
                                     viewModel.duration > 0
-                                    ? Double(viewModel.currentTime / viewModel.duration)
-                                    : -1.0
+                                        ? Double(viewModel.currentTime / viewModel.duration)
+                                        : -1.0
                                 },
                                 set: { newValue in
                                     let newTime = newValue * viewModel.duration
@@ -120,7 +118,7 @@ struct VinylNowPlayingView: View {
                         )
                         .frame(height: tonearmHeight)
                         .offset(x: tonearmHeight * 0.52, y: -tonearmHeight / 12)
-                        .animation(.linear(duration: 0.5), value: viewModel.currentTime == 0)  // Animate when moving to/from idle
+                        .animation(.linear(duration: 0.5), value: viewModel.currentTime == 0) // Animate when moving to/from idle
                     }
                     .frame(width: vinylSize, height: vinylSize)
 
@@ -130,7 +128,6 @@ struct VinylNowPlayingView: View {
                     Controls()
                         .frame(width: vinylSize * 1.1)
                         .frame(maxHeight: .infinity)
-
                 }
             }
         }
@@ -144,7 +141,7 @@ struct Vinyl: View {
     // Rotation state - preserved across play/pause
     @State private var baseRotation: Double = 0
     @State private var spinStartTime: Date?
-    
+
     // Rotation speed: degrees per second (33 RPM = 198°/sec, slower = more realistic)
     private let degreesPerSecond: Double = 30
 
@@ -190,10 +187,10 @@ struct Vinyl: View {
                                     options: nil
                                 ) { item, _ in
                                     if let data = item as? Data,
-                                        let url = URL(
-                                            dataRepresentation: data,
-                                            relativeTo: nil
-                                        )
+                                       let url = URL(
+                                           dataRepresentation: data,
+                                           relativeTo: nil
+                                       )
                                     {
                                         print("Dropped URL (data): \(url)")
                                         DispatchQueue.main.async {
@@ -216,7 +213,6 @@ struct Vinyl: View {
                 .resizable()
                 .frame(width: vinylSize * 0.036, height: vinylSize * 0.036)
                 .shadow(color: Color.black.opacity(0.6), radius: 1, x: -1, y: 1)
-
         }
         .onChange(of: viewModel.isPlaying) { _, isPlaying in
             if isPlaying {
@@ -233,7 +229,7 @@ struct Vinyl: View {
             }
         }
     }
-    
+
     private func currentRotation(at date: Date) -> Double {
         guard let startTime = spinStartTime else {
             return baseRotation
@@ -313,7 +309,7 @@ struct Controls: View {
                         .resizable()
                         .frame(width: buttonSizeLarge, height: buttonSizeLarge)
 
-                    Image(viewModel.isPlaying ? "iconPause" : "iconPlay")  // Play/pause icon toggle
+                    Image(viewModel.isPlaying ? "iconPause" : "iconPlay") // Play/pause icon toggle
                         .resizable()
                         .frame(
                             width: buttonSizeLarge * 0.7,

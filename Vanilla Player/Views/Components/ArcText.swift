@@ -4,7 +4,7 @@ struct ArcText: View {
     let text: String
     let radius: CGFloat
     let startAngle: Angle
-    let spacing: CGFloat  // Approximate width per character (in degrees)
+    let spacing: CGFloat // Approximate width per character (in degrees)
 
     // Optional: Closure for styling the text (e.g., font, color)
     var configure: ((Text) -> Text)? = nil
@@ -20,8 +20,8 @@ struct ArcText: View {
 
                 (configure?(Text(String(char))) ?? Text(String(char)))
                     .background(
-                        GeometryReader { geo in
-                            Color.clear  // Use this if you want to calculate exact widths dynamically
+                        GeometryReader { _ in
+                            Color.clear // Use this if you want to calculate exact widths dynamically
                         }
                     )
                     // 1. Move the character to the top of the circle (radius distance)

@@ -32,7 +32,7 @@ struct KnobView: View {
                                 isDragging = true
                             }
                         }
-                        .onEnded { value in
+                        .onEnded { _ in
                             onDragEnded()
                             isDragging = false
                         }
