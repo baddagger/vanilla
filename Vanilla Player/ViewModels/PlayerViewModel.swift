@@ -138,12 +138,15 @@ class PlayerViewModel: NSObject, ObservableObject {
                     currentSecurityScopedURL = sourceURL
                 } else {
                     print(
-                        "ERROR: Failed to access both track URL and parent Source URL for: \(track.title)",
+                        "ERROR: Failed to access both track URL and parent Source URL for:",
+                        track.title,
                     )
                 }
             } else {
                 print(
-                    "WARNING: Track startAccessingSecurityScopedResource failed and no parent source found for: \(track.title)",
+                    "WARNING: Track startAccessingSecurityScopedResource failed,",
+                    "no parent source found for:",
+                    track.title,
                 )
             }
         }
@@ -248,12 +251,16 @@ class PlayerViewModel: NSObject, ObservableObject {
                         currentSecurityScopedURL = sourceURL
                     } else {
                         print(
-                            "ERROR: Failed to access both track URL and parent Source URL for restored track: \(track.title)",
+                            "ERROR: Failed to access both track URL",
+                            "and parent Source URL for restored track:",
+                            track.title,
                         )
                     }
                 } else {
                     print(
-                        "WARNING: Track startAccessingSecurityScopedResource failed and no parent source found for restored track: \(track.title)",
+                        "WARNING: Track startAccessingSecurityScopedResource failed,",
+                        "no parent source found for restored track:",
+                        track.title,
                     )
                 }
             }

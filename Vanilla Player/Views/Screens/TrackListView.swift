@@ -37,12 +37,11 @@ struct TrackListView: View {
                             .padding(.leading, 6)
 
                         ZStack(alignment: .leading) {
-                            Text(
-                                "Search \(viewModel.tracks.count) song\(viewModel.tracks.count == 1 ? "" : "s")...",
-                            )
-                            .foregroundColor(newColor.opacity(0.5))
-                            .font(.system(size: 14, design: .serif))
-                            .opacity(searchText.isEmpty ? 1 : 0)
+                            let count = viewModel.tracks.count
+                            Text("Search \(count) song\(count == 1 ? "" : "s")...")
+                                .foregroundColor(newColor.opacity(0.5))
+                                .font(.system(size: 14, design: .serif))
+                                .opacity(searchText.isEmpty ? 1 : 0)
 
                             TextField("", text: $searchText)
                                 .textFieldStyle(.plain)

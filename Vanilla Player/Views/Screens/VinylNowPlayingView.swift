@@ -173,8 +173,7 @@ struct Vinyl: View {
             Image("vinyl")
                 .resizable()
                 .aspectRatio(1, contentMode: .fit)
-                .onDrop(of: [UTType.fileURL.identifier], isTargeted: nil) {
-                    providers in
+                .onDrop(of: [UTType.fileURL.identifier], isTargeted: nil) { providers in
                     for provider in providers {
                         // Attempt to load as URL directly
                         _ = provider.loadObject(ofClass: URL.self) { url, _ in
