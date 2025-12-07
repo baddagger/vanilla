@@ -1,0 +1,27 @@
+name: Build DMG
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build-dmg:
+    runs-on: macos-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Select Xcode
+      run: sudo xcode-select -switch /Applications/Xcode.app
+      
+    - name: Build DMG
+      run: ./Scripts/build-dmg.sh
+        
+    - name: Upload DMG
+      uses: actions/upload-artifact@v4
+      with:
+        name: VanillaPlayer-DMG
+        path: VanillaPlayer-*.dmg
+
