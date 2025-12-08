@@ -15,7 +15,7 @@ class AudioEngineManager: ObservableObject {
     private var playerNode = AVAudioPlayerNode()
     private var eqNode = AVAudioUnitEQ(numberOfBands: 1)
     private var audioFile: AVAudioFile?
-    private var timer: Timer?
+    private var timer: DispatchSourceTimer?
     private var startingFrame: AVAudioFramePosition = 0
 
     // Playback Session ID to handle race conditions
@@ -32,6 +32,7 @@ class AudioEngineManager: ObservableObject {
     private var imagInput: [Float] = []
     private var realOutput: [Float] = []
     private var imagOutput: [Float] = []
+    private var magnitudes: [Float] = []
 
     // Caching for Frequency Bands
     private struct MelBand {
@@ -45,6 +46,10 @@ class AudioEngineManager: ObservableObject {
     // UI Throttling
     private var lastUIUpdateTime: TimeInterval = 0
     private let uiUpdateInterval: TimeInterval = 0.033 // ~30 FPS
+    
+    // FFT Throttling
+    private var lastFFTProcessingTime: TimeInterval = 0
+    private let fftProcessingInterval: TimeInterval = 0.033 // ~30 FPS
 
     init() {
         setupFFT()
@@ -64,6 +69,7 @@ class AudioEngineManager: ObservableObject {
         imagInput = [Float](repeating: 0, count: fftSize)
         realOutput = [Float](repeating: 0, count: fftSize)
         imagOutput = [Float](repeating: 0, count: fftSize)
+        magnitudes = [Float](repeating: 0, count: fftSize)
     }
 
     private func setupAudioEngine() {
@@ -158,7 +164,8 @@ class AudioEngineManager: ObservableObject {
             }
             playerNode.pause()
             isPlaying = false
-            timer?.invalidate()
+            timer?.cancel()
+            timer = nil
         }
     }
 
@@ -218,16 +225,25 @@ class AudioEngineManager: ObservableObject {
                 startTimer()
             }
         } else {
-            timer?.invalidate()
+            timer?.cancel()
+            timer = nil
         }
     }
 
     private func startTimer() {
-        timer?.invalidate()
-        // Run at 60Hz for smooth UI updates
-        timer = Timer.scheduledTimer(withTimeInterval: 0.016, repeats: true) { [weak self] _ in
+        timer?.cancel()
+        timer = nil
+        
+        let queue = DispatchQueue(label: "com.vanillaplayer.timer", qos: .userInteractive)
+        let t = DispatchSource.makeTimerSource(queue: queue)
+        t.schedule(deadline: .now(), repeating: 0.5) // 2 calls per second
+        
+        t.setEventHandler { [weak self] in
             self?.updateCurrentTime()
         }
+        
+        t.resume()
+        timer = t
     }
 
     private func updateCurrentTime() {
@@ -237,12 +253,17 @@ class AudioEngineManager: ObservableObject {
 
         let sampleRate = audioFile.processingFormat.sampleRate
         let calculatedTime = Double(startingFrame + playerTime.sampleTime) / sampleRate
-        currentTime = max(0, min(calculatedTime, duration))
+        let newTime = max(0, min(calculatedTime, duration))
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.currentTime = newTime
+        }
     }
 
     private func audioPlayerDidFinishPlaying() {
         isPlaying = false
-        timer?.invalidate()
+        timer?.cancel()
+        timer = nil
         onPlaybackFinished?()
     }
 
@@ -250,6 +271,12 @@ class AudioEngineManager: ObservableObject {
 
     private func processAudioBuffer(_ buffer: AVAudioPCMBuffer) {
         guard isActive else { return }
+
+        // Throttle FFT processing
+        let now = Date().timeIntervalSinceReferenceDate
+        guard now - lastFFTProcessingTime >= fftProcessingInterval else { return }
+        lastFFTProcessingTime = now
+
         guard let channelData = buffer.floatChannelData?[0], let fftSetup else { return }
 
         let frameCount = Int(buffer.frameLength)
@@ -265,33 +292,22 @@ class AudioEngineManager: ObservableObject {
         let copyCount = min(frameCount, fftSize)
 
         // Use UnsafeMutableBufferPointer access for all buffers to ensure exclusivity
-        // and avoid Copy-on-Write triggers during the DSP operations.
-        // We access all buffers at once to keep the pointers valid during the operation sequence.
-
         realInput.withUnsafeMutableBufferPointer { realInputPtr in
             guard let realInputBase = realInputPtr.baseAddress else { return }
 
             // 1. CLEAR & COPY
-            // Equivalent to memset(realInput, 0)
             realInputBase.update(repeating: 0, count: fftSize)
-            // Safe copy from source
             realInputBase.assign(from: channelData, count: copyCount)
 
             // 2. WINDOWING
-            // vDSP_vmul(input, 1, window, 1, output, 1, length)
-            // Use local copies of pointers to avoid Array exclusivity checks
             window.withUnsafeBufferPointer { windowPtr in
                 guard let windowBase = windowPtr.baseAddress else { return }
-
-                // In-place windowing: input = realInput, output = realInput
                 vDSP_vmul(realInputBase, 1, windowBase, 1, realInputBase, 1, vDSP_Length(fftSize))
             }
 
             // 3. FFT EXECUTION
             imagInput.withUnsafeMutableBufferPointer { imagInputPtr in
                 guard let imagInputBase = imagInputPtr.baseAddress else { return }
-
-                // Clear imaginary input
                 vDSP_vclr(imagInputBase, 1, vDSP_Length(fftSize))
 
                 realOutput.withUnsafeMutableBufferPointer { realOutputPtr in
@@ -300,57 +316,62 @@ class AudioEngineManager: ObservableObject {
                     imagOutput.withUnsafeMutableBufferPointer { imagOutputPtr in
                         guard let imagOutputBase = imagOutputPtr.baseAddress else { return }
 
+                        var splitComplex = DSPSplitComplex(
+                            realp: realOutputBase,
+                            imagp: imagOutputBase
+                        )
+
                         // Execute FFT
                         vDSP_DFT_Execute(
                             fftSetup,
                             realInputBase,
                             imagInputBase,
                             realOutputBase,
-                            imagOutputBase,
+                            imagOutputBase
                         )
 
-                        // 4. MAGNITUDE CALCULATION
-                        // We do this inside these closures to keep the output pointers valid
-                        // although we could copy them out, it's faster to process here.
+                        // 4. MAGNITUDE CALCULATION (Optimized with vDSP)
+                        magnitudes.withUnsafeMutableBufferPointer { magPtr in
+                            guard let magBase = magPtr.baseAddress else { return }
+                            
+                            // Calculate magnitudes: sqrt(real^2 + imag^2)
+                            vDSP_zvabs(&splitComplex, 1, magBase, 1, vDSP_Length(fftSize))
 
-                        // Calculate normalized amplitudes using Mel scale
-                        var newLevels = [Float](repeating: 0, count: 32)
-                        let effectiveN = fftSize / 2
+                            // Calculate normalized amplitudes using Mel scale
+                            var newLevels = [Float](repeating: 0, count: 32)
+                            let effectiveN = fftSize / 2
 
-                        for (i, band) in cachedMelBands.enumerated() {
-                            guard i < newLevels.count else { break }
+                            for (i, band) in cachedMelBands.enumerated() {
+                                guard i < newLevels.count else { break }
 
-                            var binStart = band.binStart
-                            var binEnd = band.binEnd
-                            binStart = max(0, binStart)
-                            binEnd = min(effectiveN - 1, max(binStart, binEnd))
+                                var binStart = band.binStart
+                                var binEnd = band.binEnd
+                                binStart = max(0, binStart)
+                                binEnd = min(effectiveN - 1, max(binStart, binEnd))
 
-                            var sum: Float = 0
+                                // Efficient sum of pre-calculated magnitudes
+                                var sum: Float = 0
+                                // If range is large enough, vDSP_sve could be used, but loop is fine for small bands
+                                for bin in binStart ... binEnd {
+                                    sum += magBase[bin]
+                                }
 
-                            // Sum magnitudes for this band
-                            for bin in binStart ... binEnd {
-                                let real = realOutputBase[bin]
-                                let imag = imagOutputBase[bin]
-                                let magnitude = sqrtf(real * real + imag * imag)
-                                sum += magnitude
+                                let count = max(1, binEnd - binStart + 1)
+                                let avgMagnitude = sum / Float(count)
+
+                                let dBMin: Float = -60.0
+                                let dBMax: Float = 40.0
+
+                                let dBValue = 20 * log10f(max(avgMagnitude, 1e-10))
+                                var normalizedValue = (dBValue - dBMin) / (dBMax - dBMin)
+                                normalizedValue = min(1.0, max(0.0, normalizedValue))
+
+                                newLevels[i] = normalizedValue
                             }
 
-                            let count = max(1, binEnd - binStart + 1)
-                            let avgMagnitude = sum / Float(count)
-
-                            let dBMin: Float = -60.0
-                            let dBMax: Float = 40.0
-
-                            let dBValue = 20 * log10f(max(avgMagnitude, 1e-10))
-                            var normalizedValue = (dBValue - dBMin) / (dBMax - dBMin)
-                            normalizedValue = min(1.0, max(0.0, normalizedValue))
-
-                            newLevels[i] = normalizedValue
+                            // 5. UPDATE UI
+                            self.dispatchUIUpdate(newLevels: newLevels)
                         }
-
-                        // 5. UPDATE UI
-                        // Using local copy of newLevels
-                        self.dispatchUIUpdate(newLevels: newLevels)
                     }
                 }
             }
@@ -433,7 +454,8 @@ class AudioEngineManager: ObservableObject {
     }
 
     deinit {
-        timer?.invalidate()
+        timer?.cancel()
+        timer = nil
         if let fftSetup {
             vDSP_DFT_DestroySetup(fftSetup)
         }
