@@ -8,6 +8,9 @@ disabled_rules:
   - for_where
   - multiple_closures_with_trailing_closure
 
+excluded:
+ - build
+
 line_length:
   warning: 100
   error: 120
