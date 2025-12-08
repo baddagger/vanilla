@@ -140,13 +140,6 @@ struct Vinyl: View {
     let vinylSize: CGFloat
     @EnvironmentObject var viewModel: PlayerViewModel
 
-    // Rotation state - preserved across play/pause
-    @State private var baseRotation: Double = 0
-    @State private var spinStartTime: Date?
-
-    // Rotation speed: degrees per second (33 RPM = 198°/sec, slower = more realistic)
-    private let degreesPerSecond: Double = 30
-
     var body: some View {
         ZStack {
             let coverSize = vinylSize * 0.34
@@ -161,14 +154,14 @@ struct Vinyl: View {
                 .resizable()
                 .frame(width: coverSize, height: coverSize)
 
-            TimelineView(.animation(paused: !viewModel.isPlaying || !viewModel
-                    .isWindowVisible))
-            { timeline in
-                VinylCoverView(track: viewModel.currentTrack)
-                    .frame(width: coverSize, height: coverSize)
-                    .clipShape(Circle())
-                    .rotationEffect(.degrees(currentRotation(at: timeline.date)))
-            }
+            // GPU-accelerated rotation using CABasicAnimation
+            RotatingVinylCover(
+                track: viewModel.currentTrack,
+                isSpinning: viewModel.isPlaying && viewModel.isWindowVisible,
+                rpm: 2.5 // Revolutions per minute (slow vinyl spin)
+            )
+            .frame(width: coverSize, height: coverSize)
+            .clipShape(Circle())
 
             Image("vinyl")
                 .resizable()
@@ -217,67 +210,12 @@ struct Vinyl: View {
                 .frame(width: vinylSize * 0.036, height: vinylSize * 0.036)
                 .shadow(color: Color.black.opacity(0.6), radius: 1, x: -1, y: 1)
         }
-        .onChange(of: viewModel.isPlaying) { _, isPlaying in
-            if isPlaying {
-                // Starting to play - record start time
-                spinStartTime = Date()
-            } else {
-                // Pausing - save accumulated rotation
-                if let startTime = spinStartTime {
-                    let elapsed = Date().timeIntervalSince(startTime)
-                    baseRotation += elapsed * degreesPerSecond
-                    baseRotation = baseRotation.truncatingRemainder(dividingBy: 360)
-                }
-                spinStartTime = nil
-            }
-        }
-    }
-
-    private func currentRotation(at date: Date) -> Double {
-        guard let startTime = spinStartTime else {
-            return baseRotation
-        }
-        let elapsed = date.timeIntervalSince(startTime)
-        return baseRotation + elapsed * degreesPerSecond
     }
 }
 
-struct VinylCoverView: View {
-    let track: Track?
-    @State private var artwork: NSImage?
 
-    var body: some View {
-        ZStack {
-            if let artwork {
-                Image(nsImage: artwork)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            }
-        }
-        .onChange(of: track) { newTrack in
-            loadArtwork(for: newTrack)
-        }
-        .onAppear {
-            loadArtwork(for: track)
-        }
-    }
 
-    private func loadArtwork(for track: Track?) {
-        artwork = nil
-        guard let track else { return }
 
-        if !track.hasArtwork {
-            return
-        }
-
-        DispatchQueue.global(qos: .userInitiated).async {
-            let loaded = track.loadArtwork()
-            DispatchQueue.main.async {
-                artwork = loaded
-            }
-        }
-    }
-}
 
 struct Controls: View {
     @EnvironmentObject var viewModel: PlayerViewModel
