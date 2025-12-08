@@ -201,7 +201,7 @@ struct TrackRowView: View {
                 }
             }
 
-        if isCurrent, viewModel.isPlaying {
+            if isCurrent, viewModel.isPlaying {
                 Spacer()
                 MiniSpectrumView2(color: newColor)
                     .frame(width: 20, height: 16)

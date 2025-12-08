@@ -158,7 +158,7 @@ struct Vinyl: View {
             RotatingVinylCover(
                 track: viewModel.currentTrack,
                 isSpinning: viewModel.isPlaying && viewModel.isWindowVisible,
-                rpm: 2.5 // Revolutions per minute (slow vinyl spin)
+                rpm: 2.5, // Revolutions per minute (slow vinyl spin)
             )
             .frame(width: coverSize, height: coverSize)
             .clipShape(Circle())
@@ -212,10 +212,6 @@ struct Vinyl: View {
         }
     }
 }
-
-
-
-
 
 struct Controls: View {
     @EnvironmentObject var viewModel: PlayerViewModel
