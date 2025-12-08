@@ -14,10 +14,13 @@ struct DigitalNowPlayingView: View {
 
             let textColor = Color(hex: "#c0a06c")
 
-            Text(viewModel.currentTrack?.title ?? NSLocalizedString("Ready to Play", comment: "Placeholder Title"))
-                .font(.system(size: 36, weight: .light, design: .serif))
-                .foregroundColor(textColor)
-                .multilineTextAlignment(.center)
+            Text(viewModel.currentTrack?.title ?? NSLocalizedString(
+                "Ready to Play",
+                comment: "Placeholder Title",
+            ))
+            .font(.system(size: 36, weight: .light, design: .serif))
+            .foregroundColor(textColor)
+            .multilineTextAlignment(.center)
 
             if let artist = viewModel.currentTrack?.artist, !artist.isEmpty {
                 Text(artist)

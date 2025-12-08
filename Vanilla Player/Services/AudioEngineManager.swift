@@ -46,7 +46,7 @@ class AudioEngineManager: ObservableObject {
     // UI Throttling
     private var lastUIUpdateTime: TimeInterval = 0
     private let uiUpdateInterval: TimeInterval = 0.033 // ~30 FPS
-    
+
     // FFT Throttling
     private var lastFFTProcessingTime: TimeInterval = 0
     private let fftProcessingInterval: TimeInterval = 0.033 // ~30 FPS
@@ -233,15 +233,15 @@ class AudioEngineManager: ObservableObject {
     private func startTimer() {
         timer?.cancel()
         timer = nil
-        
+
         let queue = DispatchQueue(label: "com.vanillaplayer.timer", qos: .userInteractive)
         let t = DispatchSource.makeTimerSource(queue: queue)
         t.schedule(deadline: .now(), repeating: 0.5) // 2 calls per second
-        
+
         t.setEventHandler { [weak self] in
             self?.updateCurrentTime()
         }
-        
+
         t.resume()
         timer = t
     }
@@ -254,7 +254,7 @@ class AudioEngineManager: ObservableObject {
         let sampleRate = audioFile.processingFormat.sampleRate
         let calculatedTime = Double(startingFrame + playerTime.sampleTime) / sampleRate
         let newTime = max(0, min(calculatedTime, duration))
-        
+
         DispatchQueue.main.async { [weak self] in
             self?.currentTime = newTime
         }
@@ -318,7 +318,7 @@ class AudioEngineManager: ObservableObject {
 
                         var splitComplex = DSPSplitComplex(
                             realp: realOutputBase,
-                            imagp: imagOutputBase
+                            imagp: imagOutputBase,
                         )
 
                         // Execute FFT
@@ -327,13 +327,13 @@ class AudioEngineManager: ObservableObject {
                             realInputBase,
                             imagInputBase,
                             realOutputBase,
-                            imagOutputBase
+                            imagOutputBase,
                         )
 
                         // 4. MAGNITUDE CALCULATION (Optimized with vDSP)
                         magnitudes.withUnsafeMutableBufferPointer { magPtr in
                             guard let magBase = magPtr.baseAddress else { return }
-                            
+
                             // Calculate magnitudes: sqrt(real^2 + imag^2)
                             vDSP_zvabs(&splitComplex, 1, magBase, 1, vDSP_Length(fftSize))
 
@@ -351,7 +351,8 @@ class AudioEngineManager: ObservableObject {
 
                                 // Efficient sum of pre-calculated magnitudes
                                 var sum: Float = 0
-                                // If range is large enough, vDSP_sve could be used, but loop is fine for small bands
+                                // If range is large enough, vDSP_sve could be used, but loop is
+                                // fine for small bands
                                 for bin in binStart ... binEnd {
                                     sum += magBase[bin]
                                 }

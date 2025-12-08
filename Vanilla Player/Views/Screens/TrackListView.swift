@@ -38,7 +38,13 @@ struct TrackListView: View {
 
                         ZStack(alignment: .leading) {
                             let count = viewModel.tracks.count
-                            let format = count == 1 ? NSLocalizedString("Search %d song...", comment: "Search Placeholder Singular") : NSLocalizedString("Search %d songs...", comment: "Search Placeholder Plural")
+                            let format = count == 1 ? NSLocalizedString(
+                                "Search %d song...",
+                                comment: "Search Placeholder Singular",
+                            ) : NSLocalizedString(
+                                "Search %d songs...",
+                                comment: "Search Placeholder Plural",
+                            )
                             Text(String(format: format, count))
                                 .foregroundColor(newColor.opacity(0.5))
                                 .font(.system(size: 14, design: .serif))
