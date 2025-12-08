@@ -57,13 +57,16 @@ class RotatingImageView: NSView {
         layer?.addSublayer(imageLayer)
         imageLayer.contentsGravity = .resizeAspectFill
         imageLayer.masksToBounds = true
+        imageLayer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
     }
 
     override func layout() {
         super.layout()
         CATransaction.begin()
         CATransaction.setDisableActions(true)
-        imageLayer.frame = bounds
+        // Position the layer at center with proper anchor point
+        imageLayer.bounds = CGRect(origin: .zero, size: bounds.size)
+        imageLayer.position = CGPoint(x: bounds.midX, y: bounds.midY)
         imageLayer.cornerRadius = bounds.width / 2
         CATransaction.commit()
     }
