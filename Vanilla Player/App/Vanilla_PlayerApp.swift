@@ -30,19 +30,19 @@ struct Vanilla_PlayerApp: App {
         .handlesExternalEvents(matching: ["*"])
         .commands {
             CommandGroup(replacing: .newItem) {
-                Button("Add Song...") {
+                Button(NSLocalizedString("Add Song...", comment: "")) {
                     addFile()
                 }
                 .keyboardShortcut("O", modifiers: [.command])
 
-                Button("Add Folder...") {
+                Button(NSLocalizedString("Add Folder...", comment: "")) {
                     addFolder()
                 }
                 .keyboardShortcut("O", modifiers: [.command, .shift])
 
                 Divider()
 
-                Button("Manage Sources...") {
+                Button(NSLocalizedString("Manage Sources...", comment: "")) {
                     openWindow(id: "source-management")
                 }
                 .keyboardShortcut("S", modifiers: [.command, .control])
