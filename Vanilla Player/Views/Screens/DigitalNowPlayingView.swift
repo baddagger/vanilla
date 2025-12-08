@@ -39,7 +39,7 @@ struct DigitalNowPlayingView: View {
 
             Spacer()
 
-            SpectrumView(viewModel: viewModel.visualizerViewModel)
+            SpectrumView2(viewModel: viewModel.visualizerViewModel)
                 .frame(height: 80)
                 .padding(.horizontal, 24)
 
