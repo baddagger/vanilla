@@ -41,6 +41,7 @@ struct PlaybackSliderView: View {
                         .offset(x: thumbOffset)
                 }
                 .frame(height: geometry.size.height)
+                .contentShape(Rectangle())
                 .gesture(
                     DragGesture(minimumDistance: 0)
                         .onChanged { value in
@@ -55,7 +56,7 @@ struct PlaybackSliderView: View {
                         },
                 )
             }
-            .frame(height: 20)
+            .frame(height: 16)
 
             HStack {
                 Text(formatTime(currentTime))
