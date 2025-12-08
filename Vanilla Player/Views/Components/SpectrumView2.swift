@@ -9,12 +9,12 @@ import SwiftUI
 struct SpectrumView2: NSViewRepresentable {
     @ObservedObject var viewModel: VisualizerViewModel
 
-    func makeNSView(context: Context) -> SpectrumLayerView {
+    func makeNSView(context _: Context) -> SpectrumLayerView {
         let view = SpectrumLayerView()
         return view
     }
 
-    func updateNSView(_ nsView: SpectrumLayerView, context: Context) {
+    func updateNSView(_ nsView: SpectrumLayerView, context _: Context) {
         nsView.updateLevels(viewModel.meteringLevels)
     }
 }
@@ -59,7 +59,7 @@ class SpectrumLayerView: NSView {
 
         // Create 32 bar layers
         let barCount = 32
-        for _ in 0..<barCount {
+        for _ in 0 ..< barCount {
             let bar = CAGradientLayer()
             bar.colors = gradientColors
             bar.locations = gradientLocations
@@ -89,7 +89,7 @@ class SpectrumLayerView: NSView {
                 x: x,
                 y: (bounds.height - minHeight) / 2,
                 width: barWidth,
-                height: minHeight
+                height: minHeight,
             )
         }
     }

@@ -10,13 +10,13 @@ struct RotatingVinylCover: NSViewRepresentable {
     let isSpinning: Bool
     let rpm: Double // Revolutions per minute
 
-    func makeNSView(context: Context) -> RotatingImageView {
+    func makeNSView(context _: Context) -> RotatingImageView {
         let view = RotatingImageView()
         view.rpm = rpm
         return view
     }
 
-    func updateNSView(_ nsView: RotatingImageView, context: Context) {
+    func updateNSView(_ nsView: RotatingImageView, context _: Context) {
         nsView.rpm = rpm
 
         // Update spinning state

@@ -12,12 +12,12 @@ struct MiniSpectrumView2: NSViewRepresentable {
         self.color = NSColor(color)
     }
 
-    func makeNSView(context: Context) -> MiniSpectrumLayerView {
+    func makeNSView(context _: Context) -> MiniSpectrumLayerView {
         let view = MiniSpectrumLayerView(barColor: color)
         return view
     }
 
-    func updateNSView(_ nsView: MiniSpectrumLayerView, context: Context) {
+    func updateNSView(_: MiniSpectrumLayerView, context _: Context) {
         // Color doesn't change, nothing to update
     }
 }
@@ -43,14 +43,14 @@ class MiniSpectrumLayerView: NSView {
     }
 
     required init?(coder: NSCoder) {
-        self.barColor = .yellow
+        barColor = .yellow
         super.init(coder: coder)
         wantsLayer = true
         setupBars()
     }
 
     private func setupBars() {
-        for i in 0..<barCount {
+        for i in 0 ..< barCount {
             let bar = CALayer()
             bar.backgroundColor = barColor.cgColor
             bar.cornerRadius = 1
