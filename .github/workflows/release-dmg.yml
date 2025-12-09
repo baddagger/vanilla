@@ -1,0 +1,60 @@
+name: Release DMG
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Tag name for the release (e.g., v1.0.0)'
+        required: true
+        type: string
+
+jobs:
+  release-dmg:
+    runs-on: macos-latest
+    permissions:
+      contents: write
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Select Xcode
+      run: sudo xcode-select -switch /Applications/Xcode.app
+      
+    - name: Build DMG
+      id: build
+      run: |
+        ./Scripts/build-dmg.sh
+        VERSION=$(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "build/Build/Products/Release/Vanilla Player.app/Contents/Info.plist")
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        DMG_FILE=$(ls VanillaPlayer-*.dmg)
+        echo "dmg_file=$DMG_FILE" >> $GITHUB_OUTPUT
+
+    - name: Determine Tag
+      id: tag
+      run: |
+        if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          echo "tag_name=${{ github.event.inputs.tag_name }}" >> $GITHUB_OUTPUT
+        else
+          echo "tag_name=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Upload DMG Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: VanillaPlayer-${{ steps.build.outputs.version }}-DMG
+        path: ${{ steps.build.outputs.dmg_file }}
+
+    - name: Create Release and Upload DMG
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: ${{ steps.tag.outputs.tag_name }}
+        name: Vanilla Player ${{ steps.build.outputs.version }}
+        files: ${{ steps.build.outputs.dmg_file }}
+        draft: false
+        prerelease: false
+        generate_release_notes: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
