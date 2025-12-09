@@ -1,5 +1,5 @@
 <p align="center">
-<img height="256" src="Vanilla Player/Resources/Assets.xcassets/AppIcon.appiconset/icon_256x256.png">
+<img height="256" src="Vanilla Player/Resources/Assets.xcassets/AppIcon.appiconset/icon_512x512.png">
 </p>
 
 <h1 align="center">Vanilla Player</h1>
