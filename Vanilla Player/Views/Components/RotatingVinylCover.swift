@@ -91,7 +91,7 @@ class RotatingImageView: NSView {
         // Calculate starting angle from where we left off
         let animation = CABasicAnimation(keyPath: "transform.rotation.z")
         animation.fromValue = currentRotation
-        animation.toValue = currentRotation + CGFloat.pi * 2
+        animation.toValue = currentRotation - CGFloat.pi * 2
         animation.duration = 60.0 / rpm // Duration for one full rotation
         animation.repeatCount = .infinity
         animation.isRemovedOnCompletion = false
