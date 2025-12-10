@@ -43,19 +43,21 @@ struct KnobView: View {
             let rotation = startAngle + (endAngle - startAngle) * progress
 
             let r = buttonSize / 2
-            let radians = rotation * .pi / 180
-            let dx = r * cos(radians) * 0.65
-            let dy = r * sin(radians) * 0.65
-
+            
             // Progress indicator
             let indicatorWidth = buttonSize * 0.04
             let indicatorHeight = buttonSize * 0.16
+            
             RoundedRectangle(cornerRadius: 4)
                 .fill(indicatorColor)
                 .frame(width: indicatorWidth, height: indicatorHeight)
                 .cornerRadius(4)
-                .rotationEffect(.degrees(90 + rotation))
-                .offset(x: dx, y: dy)
+                // Rotate 90 degrees to point outwards (assuming vertical initial state)
+                .rotationEffect(.degrees(90))
+                // Push out to the radius
+                .offset(x: buttonSize / 2 * 0.65)
+                // Rotate to the current angle
+                .rotationEffect(.degrees(rotation))
 
             let startRadians = startAngle * .pi / 180
             let startIndicatorDx = r * cos(startRadians) * 1.1
