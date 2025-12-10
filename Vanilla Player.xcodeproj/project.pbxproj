@@ -52,6 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FSPARKLE012EE0181800C236 /* Sparkle in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +113,7 @@
 			);
 			name = "Vanilla Player";
 			packageProductDependencies = (
+				1FSPARKLE022EE0181800C236 /* Sparkle */,
 			);
 			productName = "Vanilla Player";
 			productReference = 1F3154F42EE0181700C236E4 /* Vanilla Player.app */;
@@ -199,6 +201,9 @@
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1F3154F52EE0181700C236E4 /* Products */;
 			projectDirPath = "";
+			packageReferences = (
+				1FSPARKLE002EE0181800C236 /* XCRemoteSwiftPackageReference "Sparkle" */,
+			);
 			projectRoot = "";
 			targets = (
 				1F3154F32EE0181700C236E4 /* Vanilla Player */,
@@ -544,6 +549,29 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1FSPARKLE002EE0181800C236 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1FSPARKLE012EE0181800C236 /* Sparkle in Frameworks */ = {
+			isa = PBXBuildFile;
+			productRef = 1FSPARKLE022EE0181800C236 /* Sparkle */;
+		};
+		1FSPARKLE022EE0181800C236 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1FSPARKLE002EE0181800C236 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1F3154EC2EE0181700C236E4 /* Project object */;
 }
