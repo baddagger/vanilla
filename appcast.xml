@@ -6,22 +6,22 @@
         <description>Most recent updates to Vanilla Player</description>
         <language>en</language>
         <item>
-            <title>Version 0.1.3</title>
-            <pubDate>Wed, 10 Dec 2025 09:13:48 +0000</pubDate>
-            <description><![CDATA[- Fix flaky playback progress]]></description>
-            <sparkle:version>4</sparkle:version>
-            <sparkle:shortVersionString>0.1.3</sparkle:shortVersionString>
+            <title>Version 0.1.4</title>
+            <pubDate>Wed, 10 Dec 2025 10:25:52 +0000</pubDate>
+            <description><![CDATA[- Fix the updater that cannot install updates]]></description>
+            <sparkle:version>5</sparkle:version>
+            <sparkle:shortVersionString>0.1.4</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.3/VanillaPlayer-0.1.3-arm64.dmg"
-                       length="5795834"
+            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.4/VanillaPlayer-0.1.4-arm64.dmg"
+                       length="5799242"
                        type="application/octet-stream"
                        sparkle:cpu="arm64"
-                       sparkle:edSignature="noH2AsHA5eHTPLkQYAD/aKaZK1x7upDgsqQowPXTOW+w4IsRCvDKejTV3be3EgV0LG9DP9SBf4tOQq5pGU3fDg==" />
-            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.3/VanillaPlayer-0.1.3-x86_64.dmg"
-                       length="5823031"
+                       sparkle:edSignature="TLcAjJQHthfezNWYZJZCHSfj+075v/ZOKgZrceMN3WHHg0TLuRqpEP1wzIvSF+Q0APMj6p9/IJFxqiuXqZu+BQ==" />
+            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.4/VanillaPlayer-0.1.4-x86_64.dmg"
+                       length="5823137"
                        type="application/octet-stream"
                        sparkle:cpu="x86_64"
-                       sparkle:edSignature="lFQuyp/C+lTnbZh4XFhJJdRf3q3q6GtYOrr8KV0mXwUL2BmZeqUo+NImaCW6Jzbt/EuLbh6qXykLtX7ym9yXDQ==" />
+                       sparkle:edSignature="UNP5+812VMTogEtYq7ISVQ9u++jwSXE6nHMJowgdjZYbirXwL+ntd/FOro6Y3AL9hIO7kHAFNYILyR+pvOtUCQ==" />
         </item>
     </channel>
 </rss>
