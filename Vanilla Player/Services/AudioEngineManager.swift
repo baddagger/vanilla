@@ -157,11 +157,6 @@ class AudioEngineManager: ObservableObject {
 
     func pause() {
         if isPlaying {
-            if let nodeTime = playerNode.lastRenderTime,
-               let playerTime = playerNode.playerTime(forNodeTime: nodeTime)
-            {
-                startingFrame = playerTime.sampleTime
-            }
             playerNode.pause()
             isPlaying = false
             timer?.cancel()
