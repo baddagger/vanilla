@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		1FSPARKLE012EE0181800C236 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 1FSPARKLE022EE0181800C236 /* Sparkle */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		1F3155032EE0181800C236E4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -198,12 +202,12 @@
 			);
 			mainGroup = 1F3154EB2EE0181700C236E4;
 			minimizedProjectReferenceProxies = 1;
-			preferredProjectObjectVersion = 77;
-			productRefGroup = 1F3154F52EE0181700C236E4 /* Products */;
-			projectDirPath = "";
 			packageReferences = (
 				1FSPARKLE002EE0181800C236 /* XCRemoteSwiftPackageReference "Sparkle" */,
 			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 1F3154F52EE0181700C236E4 /* Products */;
+			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				1F3154F32EE0181700C236E4 /* Vanilla Player */,
@@ -401,7 +405,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Vanilla Player/App/Vanilla_Player.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Vanilla Player/Info.plist";
@@ -410,7 +414,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.1.1;
+				MARKETING_VERSION = 0.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "me.Vanilla-Player";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -427,7 +431,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Vanilla Player/App/Vanilla_Player.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Vanilla Player/Info.plist";
@@ -436,7 +440,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.1.1;
+				MARKETING_VERSION = 0.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "me.Vanilla-Player";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -562,10 +566,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		1FSPARKLE012EE0181800C236 /* Sparkle in Frameworks */ = {
-			isa = PBXBuildFile;
-			productRef = 1FSPARKLE022EE0181800C236 /* Sparkle */;
-		};
 		1FSPARKLE022EE0181800C236 /* Sparkle */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1FSPARKLE002EE0181800C236 /* XCRemoteSwiftPackageReference "Sparkle" */;
