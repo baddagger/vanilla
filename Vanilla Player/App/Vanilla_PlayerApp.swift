@@ -11,11 +11,12 @@ struct Vanilla_PlayerApp: App {
     private let updaterController: SPUStandardUpdaterController
 
     init() {
-        // Initialize Sparkle updater - starts automatically and checks for user permissions on first run
+        // Initialize Sparkle updater - starts automatically and checks for user permissions on
+        // first run
         updaterController = SPUStandardUpdaterController(
             startingUpdater: true,
             updaterDelegate: nil,
-            userDriverDelegate: nil
+            userDriverDelegate: nil,
         )
     }
 
