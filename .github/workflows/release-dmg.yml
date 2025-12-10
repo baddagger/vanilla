@@ -74,6 +74,18 @@ jobs:
           "${{ steps.sign.outputs.signature }}" \
           "${{ github.repository }}"
         
+        # Generate appcast.xml before switching branches (so we have Scripts/ and CHANGELOG.md)
+        ./Scripts/generate-appcast.sh \
+          "${{ steps.build.outputs.version }}" \
+          "${{ steps.build.outputs.build }}" \
+          "${{ steps.tag.outputs.tag_name }}" \
+          "${{ steps.build.outputs.dmg_file }}" \
+          "${{ steps.sign.outputs.signature }}" \
+          "${{ github.repository }}"
+        
+        # Move appcast to temp location
+        mv appcast.xml /tmp/appcast.xml
+        
         # Push appcast.xml to releases branch
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -82,15 +94,9 @@ jobs:
         git fetch origin releases:releases 2>/dev/null || git checkout --orphan releases
         git checkout releases 2>/dev/null || git checkout --orphan releases
         
-        # Keep only appcast.xml in this branch
+        # Clean branch and bring back appcast
         git rm -rf . 2>/dev/null || true
-        mv ../appcast.xml . 2>/dev/null || ./Scripts/generate-appcast.sh \
-          "${{ steps.build.outputs.version }}" \
-          "${{ steps.build.outputs.build }}" \
-          "${{ steps.tag.outputs.tag_name }}" \
-          "${{ steps.build.outputs.dmg_file }}" \
-          "${{ steps.sign.outputs.signature }}" \
-          "${{ github.repository }}"
+        mv /tmp/appcast.xml appcast.xml
         
         git add appcast.xml
         git commit -m "Update appcast.xml for version ${{ steps.build.outputs.version }}" || echo "No changes"
