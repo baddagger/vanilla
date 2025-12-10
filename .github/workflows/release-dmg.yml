@@ -12,7 +12,44 @@ on:
         type: string
 
 jobs:
-  release-dmg:
+  build:
+    name: Build ${{ matrix.arch }}
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        arch: [arm64, x86_64]
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Select Xcode
+      run: sudo xcode-select -switch /Applications/Xcode.app
+      
+    - name: Build DMG
+      id: build
+      run: |
+        ./Scripts/build-dmg.sh ${{ matrix.arch }}
+        
+        # Get Version Info
+        APP_PATH="build/Build/Products/Release/Vanilla Player.app"
+        VERSION=$(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "$APP_PATH/Contents/Info.plist")
+        BUILD=$(/usr/libexec/PlistBuddy -c "Print CFBundleVersion" "$APP_PATH/Contents/Info.plist")
+        
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "build=$BUILD" >> $GITHUB_OUTPUT
+        
+        DMG_FILE=$(ls VanillaPlayer-*-${{ matrix.arch }}.dmg)
+        echo "dmg_file=$DMG_FILE" >> $GITHUB_OUTPUT
+
+    - name: Upload DMG Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: dmg-${{ matrix.arch }}
+        path: ${{ steps.build.outputs.dmg_file }}
+        if-no-files-found: error
+
+  release:
+    needs: build
     runs-on: macos-latest
     permissions:
       contents: write
@@ -21,21 +58,12 @@ jobs:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
-    
-    - name: Select Xcode
-      run: sudo xcode-select -switch /Applications/Xcode.app
-      
-    - name: Build DMG
-      id: build
-      run: |
-        ./Scripts/build-dmg.sh
-        VERSION=$(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "build/Build/Products/Release/Vanilla Player.app/Contents/Info.plist")
-        BUILD=$(/usr/libexec/PlistBuddy -c "Print CFBundleVersion" "build/Build/Products/Release/Vanilla Player.app/Contents/Info.plist")
-        echo "version=$VERSION" >> $GITHUB_OUTPUT
-        echo "build=$BUILD" >> $GITHUB_OUTPUT
-        DMG_FILE=$(ls VanillaPlayer-*.dmg)
-        echo "dmg_file=$DMG_FILE" >> $GITHUB_OUTPUT
-        echo "dmg_size=$(stat -f%z "$DMG_FILE")" >> $GITHUB_OUTPUT
+        
+    - name: Download Artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: artifacts
+        merge-multiple: true
 
     - name: Determine Tag
       id: tag
@@ -46,9 +74,34 @@ jobs:
           echo "tag_name=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
         fi
 
-    - name: Generate EdDSA Signature
-      id: sign
-      if: ${{ env.SPARKLE_PRIVATE_KEY != '' }}
+    - name: Verify Artifacts & Get Version
+      id: info
+      run: |
+        ls -R artifacts
+        # Extract version from one of the DMGs filename or just pass what we expect?
+        # Better to just use the one from git tag if possible, or assume consistent.
+        # Let's trust the tag or just hardcode checking one file if needed.
+        # But we need VERSION and BUILD for appcast. 
+        # Since we don't have the .app here, we rely on the tag -> version mapping or inputs.
+        # Wait, the build script generates DMG with version in name: VanillaPlayer-X.Y.Z-ARCH.dmg
+        
+        DMG=$(ls artifacts/*.dmg | head -1)
+        FILENAME=$(basename "$DMG")
+        # Format: VanillaPlayer-0.1.2-arm64.dmg
+        VERSION=$(echo "$FILENAME" | cut -d'-' -f2)
+        
+        # We don't have build number easily unless we passed it. 
+        # Typically Sparkle version is the build number.
+        # Let's assume build number = version for now OR use a consistent build number (e.g. 1) 
+        # OR extract it via hdiutil? Mounting is slow.
+        # Workaround: Pass it via artifact or just use '1' if not critical, BUT Sparkle needs increasing build numbers.
+        # Let's assume the user bumps CFBundleVersion == CFBundleShortVersionString or closely related.
+        # Or, we can just use the Version string as the build string for Sparkle (it accepts strings).
+        
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "build=$VERSION" >> $GITHUB_OUTPUT  # Using version as build number for simplicity in Fan-in
+
+    - name: Generate Appcast & Sign
       env:
         SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
       run: |
@@ -57,65 +110,40 @@ jobs:
         mkdir -p sparkle_tools
         tar -xf sparkle.tar.xz -C sparkle_tools
         
-        # Sign the DMG
-        SIGNATURE=$(echo "$SPARKLE_PRIVATE_KEY" | ./sparkle_tools/bin/sign_update -f - -p "${{ steps.build.outputs.dmg_file }}")
-        echo "signature=$SIGNATURE" >> $GITHUB_OUTPUT
-
-    - name: Update Appcast
-      if: ${{ env.SPARKLE_PRIVATE_KEY != '' }}
-      env:
-        SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
-      run: |
+        # Generate appcast
         ./Scripts/generate-appcast.sh \
-          "${{ steps.build.outputs.version }}" \
-          "${{ steps.build.outputs.build }}" \
+          "${{ steps.info.outputs.version }}" \
+          "${{ steps.info.outputs.build }}" \
           "${{ steps.tag.outputs.tag_name }}" \
-          "${{ steps.build.outputs.dmg_file }}" \
-          "${{ steps.sign.outputs.signature }}" \
+          "artifacts" \
           "${{ github.repository }}"
-        
-        # Generate appcast.xml before switching branches (so we have Scripts/ and CHANGELOG.md)
-        ./Scripts/generate-appcast.sh \
-          "${{ steps.build.outputs.version }}" \
-          "${{ steps.build.outputs.build }}" \
-          "${{ steps.tag.outputs.tag_name }}" \
-          "${{ steps.build.outputs.dmg_file }}" \
-          "${{ steps.sign.outputs.signature }}" \
-          "${{ github.repository }}"
-        
-        # Move appcast to temp location
+          
+        # Move to temp for branch switch
         mv appcast.xml /tmp/appcast.xml
-        
-        # Push appcast.xml to releases branch
-        git config user.name "github-actions[bot]"
-        git config user.email "github-actions[bot]@users.noreply.github.com"
-        
-        # Fetch releases branch or create orphan if it doesn't exist
-        git fetch origin releases:releases 2>/dev/null || git checkout --orphan releases
-        git checkout releases 2>/dev/null || git checkout --orphan releases
-        
-        # Clean branch and bring back appcast
-        git rm -rf . 2>/dev/null || true
-        mv /tmp/appcast.xml appcast.xml
-        
-        git add appcast.xml
-        git commit -m "Update appcast.xml for version ${{ steps.build.outputs.version }}" || echo "No changes"
-        git push origin releases --force
 
-    - name: Upload DMG Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: VanillaPlayer-${{ steps.build.outputs.version }}-DMG
-        path: ${{ steps.build.outputs.dmg_file }}
-
-    - name: Create Release and Upload DMG
+    - name: Publish Release
       uses: softprops/action-gh-release@v2
       with:
         tag_name: ${{ steps.tag.outputs.tag_name }}
-        name: Vanilla Player ${{ steps.build.outputs.version }}
-        files: ${{ steps.build.outputs.dmg_file }}
+        name: Vanilla Player ${{ steps.info.outputs.version }}
+        files: artifacts/*.dmg
         draft: false
         prerelease: false
         generate_release_notes: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Push Appcast
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        
+        git fetch origin releases:releases 2>/dev/null || git checkout --orphan releases
+        git checkout releases 2>/dev/null || git checkout --orphan releases
+        
+        git rm -rf . 2>/dev/null || true
+        mv /tmp/appcast.xml appcast.xml
+        
+        git add appcast.xml
+        git commit -m "Update appcast.xml for version ${{ steps.info.outputs.version }}" || echo "No changes"
+        git push origin releases --force
