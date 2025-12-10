@@ -43,11 +43,11 @@ struct KnobView: View {
             let rotation = startAngle + (endAngle - startAngle) * progress
 
             let r = buttonSize / 2
-            
+
             // Progress indicator
             let indicatorWidth = buttonSize * 0.04
             let indicatorHeight = buttonSize * 0.16
-            
+
             RoundedRectangle(cornerRadius: 4)
                 .fill(indicatorColor)
                 .frame(width: indicatorWidth, height: indicatorHeight)
