@@ -1,3 +1,7 @@
+### [0.1.3] - 2024-12-10
+
+- Fix flaky playback progress
+
 ### [0.1.2] - 2024-12-10
 
 - Add auto updater
