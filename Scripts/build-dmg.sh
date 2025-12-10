@@ -6,14 +6,15 @@ cd "$(dirname "$0")/.."
 
 PROJECT_NAME="Vanilla Player"
 SCHEME_NAME="Vanilla Player"
-ARCH=$(uname -m)
+ARCH=${1:-$(uname -m)}
 BUILD_DIR="build"
 
-echo "🔨 Building $PROJECT_NAME..."
+echo "🔨 Building $PROJECT_NAME for $ARCH..."
 xcodebuild clean build \
   -project "$PROJECT_NAME.xcodeproj" \
   -scheme "$SCHEME_NAME" \
   -destination 'platform=macOS' \
+  ARCHS="$ARCH" \
   -configuration Release \
   -derivedDataPath "$BUILD_DIR"
 
