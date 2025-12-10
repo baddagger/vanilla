@@ -1,3 +1,7 @@
+### [0.1.4] - 2024-12-10
+
+- Fix the updater that cannot install updates
+
 ### [0.1.3] - 2024-12-10
 
 - Fix flaky playback progress
