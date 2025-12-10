@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+    <channel>
+        <title>Vanilla Player Updates</title>
+        <link>https://github.com/baddagger/vanilla/releases</link>
+        <description>Most recent updates to Vanilla Player</description>
+        <language>en</language>
+        <item>
+            <title>Version 0.1.2</title>
+            <pubDate>Wed, 10 Dec 2025 03:47:01 +0000</pubDate>
+            <description><![CDATA[- Add auto updater]]></description>
+            <sparkle:version>3</sparkle:version>
+            <sparkle:shortVersionString>0.1.2</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.2/VanillaPlayer-0.1.2-arm64.dmg"
+                       length="5796898"
+                       type="application/octet-stream"
+                       sparkle:edSignature="XiLSfSdtnw5oXcjIM/4oKZlX33Dczej3Q6oouDkMw2QmbZkWXfVBs3EJ2tFxG9kpyAYcb9SpuGYNRAn6RxKwAw==" />
+        </item>
+    </channel>
+</rss>
