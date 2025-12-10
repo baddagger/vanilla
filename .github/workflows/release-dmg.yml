@@ -40,6 +40,10 @@ jobs:
         
         DMG_FILE=$(ls VanillaPlayer-*-${{ matrix.arch }}.dmg)
         echo "dmg_file=$DMG_FILE" >> $GITHUB_OUTPUT
+        
+        # Save version info for release job
+        echo "VERSION=$VERSION" > version_info.txt
+        echo "BUILD=$BUILD" >> version_info.txt
 
     - name: Upload DMG Artifact
       uses: actions/upload-artifact@v4
@@ -47,6 +51,12 @@ jobs:
         name: dmg-${{ matrix.arch }}
         path: ${{ steps.build.outputs.dmg_file }}
         if-no-files-found: error
+        
+    - name: Upload Version Info
+      uses: actions/upload-artifact@v4
+      with:
+        name: version-info-${{ matrix.arch }}
+        path: version_info.txt
 
   release:
     needs: build
@@ -78,28 +88,33 @@ jobs:
       id: info
       run: |
         ls -R artifacts
-        # Extract version from one of the DMGs filename or just pass what we expect?
-        # Better to just use the one from git tag if possible, or assume consistent.
-        # Let's trust the tag or just hardcode checking one file if needed.
-        # But we need VERSION and BUILD for appcast. 
-        # Since we don't have the .app here, we rely on the tag -> version mapping or inputs.
-        # Wait, the build script generates DMG with version in name: VanillaPlayer-X.Y.Z-ARCH.dmg
         
-        DMG=$(ls artifacts/*.dmg | head -1)
-        FILENAME=$(basename "$DMG")
-        # Format: VanillaPlayer-0.1.2-arm64.dmg
-        VERSION=$(echo "$FILENAME" | cut -d'-' -f2)
+        # Read version info from one of the artifacts (e.g. arm64)
+        # We need to find where it was downloaded. 'merge-multiple: true' puts them all in artifacts/
+        # But wait, version_info.txt from both jobs might overwrite each other.
+        # Since they are identical (same commit), it's fine.
         
-        # We don't have build number easily unless we passed it. 
-        # Typically Sparkle version is the build number.
-        # Let's assume build number = version for now OR use a consistent build number (e.g. 1) 
-        # OR extract it via hdiutil? Mounting is slow.
-        # Workaround: Pass it via artifact or just use '1' if not critical, BUT Sparkle needs increasing build numbers.
-        # Let's assume the user bumps CFBundleVersion == CFBundleShortVersionString or closely related.
-        # Or, we can just use the Version string as the build string for Sparkle (it accepts strings).
+        if [ -f "artifacts/version_info.txt" ]; then
+            source "artifacts/version_info.txt"
+        elif [ -f "artifacts/version-info-arm64/version_info.txt" ]; then
+             source "artifacts/version-info-arm64/version_info.txt"
+        else
+            # Fallback if merge-multiple behavior varies or download path differs
+            # Try to find any version_info.txt
+            FILE=$(find artifacts -name "version_info.txt" | head -1)
+            if [ -n "$FILE" ]; then
+                source "$FILE"
+            else
+                echo "Error: Could not find version_info.txt"
+                exit 1
+            fi
+        fi
+        
+        echo "Detected VERSION: $VERSION"
+        echo "Detected BUILD: $BUILD"
         
         echo "version=$VERSION" >> $GITHUB_OUTPUT
-        echo "build=$VERSION" >> $GITHUB_OUTPUT  # Using version as build number for simplicity in Fan-in
+        echo "build=$BUILD" >> $GITHUB_OUTPUT
 
     - name: Generate Appcast & Sign
       env:
@@ -111,12 +126,18 @@ jobs:
         tar -xf sparkle.tar.xz -C sparkle_tools
         
         # Generate appcast
+        # Pass MIN_OS=14.0 to be safe, or just rely on defaults. 
+        # But we previously had 15.0 which caused issues. 
+        # Let's use 14.0 as a safe default or extract it if we could (we can't easily here).
+        # Better yet, let's update the script to accept it.
+        
         ./Scripts/generate-appcast.sh \
           "${{ steps.info.outputs.version }}" \
           "${{ steps.info.outputs.build }}" \
           "${{ steps.tag.outputs.tag_name }}" \
           "artifacts" \
-          "${{ github.repository }}"
+          "${{ github.repository }}" \
+          "14.0"
           
         # Move to temp for branch switch
         mv appcast.xml /tmp/appcast.xml

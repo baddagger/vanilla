@@ -10,9 +10,10 @@ BUILD="$2"
 TAG="$3"
 DMG_DIR="$4"
 REPO="${5:-baddagger/vanilla}"
+MIN_OS="${6:-15.0}"
 
 if [ -z "$VERSION" ] || [ -z "$BUILD" ] || [ -z "$TAG" ] || [ -z "$DMG_DIR" ]; then
-  echo "Usage: $0 <version> <build> <tag> <dmg_directory> [repo]"
+  echo "Usage: $0 <version> <build> <tag> <dmg_directory> [repo] [min_os]"
   exit 1
 fi
 
@@ -35,7 +36,7 @@ if [ ! -f "$SPARKLE_SIGN_CMD" ]; then
     SPARKLE_SIGN_CMD="sparkle_tools/bin/sign_update"
 fi
 
-echo "Generating appcast for version $VERSION ($BUILD)..."
+echo "Generating appcast for version $VERSION ($BUILD) with Min OS $MIN_OS..."
 
 # Start XML
 cat > appcast.xml << EOF
@@ -52,7 +53,7 @@ cat > appcast.xml << EOF
             <description><![CDATA[${RELEASE_NOTES}]]></description>
             <sparkle:version>${BUILD}</sparkle:version>
             <sparkle:shortVersionString>${VERSION}</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
+            <sparkle:minimumSystemVersion>${MIN_OS}</sparkle:minimumSystemVersion>
 EOF
 
 # Process each DMG in the directory
