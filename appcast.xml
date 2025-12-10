@@ -7,21 +7,21 @@
         <language>en</language>
         <item>
             <title>Version 0.1.2</title>
-            <pubDate>Wed, 10 Dec 2025 04:22:25 +0000</pubDate>
+            <pubDate>Wed, 10 Dec 2025 05:02:54 +0000</pubDate>
             <description><![CDATA[- Add auto updater]]></description>
-            <sparkle:version>0.1.2</sparkle:version>
+            <sparkle:version>3</sparkle:version>
             <sparkle:shortVersionString>0.1.2</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
             <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.2/VanillaPlayer-0.1.2-arm64.dmg"
-                       length="5795277"
+                       length="5796079"
                        type="application/octet-stream"
                        sparkle:cpu="arm64"
-                       sparkle:edSignature="Mh6aewt5khFxpXSwqbH/RHFUgucTkBpWzldh+/4PpVYBk8ETVeRJO9ClapSET2n38i/tlbKIzujbQ/siY4Q1BA==" />
+                       sparkle:edSignature="F5YNS3UCOrJhRvLZRnnYNkhtNhZzgxoWE9I6mfxnaxJooh/TwsPANfs7sRUIScUcUnKolLyCavWSNuo3VB7RCg==" />
             <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.2/VanillaPlayer-0.1.2-x86_64.dmg"
-                       length="5823920"
+                       length="5824228"
                        type="application/octet-stream"
                        sparkle:cpu="x86_64"
-                       sparkle:edSignature="HkVtJcBHhtnAsi41Hr/XXz3/XwFYyvs9H050yM9Ds+0UsIZZ8MoVnbk6QnGXulQU9sbGZWoNTI4Nn2SyFPW/Cg==" />
+                       sparkle:edSignature="s2EQ+HcirNws6QLncTpoMqPbZ+qliBh+uzGijK2X00GzBcF5mn5LWTGNjn/k1r+iBBItD4lfDBsiIqBfEZ3jBg==" />
         </item>
     </channel>
 </rss>
