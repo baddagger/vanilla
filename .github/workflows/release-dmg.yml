@@ -58,7 +58,7 @@ jobs:
         tar -xf sparkle.tar.xz -C sparkle_tools
         
         # Sign the DMG
-        SIGNATURE=$(echo "$SPARKLE_PRIVATE_KEY" | ./sparkle_tools/bin/sign_update "${{ steps.build.outputs.dmg_file }}")
+        SIGNATURE=$(echo "$SPARKLE_PRIVATE_KEY" | ./sparkle_tools/bin/sign_update -f - -p "${{ steps.build.outputs.dmg_file }}")
         echo "signature=$SIGNATURE" >> $GITHUB_OUTPUT
 
     - name: Update Appcast
