@@ -1,3 +1,4 @@
+import Sparkle
 import SwiftUI
 
 @main
@@ -5,6 +6,18 @@ struct Vanilla_PlayerApp: App {
     @StateObject private var playerViewModel = PlayerViewModel()
     @Environment(\.openWindow) var openWindow
     @Environment(\.scenePhase) private var scenePhase
+
+    // Sparkle updater controller
+    private let updaterController: SPUStandardUpdaterController
+
+    init() {
+        // Initialize Sparkle updater - starts automatically and checks for user permissions on first run
+        updaterController = SPUStandardUpdaterController(
+            startingUpdater: true,
+            updaterDelegate: nil,
+            userDriverDelegate: nil
+        )
+    }
 
     var body: some Scene {
         WindowGroup {
@@ -51,6 +64,13 @@ struct Vanilla_PlayerApp: App {
             // Remove Edit Menu
             CommandGroup(replacing: .undoRedo) {}
             CommandGroup(replacing: .pasteboard) {}
+
+            // Add Check for Updates menu item
+            CommandGroup(after: .appInfo) {
+                Button(NSLocalizedString("Check for Updates...", comment: "Menu item")) {
+                    updaterController.checkForUpdates(nil)
+                }
+            }
         }
 
         Window("Source Management", id: "source-management") {

@@ -19,6 +19,8 @@ jobs:
     
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
     
     - name: Select Xcode
       run: sudo xcode-select -switch /Applications/Xcode.app
@@ -28,9 +30,12 @@ jobs:
       run: |
         ./Scripts/build-dmg.sh
         VERSION=$(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "build/Build/Products/Release/Vanilla Player.app/Contents/Info.plist")
+        BUILD=$(/usr/libexec/PlistBuddy -c "Print CFBundleVersion" "build/Build/Products/Release/Vanilla Player.app/Contents/Info.plist")
         echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "build=$BUILD" >> $GITHUB_OUTPUT
         DMG_FILE=$(ls VanillaPlayer-*.dmg)
         echo "dmg_file=$DMG_FILE" >> $GITHUB_OUTPUT
+        echo "dmg_size=$(stat -f%z "$DMG_FILE")" >> $GITHUB_OUTPUT
 
     - name: Determine Tag
       id: tag
@@ -40,6 +45,56 @@ jobs:
         else
           echo "tag_name=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
         fi
+
+    - name: Generate EdDSA Signature
+      id: sign
+      if: ${{ env.SPARKLE_PRIVATE_KEY != '' }}
+      env:
+        SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
+      run: |
+        # Download Sparkle tools
+        curl -L -o sparkle.tar.xz "https://github.com/sparkle-project/Sparkle/releases/download/2.6.4/Sparkle-2.6.4.tar.xz"
+        mkdir -p sparkle_tools
+        tar -xf sparkle.tar.xz -C sparkle_tools
+        
+        # Sign the DMG
+        SIGNATURE=$(echo "$SPARKLE_PRIVATE_KEY" | ./sparkle_tools/bin/sign_update "${{ steps.build.outputs.dmg_file }}")
+        echo "signature=$SIGNATURE" >> $GITHUB_OUTPUT
+
+    - name: Update Appcast
+      if: ${{ env.SPARKLE_PRIVATE_KEY != '' }}
+      env:
+        SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
+      run: |
+        ./Scripts/generate-appcast.sh \
+          "${{ steps.build.outputs.version }}" \
+          "${{ steps.build.outputs.build }}" \
+          "${{ steps.tag.outputs.tag_name }}" \
+          "${{ steps.build.outputs.dmg_file }}" \
+          "${{ steps.sign.outputs.signature }}" \
+          "${{ github.repository }}"
+        
+        # Push appcast.xml to releases branch
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        
+        # Fetch releases branch or create orphan if it doesn't exist
+        git fetch origin releases:releases 2>/dev/null || git checkout --orphan releases
+        git checkout releases 2>/dev/null || git checkout --orphan releases
+        
+        # Keep only appcast.xml in this branch
+        git rm -rf . 2>/dev/null || true
+        mv ../appcast.xml . 2>/dev/null || ./Scripts/generate-appcast.sh \
+          "${{ steps.build.outputs.version }}" \
+          "${{ steps.build.outputs.build }}" \
+          "${{ steps.tag.outputs.tag_name }}" \
+          "${{ steps.build.outputs.dmg_file }}" \
+          "${{ steps.sign.outputs.signature }}" \
+          "${{ github.repository }}"
+        
+        git add appcast.xml
+        git commit -m "Update appcast.xml for version ${{ steps.build.outputs.version }}" || echo "No changes"
+        git push origin releases --force
 
     - name: Upload DMG Artifact
       uses: actions/upload-artifact@v4
