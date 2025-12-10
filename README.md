@@ -11,3 +11,19 @@ An opinionated music player for macOS.
 <p align="center">
 <img src="Media/screenshot.png">
 </p>
+
+# Features
+
+- Native, built natively for macOS
+- Clean, record player-inspired UI
+- Volume and Bass controls
+- Real-time audio spectrum
+- Audio source management
+
+# Downloading
+
+You can download the latest release from [GitHub Releases](https://github.com/baddagger/vanilla/releases).
+
+# License
+
+This project is licensed under the MIT License.
