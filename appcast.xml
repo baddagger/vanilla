@@ -6,22 +6,22 @@
         <description>Most recent updates to Vanilla Player</description>
         <language>en</language>
         <item>
-            <title>Version 0.1.4</title>
-            <pubDate>Wed, 10 Dec 2025 10:25:52 +0000</pubDate>
-            <description><![CDATA[- Fix the updater that cannot install updates]]></description>
-            <sparkle:version>5</sparkle:version>
-            <sparkle:shortVersionString>0.1.4</sparkle:shortVersionString>
+            <title>Version 0.1.5</title>
+            <pubDate>Wed, 10 Dec 2025 11:57:06 +0000</pubDate>
+            <description><![CDATA[- Improve animation path of the knob indicator]]></description>
+            <sparkle:version>6</sparkle:version>
+            <sparkle:shortVersionString>0.1.5</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.4/VanillaPlayer-0.1.4-arm64.dmg"
-                       length="5799242"
+            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.5/VanillaPlayer-0.1.5-arm64.dmg"
+                       length="5797258"
                        type="application/octet-stream"
                        sparkle:cpu="arm64"
-                       sparkle:edSignature="TLcAjJQHthfezNWYZJZCHSfj+075v/ZOKgZrceMN3WHHg0TLuRqpEP1wzIvSF+Q0APMj6p9/IJFxqiuXqZu+BQ==" />
-            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.4/VanillaPlayer-0.1.4-x86_64.dmg"
-                       length="5823137"
+                       sparkle:edSignature="PFRisWBI2N1EKagyMZ7fqvqnXl8ig2IulWfTSda4YYoNK4FuyTSpbErMv/PdP7VHiq3hG9+DPNzYVuegseX6AQ==" />
+            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.5/VanillaPlayer-0.1.5-x86_64.dmg"
+                       length="5822944"
                        type="application/octet-stream"
                        sparkle:cpu="x86_64"
-                       sparkle:edSignature="UNP5+812VMTogEtYq7ISVQ9u++jwSXE6nHMJowgdjZYbirXwL+ntd/FOro6Y3AL9hIO7kHAFNYILyR+pvOtUCQ==" />
+                       sparkle:edSignature="sxjjfFaaZOxK/aA/wosVTr7vwUgCkLNZqgWP9jcau2dSEZiPvO0cj+LnDWqHfCwj3CKpyeSBNjiF231Dj5PHDA==" />
         </item>
     </channel>
 </rss>
