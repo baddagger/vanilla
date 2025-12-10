@@ -1,3 +1,7 @@
+### [0.1.5] - 2024-12-10
+
+- Improve animation path of the knob indicator
+
 ### [0.1.4] - 2024-12-10
 
 - Fix the updater that cannot install updates
