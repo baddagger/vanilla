@@ -24,6 +24,8 @@ An opinionated music player for macOS.
 
 You can download the latest release from [GitHub Releases](https://github.com/baddagger/vanilla/releases).
 
+The app will be blocked by Gatekeeper on first launch, you will need to open it from the `Security & Privacy` settings.
+
 # License
 
 This project is licensed under the MIT License.
