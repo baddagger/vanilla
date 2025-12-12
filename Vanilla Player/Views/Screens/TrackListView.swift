@@ -3,7 +3,6 @@ import SwiftUI
 struct TrackListView: View {
     @EnvironmentObject var viewModel: PlayerViewModel
     @Environment(\.openWindow) private var openWindow
-    @State private var hoveredTrackID: UUID?
     @State private var searchText: String = ""
     @FocusState private var isSearchFocused: Bool
     @State private var isAddMenuVisible: Bool = false
@@ -101,30 +100,29 @@ struct TrackListView: View {
                 .padding(.top, 8)
                 .zIndex(1)
 
-                List {
-                    ForEach(filteredTracks) { track in
-                        TrackRowView(
-                            track: track,
-                            isCurrent: viewModel.currentTrack == track,
-                            newColor: newColor,
-                            hoveredTrackID: $hoveredTrackID,
-                            disableHover: isAddMenuVisible,
-                            showRemoveButton: showRemoveFeatures,
-                            onRemove: {
-                                // Disabled: tracks are managed via source management
-                            },
-                            onPlay: {
-                                if let index = viewModel.tracks.firstIndex(
-                                    of: track,
-                                ) {
-                                    viewModel.playTrack(at: index)
-                                }
-                            },
-                        )
+                CustomScrollView {
+                    LazyVStack(spacing: 4) {
+                        ForEach(filteredTracks) { track in
+                            TrackRowView(
+                                track: track,
+                                isCurrent: viewModel.currentTrack == track,
+                                newColor: newColor,
+                                disableHover: isAddMenuVisible,
+                                showRemoveButton: showRemoveFeatures,
+                                onRemove: {
+                                    // Disabled: tracks are managed via source management
+                                },
+                                onPlay: {
+                                    if let index = viewModel.tracks.firstIndex(
+                                        of: track,
+                                    ) {
+                                        viewModel.playTrack(at: index)
+                                    }
+                                },
+                            )
+                        }
                     }
                 }
-                .listStyle(.plain)
-                .scrollContentBackground(.hidden)
                 .padding([.leading, .trailing, .bottom], 24)
             }
         }
@@ -168,16 +166,14 @@ struct TrackRowView: View {
     let track: Track
     let isCurrent: Bool
     let newColor: Color
-    @Binding var hoveredTrackID: UUID?
     let disableHover: Bool
     let showRemoveButton: Bool
     let onRemove: () -> Void
     let onPlay: () -> Void
     @EnvironmentObject var viewModel: PlayerViewModel
+    @State private var isHovered = false
 
     var body: some View {
-        let isHovered = !disableHover && hoveredTrackID == track.id
-
         HStack {
             ArtworkView(track: track)
                 .frame(width: 32, height: 32)
@@ -209,7 +205,7 @@ struct TrackRowView: View {
                 Spacer()
             }
 
-            if showRemoveButton, hoveredTrackID == track.id {
+            if showRemoveButton, isHovered {
                 RemoveButton(color: newColor, action: onRemove)
             }
         }
@@ -222,7 +218,9 @@ struct TrackRowView: View {
         .onTapGesture(perform: onPlay)
         .onHover { isHovering in
             if !disableHover {
-                hoveredTrackID = isHovering ? track.id : nil
+                withAnimation(.easeInOut(duration: 0.15)) {
+                    isHovered = isHovering
+                }
             }
             if isHovering {
                 NSCursor.pointingHand.push()
@@ -230,8 +228,6 @@ struct TrackRowView: View {
                 NSCursor.pop()
             }
         }
-        .listRowBackground(Color.clear)
-        .listRowSeparator(.hidden)
         .overlay(
             VStack {
                 Spacer()
