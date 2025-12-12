@@ -1,3 +1,8 @@
+### [0.1.6] - 2024-12-12
+
+- Implement a custom scrollbar for the track list
+- Reverse the track list order
+
 ### [0.1.5] - 2024-12-10
 
 - Improve animation path of the knob indicator
