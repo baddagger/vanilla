@@ -6,22 +6,23 @@
         <description>Most recent updates to Vanilla Player</description>
         <language>en</language>
         <item>
-            <title>Version 0.1.5</title>
-            <pubDate>Wed, 10 Dec 2025 11:57:06 +0000</pubDate>
-            <description><![CDATA[- Improve animation path of the knob indicator]]></description>
+            <title>Version 0.1.6</title>
+            <pubDate>Fri, 12 Dec 2025 09:43:51 +0000</pubDate>
+            <description><![CDATA[- Implement a custom scrollbar for the track list
+- Reverse the track list order]]></description>
             <sparkle:version>6</sparkle:version>
-            <sparkle:shortVersionString>0.1.5</sparkle:shortVersionString>
+            <sparkle:shortVersionString>0.1.6</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.5/VanillaPlayer-0.1.5-arm64.dmg"
-                       length="5797258"
+            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.6/VanillaPlayer-0.1.6-arm64.dmg"
+                       length="5817568"
                        type="application/octet-stream"
                        sparkle:cpu="arm64"
-                       sparkle:edSignature="PFRisWBI2N1EKagyMZ7fqvqnXl8ig2IulWfTSda4YYoNK4FuyTSpbErMv/PdP7VHiq3hG9+DPNzYVuegseX6AQ==" />
-            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.5/VanillaPlayer-0.1.5-x86_64.dmg"
-                       length="5822944"
+                       sparkle:edSignature="B3Jr8SnqY2tVoOCZLVjMtQxTlJuITO8MPdO7VvXOCbQke85W9x1jcpP7M544P/P9ORTAk3tvxEngI3TMBUICBw==" />
+            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.6/VanillaPlayer-0.1.6-x86_64.dmg"
+                       length="5841740"
                        type="application/octet-stream"
                        sparkle:cpu="x86_64"
-                       sparkle:edSignature="sxjjfFaaZOxK/aA/wosVTr7vwUgCkLNZqgWP9jcau2dSEZiPvO0cj+LnDWqHfCwj3CKpyeSBNjiF231Dj5PHDA==" />
+                       sparkle:edSignature="jryM2b8gu0jLJ7yvwL7eKsz4KMlR14HhcI7/sVOYubUgVz6T+nOc6iXDBf8Y2aM4/2V4ueT22KU73G1XgI4TBA==" />
         </item>
     </channel>
 </rss>
