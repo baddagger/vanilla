@@ -68,6 +68,7 @@ class PlayerViewModel: NSObject, ObservableObject {
     private func setupBindings() {
         // Sync Library Tracks to Player Tracks
         libraryManager.$tracks
+            .map { Array($0.reversed()) }
             .assign(to: &$tracks)
 
         audioManager.$isPlaying.assign(to: &$isPlaying)
