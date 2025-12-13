@@ -26,7 +26,7 @@ struct DigitalNowPlayingView: View {
 
             if let artist = viewModel.currentTrack?.artist, !artist.isEmpty {
                 Spacer().frame(height: 8)
-                
+
                 Text(artist)
                     .font(.system(size: 18, weight: .light, design: .serif))
                     .foregroundColor(textColor)
@@ -36,7 +36,7 @@ struct DigitalNowPlayingView: View {
 
             if let album = viewModel.currentTrack?.album, !album.isEmpty {
                 Spacer().frame(height: 8)
-                
+
                 Text(album)
                     .font(.system(size: 14, weight: .light, design: .serif))
                     .foregroundColor(textColor.opacity(0.8))
