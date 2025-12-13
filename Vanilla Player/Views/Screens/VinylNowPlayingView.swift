@@ -118,9 +118,6 @@ struct VinylNowPlayingView: View {
                         )
                         .frame(height: tonearmHeight)
                         .offset(x: tonearmHeight * 0.52, y: -tonearmHeight / 12)
-                        .animation(.linear(duration: 0.5),
-                                   value: viewModel
-                                       .currentTime == 0) // Animate when moving to/from idle
                     }
                     .frame(width: vinylSize, height: vinylSize)
 
