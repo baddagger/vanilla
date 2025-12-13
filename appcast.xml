@@ -6,23 +6,25 @@
         <description>Most recent updates to Vanilla Player</description>
         <language>en</language>
         <item>
-            <title>Version 0.1.6</title>
-            <pubDate>Fri, 12 Dec 2025 10:23:02 +0000</pubDate>
-            <description><![CDATA[- Implement a custom scrollbar for the track list
-- Reverse the track list order]]></description>
-            <sparkle:version>7</sparkle:version>
-            <sparkle:shortVersionString>0.1.6</sparkle:shortVersionString>
+            <title>Version 0.1.7</title>
+            <pubDate>Sat, 13 Dec 2025 07:42:37 +0000</pubDate>
+            <description><![CDATA[- Implement shuffle mode and repeat mode
+- Add command + scroll gesture to adjust knob progress
+- Fix tonearm idle to playing animation
+- Improve text spacings]]></description>
+            <sparkle:version>8</sparkle:version>
+            <sparkle:shortVersionString>0.1.7</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.6/VanillaPlayer-0.1.6-arm64.dmg"
-                       length="5818802"
+            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.7/VanillaPlayer-0.1.7-arm64.dmg"
+                       length="5840691"
                        type="application/octet-stream"
                        sparkle:cpu="arm64"
-                       sparkle:edSignature="gz6k1QfKgwXqFFcAhmRSjpGoULXw0CM4iJtrYXEjCIWM036TRFYwwIdD78lL+y9EYd9TEUu7FBWoLGDnU+VdCA==" />
-            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.6/VanillaPlayer-0.1.6-x86_64.dmg"
-                       length="5846543"
+                       sparkle:edSignature="Red5e1L3w+k/DRQyjB054yi+1/UklUSe0ml8vAQqV0/8he/CfPDoi9u5qwro+TwBMqnAOQqSm/4yYjNN4DxYCQ==" />
+            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.7/VanillaPlayer-0.1.7-x86_64.dmg"
+                       length="5865990"
                        type="application/octet-stream"
                        sparkle:cpu="x86_64"
-                       sparkle:edSignature="0nzA/qZT7BP7UdG0egkaEMTcfPJogNqzOTl+E+QI8e+H7Tpdw4bwfcZZUHr/Y79dGePyvRm5JnBia8mY5dEwCA==" />
+                       sparkle:edSignature="ZDGlz/ucOmjWzPOgfwQMXd8QDfYJdgqJSzAii9yekur71t0eOAj2aHUGD4pKI29cCjupDkw41Qfi0F1dRu46Aw==" />
         </item>
     </channel>
 </rss>
