@@ -314,7 +314,8 @@ class PlayerViewModel: NSObject, ObservableObject {
         UserDefaults.standard.set(repeatMode.rawValue, forKey: UserDefaultsKeys.repeatMode)
 
         // Only save track info if we have a valid track.
-        // If currentTrack is nil (e.g. during app launch/restore), we should NOT wipe the saved state.
+        // If currentTrack is nil (e.g. during app launch/restore), we should NOT wipe the saved
+        // state.
         guard let track = currentTrack else { return }
 
         UserDefaults.standard.set(track.url.absoluteString, forKey: UserDefaultsKeys.lastTrackURL)
@@ -324,7 +325,9 @@ class PlayerViewModel: NSObject, ObservableObject {
     private func restorePlaybackState() {
         // Restore Shuffle/Repeat
         isShuffleEnabled = UserDefaults.standard.bool(forKey: UserDefaultsKeys.isShuffleEnabled)
-        if let mode = RepeatMode(rawValue: UserDefaults.standard.integer(forKey: UserDefaultsKeys.repeatMode)) {
+        if let mode = RepeatMode(rawValue: UserDefaults.standard
+            .integer(forKey: UserDefaultsKeys.repeatMode))
+        {
             repeatMode = mode
         }
 
