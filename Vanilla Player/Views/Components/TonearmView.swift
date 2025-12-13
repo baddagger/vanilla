@@ -9,6 +9,7 @@ struct TonearmView: View {
 
     @State private var isDragging = false
     @State private var lastDragAngle = 0.0
+    @State private var currentAngle: Double = 0
 
     // Layout constants
     private let rotationAnchorX = 0.76
@@ -21,10 +22,11 @@ struct TonearmView: View {
     private let handleOffsetYRatio = 0.367
     private let handleRotation = 54.0
 
-    var body: some View {
-        let angle = playbackProgress < 0 ? idleAngle : startAngle + (endAngle - startAngle) *
-            playbackProgress
+    private func targetAngle(for progress: Double) -> Double {
+        progress < 0 ? idleAngle : startAngle + (endAngle - startAngle) * progress
+    }
 
+    var body: some View {
         ZStack {
             GeometryReader { geometry in
                 let height = geometry.size.height
@@ -65,7 +67,7 @@ struct TonearmView: View {
                             .offset(x: height * handleOffsetXRatio, y: height * handleOffsetYRatio),
                     )
                     .rotationEffect(
-                        .degrees(angle),
+                        .degrees(currentAngle),
                         anchor: UnitPoint(x: rotationAnchorX, y: rotationAnchorY),
                     )
                     .gesture(
@@ -92,6 +94,27 @@ struct TonearmView: View {
             }
         }
         .aspectRatio(692 / 1024.0, contentMode: .fit)
+        .onAppear {
+            currentAngle = targetAngle(for: playbackProgress)
+        }
+        // Monitor playbackProgress to animate transitions
+        .onChange(of: playbackProgress) { newValue in
+            let target = targetAngle(for: newValue)
+            let isIdle = newValue < 0
+
+            // Check if we are physically close to idle position, implying we were idle
+            let wasIdle = abs(currentAngle - idleAngle) < 0.001
+
+            // Animate only when detecting a logical state change between idle and playing
+            if isIdle != wasIdle, !isDragging {
+                withAnimation {
+                    currentAngle = target
+                }
+            } else {
+                // Otherwise update immediately (scrubbing or normal playback)
+                currentAngle = target
+            }
+        }
     }
 
     private func onDragging(value: DragGesture.Value, geometry: GeometryProxy) {
@@ -102,6 +125,9 @@ struct TonearmView: View {
 
         playbackProgress = min(1, max(0, currentProgress + progressChange))
         lastDragAngle = currAngle
+
+        // Update local angle immediately for responsiveness
+        currentAngle = targetAngle(for: playbackProgress)
     }
 
     private func isInsideDragHandle(location: CGPoint, geometry: GeometryProxy) -> Bool {
@@ -120,9 +146,8 @@ struct TonearmView: View {
         let anchorX = width * rotationAnchorX
         let anchorY = height * rotationAnchorY
 
-        // Current tonearm angle
-        let angle = playbackProgress < 0 ? idleAngle : startAngle + (endAngle - startAngle) *
-            playbackProgress
+        // Use the current visualized angle
+        let angle = currentAngle
         let angleRadians = angle * .pi / 180
 
         // Rotate the handle center around the tonearm anchor
