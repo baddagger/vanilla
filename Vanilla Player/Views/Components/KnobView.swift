@@ -1,5 +1,5 @@
-import SwiftUI
 import AppKit
+import SwiftUI
 
 struct KnobView: View {
     let buttonSize: Double
@@ -87,7 +87,7 @@ struct KnobView: View {
                     let change = -delta * sensitivity
                     progress = min(1, max(0, progress + change))
                 }
-            }
+            },
         )
         .padding(16)
     }
@@ -124,7 +124,6 @@ struct KnobView: View {
     }
 }
 
-
 #Preview {
     @Previewable @State var progress = 0.0
     KnobView(buttonSize: 200, startAngle: 0, endAngle: 260, progress: $progress)
@@ -134,13 +133,13 @@ struct KnobView: View {
 struct ScrollReader: NSViewRepresentable {
     var onScroll: (NSEvent) -> Void
 
-    func makeNSView(context: Context) -> ScrollHandlingView {
+    func makeNSView(context _: Context) -> ScrollHandlingView {
         let view = ScrollHandlingView()
         view.onScroll = onScroll
         return view
     }
 
-    func updateNSView(_ nsView: ScrollHandlingView, context: Context) {
+    func updateNSView(_ nsView: ScrollHandlingView, context _: Context) {
         nsView.onScroll = onScroll
     }
 }
