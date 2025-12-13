@@ -1,4 +1,5 @@
 import SwiftUI
+import AppKit
 
 struct KnobView: View {
     let buttonSize: Double
@@ -78,6 +79,16 @@ struct KnobView: View {
                 .opacity(0.5)
                 .offset(x: endIndicatorDx, y: endIndicatorDy)
         }
+        .overlay(
+            ScrollReader { event in
+                if event.modifierFlags.contains(.command) {
+                    let delta = event.scrollingDeltaY
+                    let sensitivity = 0.005
+                    let change = -delta * sensitivity
+                    progress = min(1, max(0, progress + change))
+                }
+            }
+        )
         .padding(16)
     }
 
@@ -113,8 +124,33 @@ struct KnobView: View {
     }
 }
 
+
 #Preview {
     @Previewable @State var progress = 0.0
     KnobView(buttonSize: 200, startAngle: 0, endAngle: 260, progress: $progress)
         .padding()
+}
+
+struct ScrollReader: NSViewRepresentable {
+    var onScroll: (NSEvent) -> Void
+
+    func makeNSView(context: Context) -> ScrollHandlingView {
+        let view = ScrollHandlingView()
+        view.onScroll = onScroll
+        return view
+    }
+
+    func updateNSView(_ nsView: ScrollHandlingView, context: Context) {
+        nsView.onScroll = onScroll
+    }
+}
+
+class ScrollHandlingView: NSView {
+    var onScroll: ((NSEvent) -> Void)?
+
+    override var acceptsFirstResponder: Bool { true }
+
+    override func scrollWheel(with event: NSEvent) {
+        onScroll?(event)
+    }
 }
