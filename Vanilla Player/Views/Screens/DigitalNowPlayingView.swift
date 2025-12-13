@@ -21,20 +21,27 @@ struct DigitalNowPlayingView: View {
             .font(.system(size: 36, weight: .light, design: .serif))
             .foregroundColor(textColor)
             .multilineTextAlignment(.center)
+            .lineLimit(3)
+            .padding(.horizontal, 12)
 
             if let artist = viewModel.currentTrack?.artist, !artist.isEmpty {
+                Spacer().frame(height: 8)
+                
                 Text(artist)
                     .font(.system(size: 18, weight: .light, design: .serif))
                     .foregroundColor(textColor)
-                    .multilineTextAlignment(.center)
+                    .lineLimit(1)
+                    .padding(.horizontal, 12)
             }
 
             if let album = viewModel.currentTrack?.album, !album.isEmpty {
+                Spacer().frame(height: 8)
+                
                 Text(album)
                     .font(.system(size: 14, weight: .light, design: .serif))
                     .foregroundColor(textColor.opacity(0.8))
-                    .multilineTextAlignment(.center)
-                    .padding(.top, 2)
+                    .lineLimit(1)
+                    .padding(.horizontal, 12)
             }
 
             Spacer()
