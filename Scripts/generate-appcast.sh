@@ -24,8 +24,20 @@ RELEASE_NOTES="Bug fixes and improvements."
 if [ -f "CHANGELOG.md" ]; then
   NOTES=$(awk -v ver="$VERSION" '
     /^###? \[/ { if (found) exit; if ($0 ~ "\\[" ver "\\]") { found=1; next } }
-    found && NF { print }
-  ' CHANGELOG.md | head -20)
+    found && NF {
+      line = $0
+      # Convert list items
+      if (line ~ /^- /) {
+        if (!in_list) { print "<ul>"; in_list=1 }
+        sub(/^- /, "", line)
+        print "<li>" line "</li>"
+      } else {
+        if (in_list) { print "</ul>"; in_list=0 }
+        print "<p>" line "</p>"
+      }
+    }
+    END { if (in_list) print "</ul>" }
+  ' CHANGELOG.md)
   [ -n "$NOTES" ] && RELEASE_NOTES="$NOTES"
 fi
 
