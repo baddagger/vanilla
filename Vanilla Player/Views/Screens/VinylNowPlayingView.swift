@@ -222,11 +222,21 @@ struct Controls: View {
 
         HStack(spacing: 32) {
             Button(action: {
-                // Repeat/Shuffle placeholder
+                viewModel.toggleShuffle()
             }) {
-                Image("buttonGold")
-                    .resizable()
-                    .frame(width: buttonSize, height: buttonSize)
+                ZStack {
+                    Image("buttonGold")
+                        .resizable()
+                        .frame(width: buttonSize, height: buttonSize)
+
+                    Image(systemName: "shuffle")
+                        .font(.system(size: buttonSize * 0.4, weight: .bold))
+                        .foregroundColor(
+                            viewModel.isShuffleEnabled
+                                ? Color.black.opacity(0.8)
+                                : Color.black.opacity(0.4),
+                        )
+                }
             }
 
             Button(action: {
@@ -264,11 +274,26 @@ struct Controls: View {
             }
 
             Button(action: {
-                // Menu placeholder
+                viewModel.toggleRepeat()
             }) {
-                Image("buttonGold")
-                    .resizable()
-                    .frame(width: buttonSize, height: buttonSize)
+                ZStack {
+                    Image("buttonGold")
+                        .resizable()
+                        .frame(width: buttonSize, height: buttonSize)
+
+                    let systemName = switch viewModel.repeatMode {
+                    case .one: "repeat.1"
+                    default: "repeat"
+                    }
+
+                    Image(systemName: systemName)
+                        .font(.system(size: buttonSize * 0.4, weight: .bold))
+                        .foregroundColor(
+                            viewModel.repeatMode != .off
+                                ? Color.black.opacity(0.8)
+                                : Color.black.opacity(0.4),
+                        )
+                }
             }
         }
         .buttonStyle(.plain)
