@@ -21,6 +21,8 @@ class PlayerViewModel: NSObject, ObservableObject {
     private enum UserDefaultsKeys {
         static let lastTrackURL = "lastPlayingTrackURL"
         static let lastPlaybackPosition = "lastPlaybackPosition"
+        static let isShuffleEnabled = "isShuffleEnabled"
+        static let repeatMode = "repeatMode"
     }
 
     // Library Manager
@@ -307,24 +309,25 @@ class PlayerViewModel: NSObject, ObservableObject {
     // MARK: - Playback State Persistence
 
     func savePlaybackState() {
-        guard let track = currentTrack else {
-            UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.lastTrackURL)
-            UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.lastPlaybackPosition)
-            return
-        }
+        // Always save settings
+        UserDefaults.standard.set(isShuffleEnabled, forKey: UserDefaultsKeys.isShuffleEnabled)
+        UserDefaults.standard.set(repeatMode.rawValue, forKey: UserDefaultsKeys.repeatMode)
+
+        // Only save track info if we have a valid track.
+        // If currentTrack is nil (e.g. during app launch/restore), we should NOT wipe the saved
+        // state.
+        guard let track = currentTrack else { return }
 
         UserDefaults.standard.set(track.url.absoluteString, forKey: UserDefaultsKeys.lastTrackURL)
         UserDefaults.standard.set(currentTime, forKey: UserDefaultsKeys.lastPlaybackPosition)
-
-        // New Persistence
-        UserDefaults.standard.set(isShuffleEnabled, forKey: "isShuffleEnabled")
-        UserDefaults.standard.set(repeatMode.rawValue, forKey: "repeatMode")
     }
 
     private func restorePlaybackState() {
         // Restore Shuffle/Repeat
-        isShuffleEnabled = UserDefaults.standard.bool(forKey: "isShuffleEnabled")
-        if let mode = RepeatMode(rawValue: UserDefaults.standard.integer(forKey: "repeatMode")) {
+        isShuffleEnabled = UserDefaults.standard.bool(forKey: UserDefaultsKeys.isShuffleEnabled)
+        if let mode = RepeatMode(rawValue: UserDefaults.standard
+            .integer(forKey: UserDefaultsKeys.repeatMode))
+        {
             repeatMode = mode
         }
 
