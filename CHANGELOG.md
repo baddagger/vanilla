@@ -1,3 +1,7 @@
+### [0.1.8] - 2024-12-13
+
+- Fix playback state restoration
+
 ### [0.1.7] - 2024-12-13
 
 - Implement shuffle mode and repeat mode
