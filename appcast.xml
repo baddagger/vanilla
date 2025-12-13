@@ -6,27 +6,24 @@
         <description>Most recent updates to Vanilla Player</description>
         <language>en</language>
         <item>
-            <title>Version 0.1.7</title>
-            <pubDate>Sat, 13 Dec 2025 10:03:45 +0000</pubDate>
+            <title>Version 0.1.8</title>
+            <pubDate>Sat, 13 Dec 2025 11:59:09 +0000</pubDate>
             <description><![CDATA[<ul>
-<li>Implement shuffle mode and repeat mode</li>
-<li>Add command + scroll gesture to adjust knob progress</li>
-<li>Fix tonearm idle to playing animation</li>
-<li>Improve text spacings</li>
+<li>Fix playback state restoration</li>
 </ul>]]></description>
-            <sparkle:version>8</sparkle:version>
-            <sparkle:shortVersionString>0.1.7</sparkle:shortVersionString>
+            <sparkle:version>9</sparkle:version>
+            <sparkle:shortVersionString>0.1.8</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.7/VanillaPlayer-0.1.7-arm64.dmg"
-                       length="5844511"
+            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.8/VanillaPlayer-0.1.8-arm64.dmg"
+                       length="5844261"
                        type="application/octet-stream"
                        sparkle:cpu="arm64"
-                       sparkle:edSignature="mc5r3wtQPeJ3TOU4ZdOnJvEJgNWM7PQhDwRyiUp2z8l+bMmp7UFJlOLJmZBrjT52BDd/j2ml/Y09tC5TgBExBA==" />
-            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.7/VanillaPlayer-0.1.7-x86_64.dmg"
-                       length="5865647"
+                       sparkle:edSignature="cWBxebu8834/oa6r+slL4kJwPU2bNQSRmSrLwAFV7FqvNhyg+cJ3m1xs9lMT5jdDmZiRIa32ijc7xmFm+xjxDQ==" />
+            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.8/VanillaPlayer-0.1.8-x86_64.dmg"
+                       length="5864736"
                        type="application/octet-stream"
                        sparkle:cpu="x86_64"
-                       sparkle:edSignature="H6JlN1+DV85ZUGaljLtPAaJL66evHR1J0So7yrqSVO9DuEGOL9clE0puEcKucqX9WeV0z+GcMe9oE7znZRgTCA==" />
+                       sparkle:edSignature="5kFD+KilGcE5/5PhTZxPEoXXdsgZ3zMXgwBiLYMYiv14mFO/T1GsLDWRhu15z0j+R5yDYiG6OT0vmUQNRfloBw==" />
         </item>
     </channel>
 </rss>
