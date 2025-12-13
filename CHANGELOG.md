@@ -1,3 +1,10 @@
+### [0.1.7] - 2024-12-13
+
+- Implement shuffle mode and repeat mode
+- Add command + scroll gesture to adjust knob progress
+- Fix tonearm idle to playing animation
+- Improve text spacings
+
 ### [0.1.6] - 2024-12-12
 
 - Implement a custom scrollbar for the track list
