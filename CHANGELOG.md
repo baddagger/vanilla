@@ -1,3 +1,9 @@
+### [0.1.9] - 2024-12-14
+
+- Add now playing widget support
+- Add hovered state for the track list scrollbar
+- Fix knob dragging gesture stopped working
+
 ### [0.1.8] - 2024-12-13
 
 - Fix playback state restoration
