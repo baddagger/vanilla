@@ -6,24 +6,26 @@
         <description>Most recent updates to Vanilla Player</description>
         <language>en</language>
         <item>
-            <title>Version 0.1.8</title>
-            <pubDate>Sat, 13 Dec 2025 11:59:09 +0000</pubDate>
+            <title>Version 0.1.9</title>
+            <pubDate>Sun, 14 Dec 2025 10:21:39 +0000</pubDate>
             <description><![CDATA[<ul>
-<li>Fix playback state restoration</li>
+<li>Add now playing widget support</li>
+<li>Add hovered state for the track list scrollbar</li>
+<li>Fix knob dragging gesture stopped working</li>
 </ul>]]></description>
-            <sparkle:version>9</sparkle:version>
-            <sparkle:shortVersionString>0.1.8</sparkle:shortVersionString>
+            <sparkle:version>10</sparkle:version>
+            <sparkle:shortVersionString>0.1.9</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.8/VanillaPlayer-0.1.8-arm64.dmg"
-                       length="5844261"
+            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.9/VanillaPlayer-0.1.9-arm64.dmg"
+                       length="5856073"
                        type="application/octet-stream"
                        sparkle:cpu="arm64"
-                       sparkle:edSignature="cWBxebu8834/oa6r+slL4kJwPU2bNQSRmSrLwAFV7FqvNhyg+cJ3m1xs9lMT5jdDmZiRIa32ijc7xmFm+xjxDQ==" />
-            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.8/VanillaPlayer-0.1.8-x86_64.dmg"
-                       length="5864736"
+                       sparkle:edSignature="F+uc3AZLNSKWCz0D0iy2e5Z712axvtto2J1u28Ttc1u53/Pu/KIN5+nN/yGb8mgvsfXR3iesNltWz2aDnQ2WBw==" />
+            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.9/VanillaPlayer-0.1.9-x86_64.dmg"
+                       length="5883463"
                        type="application/octet-stream"
                        sparkle:cpu="x86_64"
-                       sparkle:edSignature="5kFD+KilGcE5/5PhTZxPEoXXdsgZ3zMXgwBiLYMYiv14mFO/T1GsLDWRhu15z0j+R5yDYiG6OT0vmUQNRfloBw==" />
+                       sparkle:edSignature="2hYT3dwGH0yHByfFWeFaCdREMDHvLcfiVXpGqLXe7QT2iLCxxnP//wK7XImdigAqFXqxB6R/Os6FTY3J/ifaAw==" />
         </item>
     </channel>
 </rss>
