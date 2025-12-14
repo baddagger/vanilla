@@ -36,6 +36,7 @@ class PlayerViewModel: NSObject, ObservableObject {
     private var audioManager = AudioEngineManager()
     private var currentSecurityScopedURL: URL?
     private var cancellables = Set<AnyCancellable>()
+    private let nowPlayingService = NowPlayingService()
 
     override init() {
         // Initialize child VM with dependency
@@ -44,6 +45,16 @@ class PlayerViewModel: NSObject, ObservableObject {
         visualizerViewModel = VisualizerViewModel(audioManager: audioMgr)
 
         super.init()
+
+        nowPlayingService.configure(
+            play: { [weak self] in self?.audioManager.resume() },
+            pause: { [weak self] in self?.audioManager.pause() },
+            toggle: { [weak self] in self?.playPause() },
+            next: { [weak self] in self?.nextTrack() },
+            previous: { [weak self] in self?.previousTrack() },
+            seek: { [weak self] time in self?.seek(to: time) },
+        )
+
         setupBindings()
 
         // Initial Scan
@@ -82,7 +93,21 @@ class PlayerViewModel: NSObject, ObservableObject {
             }
             .store(in: &cancellables)
 
-        audioManager.$isPlaying.assign(to: &$isPlaying)
+        audioManager.$isPlaying
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isPlaying in
+                self?.isPlaying = isPlaying
+                self?.updateNowPlayingInfo()
+            }
+            .store(in: &cancellables)
+
+        // Observe track changes to update metadata
+        $currentTrackIndex
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.updateNowPlayingInfo()
+            }
+            .store(in: &cancellables)
         audioManager.$currentTime.assign(to: &$currentTime)
         audioManager.$duration.assign(to: &$duration)
         // REMOVED: audioManager.$meteringLevels.assign(to: &$meteringLevels)
@@ -247,6 +272,14 @@ class PlayerViewModel: NSObject, ObservableObject {
 
     func seek(to time: TimeInterval) {
         audioManager.seek(to: time)
+        // Update Now Playing Info with new time immediately
+        // We use the seek time directly as the verified time
+        nowPlayingService.update(
+            track: currentTrack,
+            isPlaying: isPlaying,
+            currentTime: time,
+            duration: duration,
+        )
     }
 
     func nextTrack() {
@@ -273,7 +306,7 @@ class PlayerViewModel: NSObject, ObservableObject {
             } else {
                 // Stop
                 audioManager.pause()
-                audioManager.seek(to: 0)
+                seek(to: 0)
                 isPlaying = false
             }
         }
@@ -283,7 +316,7 @@ class PlayerViewModel: NSObject, ObservableObject {
         if tracks.isEmpty { return }
 
         if currentTime > 3.0 {
-            audioManager.seek(to: 0)
+            seek(to: 0)
             return
         }
 
@@ -389,6 +422,20 @@ class PlayerViewModel: NSObject, ObservableObject {
     private func updateProcessingState() {
         let shouldProcess = isAppActive && isWindowVisible
         audioManager.setAppActiveState(shouldProcess)
+    }
+
+    // MARK: - Now Playing Info
+
+    private func updateNowPlayingInfo() {
+        // Debounce or ensure logical consistency?
+        // MPNowPlayingInfoCenter handles updates well, but we should ensure duration is valid.
+        // We use current values.
+        nowPlayingService.update(
+            track: currentTrack,
+            isPlaying: audioManager.isPlaying, // Use direct source of truth
+            currentTime: audioManager.currentTime,
+            duration: audioManager.duration,
+        )
     }
 
     deinit {
