@@ -11,9 +11,11 @@ struct CustomScrollView<Content: View>: View {
     @State private var nsScrollView: NSScrollView?
     @State private var isDragging: Bool = false
     @State private var dragStartContentOffset: CGFloat = 0
+    @State private var isHovered: Bool = false
 
     // Custom Scrollbar Formatting
     let thumbColor: Color = .white.opacity(0.1)
+    let thumbColorHovered: Color = .white.opacity(0.2)
     let trackColor: Color = .white.opacity(0)
     let thumbWidth: CGFloat = 6
 
@@ -59,10 +61,13 @@ struct CustomScrollView<Content: View>: View {
 
                     // Thumb
                     Capsule()
-                        .fill(thumbColor)
+                        .fill((isHovered || isDragging) ? thumbColorHovered : thumbColor)
                         .frame(width: thumbWidth, height: thumbHeight())
                         .offset(y: thumbOffset())
                         .padding(.vertical, 4)
+                        .onHover { hovered in
+                            isHovered = hovered
+                        }
                         .gesture(
                             DragGesture()
                                 .onChanged { value in
