@@ -6,26 +6,25 @@
         <description>Most recent updates to Vanilla Player</description>
         <language>en</language>
         <item>
-            <title>Version 0.1.9</title>
-            <pubDate>Sun, 14 Dec 2025 10:21:39 +0000</pubDate>
+            <title>Version 0.1.10</title>
+            <pubDate>Fri, 19 Dec 2025 11:30:45 +0000</pubDate>
             <description><![CDATA[<ul>
-<li>Add now playing widget support</li>
-<li>Add hovered state for the track list scrollbar</li>
-<li>Fix knob dragging gesture stopped working</li>
+<li>Add segmented-bars spectrum view</li>
+<li>Improve search box UI and behavior</li>
 </ul>]]></description>
-            <sparkle:version>10</sparkle:version>
-            <sparkle:shortVersionString>0.1.9</sparkle:shortVersionString>
+            <sparkle:version>11</sparkle:version>
+            <sparkle:shortVersionString>0.1.10</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.9/VanillaPlayer-0.1.9-arm64.dmg"
-                       length="5856073"
+            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.10/VanillaPlayer-0.1.10-arm64.dmg"
+                       length="5876618"
                        type="application/octet-stream"
                        sparkle:cpu="arm64"
-                       sparkle:edSignature="F+uc3AZLNSKWCz0D0iy2e5Z712axvtto2J1u28Ttc1u53/Pu/KIN5+nN/yGb8mgvsfXR3iesNltWz2aDnQ2WBw==" />
-            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.9/VanillaPlayer-0.1.9-x86_64.dmg"
-                       length="5883463"
+                       sparkle:edSignature="b8Ur6iedZxeJlcfNFFr8tyoGHSQ/CHvrD2pdBiorj9rCudGmbM8yNWAABsPPDjmi3zIJaRdGggvohr82Qzp+AA==" />
+            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.10/VanillaPlayer-0.1.10-x86_64.dmg"
+                       length="5907240"
                        type="application/octet-stream"
                        sparkle:cpu="x86_64"
-                       sparkle:edSignature="2hYT3dwGH0yHByfFWeFaCdREMDHvLcfiVXpGqLXe7QT2iLCxxnP//wK7XImdigAqFXqxB6R/Os6FTY3J/ifaAw==" />
+                       sparkle:edSignature="DWkFRYMyl66sgH8PFFz3v/iAX4RYx74czLMU6Ho9Gx1yoO6kQX7xved0vS9t/VL2TLuB0eDRXHIA9CKAyxM4Cw==" />
         </item>
     </channel>
 </rss>
