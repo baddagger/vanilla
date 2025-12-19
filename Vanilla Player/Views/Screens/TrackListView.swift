@@ -118,7 +118,7 @@ struct TrackListView: View {
                                     ) {
                                         viewModel.playTrack(at: index)
                                     }
-                                }
+                                },
                             )
                         }
                     }
