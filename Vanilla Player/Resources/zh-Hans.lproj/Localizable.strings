@@ -19,3 +19,10 @@
 "Add Folder..." = "添加文件夹...";
 "Manage Sources..." = "管理来源...";
 "Check for Updates..." = "检查更新...";
+
+/* Settings */
+"SETTINGS_WINDOW_TITLE" = "设置";
+"SETTINGS_VISUALIZER_SECTION" = "视觉效果设置";
+"SETTINGS_SPECTRUM_STYLE_LABEL" = "频谱样式";
+"SPECTRUM_STYLE_BARS" = "频谱柱";
+"SPECTRUM_STYLE_SEGMENTED" = "分段式频谱柱";
