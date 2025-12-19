@@ -2,6 +2,7 @@ import SwiftUI
 
 struct DigitalNowPlayingView: View {
     @EnvironmentObject var viewModel: PlayerViewModel
+    @AppStorage("spectrumStyle") private var spectrumStyle: SettingsView.SpectrumStyle = .bars
 
     var body: some View {
         VStack(alignment: .center) {
@@ -46,9 +47,15 @@ struct DigitalNowPlayingView: View {
 
             Spacer()
 
-            SpectrumView2(viewModel: viewModel.visualizerViewModel)
-                .frame(height: 80)
-                .padding(.horizontal, 24)
+            if spectrumStyle == .segmentedBars {
+                SpectrumView3(viewModel: viewModel.visualizerViewModel)
+                    .frame(height: 80)
+                    .padding(.horizontal, 24)
+            } else {
+                SpectrumView2(viewModel: viewModel.visualizerViewModel)
+                    .frame(height: 80)
+                    .padding(.horizontal, 24)
+            }
 
             PlaybackSliderView(
                 currentTime: $viewModel.currentTime,
