@@ -5,6 +5,10 @@
 <h1 align="center">Vanilla Player</h1>
 
 <p align="center">
+  English | <a href="./README_zh.md">简体中文</a>
+</p>
+
+<p align="center">
 An opinionated music player for macOS.
 </p>
 
