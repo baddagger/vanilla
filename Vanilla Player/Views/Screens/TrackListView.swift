@@ -33,7 +33,6 @@ struct TrackListView: View {
                         Image(systemName: "magnifyingglass")
                             .foregroundColor(newColor.opacity(0.6))
                             .font(.system(size: 14))
-                            .padding(.leading, 6)
 
                         ZStack(alignment: .leading) {
                             let count = viewModel.tracks.count
@@ -113,6 +112,7 @@ struct TrackListView: View {
                                     // Disabled: tracks are managed via source management
                                 },
                                 onPlay: {
+                                    isSearchFocused = false
                                     if let index = viewModel.tracks.firstIndex(
                                         of: track,
                                     ) {
@@ -124,6 +124,13 @@ struct TrackListView: View {
                     }
                 }
                 .padding([.leading, .trailing, .bottom], 24)
+            }
+            .contentShape(Rectangle())
+            .onTapGesture {
+                isSearchFocused = false
+            }
+            .onExitCommand {
+                isSearchFocused = false
             }
         }
     }
