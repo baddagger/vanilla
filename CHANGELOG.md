@@ -1,3 +1,8 @@
+### [0.1.10] - 2025-12-19
+
+- Add segmented-bars spectrum view
+- Improve search box UI and behavior
+
 ### [0.1.9] - 2025-12-14
 
 - Add now playing widget support
