@@ -33,7 +33,6 @@ struct TrackListView: View {
                         Image(systemName: "magnifyingglass")
                             .foregroundColor(newColor.opacity(0.6))
                             .font(.system(size: 14))
-                            .padding(.leading, 6)
 
                         ZStack(alignment: .leading) {
                             let count = viewModel.tracks.count
