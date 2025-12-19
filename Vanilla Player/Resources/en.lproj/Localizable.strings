@@ -19,3 +19,10 @@
 "Add Folder..." = "Add Folder...";
 "Manage Sources..." = "Manage Sources...";
 "Check for Updates..." = "Check for Updates...";
+
+/* Settings */
+"SETTINGS_WINDOW_TITLE" = "Settings";
+"SETTINGS_VISUALIZER_SECTION" = "Visualizer Settings";
+"SETTINGS_SPECTRUM_STYLE_LABEL" = "Spectrum Style";
+"SPECTRUM_STYLE_BARS" = "Bars";
+"SPECTRUM_STYLE_SEGMENTED" = "Segmented Bars";

@@ -78,6 +78,12 @@ struct Vanilla_PlayerApp: App {
             SourceManagementView(libraryManager: playerViewModel.libraryManager)
         }
         .defaultSize(width: 400, height: 500)
+
+        #if os(macOS)
+            Settings {
+                SettingsView()
+            }
+        #endif
     }
 
     private func addFolder() {
