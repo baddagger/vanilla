@@ -113,17 +113,25 @@ struct TrackListView: View {
                                     // Disabled: tracks are managed via source management
                                 },
                                 onPlay: {
+                                    isSearchFocused = false
                                     if let index = viewModel.tracks.firstIndex(
                                         of: track,
                                     ) {
                                         viewModel.playTrack(at: index)
                                     }
-                                },
+                                }
                             )
                         }
                     }
                 }
                 .padding([.leading, .trailing, .bottom], 24)
+            }
+            .contentShape(Rectangle())
+            .onTapGesture {
+                isSearchFocused = false
+            }
+            .onExitCommand {
+                isSearchFocused = false
             }
         }
     }
