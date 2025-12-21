@@ -373,6 +373,10 @@ class PlayerViewModel: NSObject, ObservableObject {
             return
         }
 
+        if !FileManager.default.fileExists(atPath: urlString) {
+            return
+        }
+
         let savedPosition = UserDefaults.standard
             .double(forKey: UserDefaultsKeys.lastPlaybackPosition)
 
