@@ -1,3 +1,9 @@
+### [0.1.12] - 2025-12-21
+
+- Improve artwork management
+- Improve handling of track removal
+- Persist and restore volume and bass settings
+
 ### [0.1.11] - 2025-12-21
 
 - Fix crash when launching the app
