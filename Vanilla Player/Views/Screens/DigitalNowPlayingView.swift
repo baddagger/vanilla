@@ -103,30 +103,13 @@ struct SquareCoverView: View {
             RoundedRectangle(cornerRadius: 12)
                 .stroke(Color.white.opacity(0.1), lineWidth: 1),
         )
-        .onChange(of: track) { newTrack in
-            loadArtwork(for: newTrack)
-        }
-        .onAppear {
-            loadArtwork(for: track)
-        }
-    }
+        .task(id: track?.id) {
+            artwork = nil
+            guard let track else { return }
+            if !track.hasArtwork { return }
 
-    private func loadArtwork(for track: Track?) {
-        artwork = nil // Reset first
-        guard let track else { return }
-
-        if !track.hasArtwork {
-            // print("Track \(track.title) has no artwork marked.")
-            return
-        }
-
-        // Async load
-        DispatchQueue.global(qos: .userInitiated).async {
-            let loaded = track.loadArtwork()
-            DispatchQueue.main.async {
-                // print("Loaded artwork for \(track.title): \(loaded != nil)")
-                artwork = loaded
-            }
+            let loaded = await track.loadArtwork()
+            artwork = loaded
         }
     }
 }

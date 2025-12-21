@@ -127,7 +127,7 @@ class LibraryManager: ObservableObject {
 
     @discardableResult
     private func scanSource(_ source: Source, mode _: ScanMode) async -> [Track] {
-        let (newTracks, allURLs) = collectTracks(from: source, existingTracks: tracks)
+        let (newTracks, allURLs) = await collectTracks(from: source, existingTracks: tracks)
 
         if !newTracks.isEmpty {
             await MainActor.run {
@@ -199,7 +199,7 @@ class LibraryManager: ObservableObject {
 
             for source in sources {
                 // Pass currentTracks so we don't recreate existing ones
-                let (newTracks, sourceURLs) = collectTracks(
+                let (newTracks, sourceURLs) = await collectTracks(
                     from: source,
                     existingTracks: currentTracks,
                 )
@@ -217,6 +217,30 @@ class LibraryManager: ObservableObject {
 
         tracks = currentTracks
         saveLibrary()
+
+        // After a full scan, it's a good time to cleanup the artwork cache
+        await refreshArtworkCache()
+    }
+
+    /// Refresh artwork for all tracks and cleanup orphaned cache entries.
+    @MainActor
+    func refreshArtworkCache() async {
+        let currentTracks = tracks
+
+        // 1. Refresh each track's metadata/artwork
+        // This will trigger re-extraction and update the cache for each track
+        var refreshedTracks: [Track] = []
+        for track in currentTracks {
+            let refreshed = await track.refreshing()
+            refreshedTracks.append(refreshed)
+        }
+
+        tracks = refreshedTracks
+        saveLibrary()
+
+        // 2. Cleanup orphaned entries
+        let allURLs = Set(refreshedTracks.map(\.url))
+        ArtworkCache.cleanup(keeping: allURLs)
     }
 
     /// Scans a source and returns newly created Tracks (with valid bookmarks) and all found URLs.
@@ -224,7 +248,9 @@ class LibraryManager: ObservableObject {
     ///   - source: The source to scan.
     ///   - existingTracks: Existing tracks to check against (to avoid recreating).
     /// - Returns: A tuple of (New Tracks, All URLs found in source).
-    private func collectTracks(from source: Source, existingTracks: [Track]) -> ([Track], [URL]) {
+    private func collectTracks(from source: Source,
+                               existingTracks: [Track]) async -> ([Track], [URL])
+    {
         guard let url = source.resolvedURL() else { return ([], []) }
 
         let isSecured = url.startAccessingSecurityScopedResource()
@@ -251,8 +277,9 @@ class LibraryManager: ObservableObject {
                             // If it's new, create Track NOW while we have access
                             // This ensures the Track can create its own bookmark successfully.
                             if !existingURLs.contains(fileURL) {
-                                let track = Track(url: fileURL)
-                                newTracks.append(track)
+                                if let track = await Track.load(from: fileURL) {
+                                    newTracks.append(track)
+                                }
                             }
                         }
                     }
@@ -262,8 +289,9 @@ class LibraryManager: ObservableObject {
                 if supportedExtensions.contains(url.pathExtension.lowercased()) {
                     allURLs.append(url)
                     if !existingURLs.contains(url) {
-                        let track = Track(url: url)
-                        newTracks.append(track)
+                        if let track = await Track.load(from: url) {
+                            newTracks.append(track)
+                        }
                     }
                 }
             }
