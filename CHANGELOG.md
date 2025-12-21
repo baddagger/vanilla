@@ -1,3 +1,7 @@
+### [0.1.11] - 2025-12-21
+
+- Fix crash when launching the app
+
 ### [0.1.10] - 2025-12-19
 
 - Add segmented-bars spectrum view
