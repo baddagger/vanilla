@@ -11,8 +11,17 @@ class PlayerViewModel: NSObject, ObservableObject {
     @Published var currentTime: TimeInterval = 0
     @Published var duration: TimeInterval = 0
     // REMOVED: meteringLevels to prevent 30fps view invalidation
-    @Published var volume: Float = 1.0
-    @Published var bass: Float = 0.0
+    @Published var volume: Float = 1.0 {
+        didSet {
+            savePlaybackState()
+        }
+    }
+
+    @Published var bass: Float = 0.0 {
+        didSet {
+            savePlaybackState()
+        }
+    }
 
     // ViewModel Split: Visualizer updates isolated here
     let visualizerViewModel: VisualizerViewModel
@@ -23,6 +32,8 @@ class PlayerViewModel: NSObject, ObservableObject {
         static let lastPlaybackPosition = "lastPlaybackPosition"
         static let isShuffleEnabled = "isShuffleEnabled"
         static let repeatMode = "repeatMode"
+        static let volume = "volume"
+        static let bass = "bass"
     }
 
     // Library Manager
@@ -376,6 +387,8 @@ class PlayerViewModel: NSObject, ObservableObject {
 
         UserDefaults.standard.set(track.url.absoluteString, forKey: UserDefaultsKeys.lastTrackURL)
         UserDefaults.standard.set(currentTime, forKey: UserDefaultsKeys.lastPlaybackPosition)
+        UserDefaults.standard.set(volume, forKey: UserDefaultsKeys.volume)
+        UserDefaults.standard.set(bass, forKey: UserDefaultsKeys.bass)
     }
 
     private func restorePlaybackState() {
@@ -385,6 +398,14 @@ class PlayerViewModel: NSObject, ObservableObject {
             .integer(forKey: UserDefaultsKeys.repeatMode))
         {
             repeatMode = mode
+        }
+
+        // Restore Volume/Bass
+        if UserDefaults.standard.object(forKey: UserDefaultsKeys.volume) != nil {
+            volume = UserDefaults.standard.float(forKey: UserDefaultsKeys.volume)
+        }
+        if UserDefaults.standard.object(forKey: UserDefaultsKeys.bass) != nil {
+            bass = UserDefaults.standard.float(forKey: UserDefaultsKeys.bass)
         }
 
         // Force queue init
