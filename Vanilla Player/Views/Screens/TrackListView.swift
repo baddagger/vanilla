@@ -276,27 +276,10 @@ struct ArtworkView: View {
                     .foregroundColor(.white.opacity(0.3))
             }
         }
-        .onAppear {
-            loadArtwork(for: track)
-        }
-        .onChange(of: track) { newTrack in
-            loadArtwork(for: newTrack)
-        }
-    }
-
-    private func loadArtwork(for track: Track?) {
-        artwork = nil
-        guard let track else { return }
-
-        if !track.hasArtwork {
-            return
-        }
-
-        DispatchQueue.global(qos: .userInitiated).async {
-            let loaded = track.loadArtwork()
-            DispatchQueue.main.async {
-                artwork = loaded
-            }
+        .task(id: track?.id) {
+            artwork = nil
+            guard let track, track.hasArtwork else { return }
+            artwork = await track.loadArtwork()
         }
     }
 }
