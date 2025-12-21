@@ -79,17 +79,11 @@ class PlayerViewModel: NSObject, ObservableObject {
     }
 
     private func setupBindings() {
-        // Sync Library Tracks to Player Tracks
+        // Sync Library Tracks to Player Tracks and handle index updates
         libraryManager.$tracks
-            .map { Array($0.reversed()) }
-            .assign(to: &$tracks)
-
-        // Whenever tracks change, we need to update our shuffle queue
-        libraryManager.$tracks
-            .map { _ in }
             .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
-                self?.updatePlaybackQueue()
+            .sink { [weak self] newLibraryTracks in
+                self?.handleLibraryTrackUpdates(newLibraryTracks)
             }
             .store(in: &cancellables)
 
@@ -108,13 +102,42 @@ class PlayerViewModel: NSObject, ObservableObject {
                 self?.updateNowPlayingInfo()
             }
             .store(in: &cancellables)
+
         audioManager.$currentTime.assign(to: &$currentTime)
         audioManager.$duration.assign(to: &$duration)
-        // REMOVED: audioManager.$meteringLevels.assign(to: &$meteringLevels)
 
         audioManager.onPlaybackFinished = { [weak self] in
             self?.nextTrack()
         }
+    }
+
+    private func handleLibraryTrackUpdates(_ newLibraryTracks: [Track]) {
+        // Store current track to find it after sync
+        let currentlyPlayingTrack = currentTrack
+
+        // Sync tracks (reversing because the UI expects newest first)
+        tracks = Array(newLibraryTracks.reversed())
+
+        if let trackToFind = currentlyPlayingTrack {
+            if let newIndex = tracks.firstIndex(of: trackToFind) {
+                // Track still exists, update its index
+                currentTrackIndex = newIndex
+            } else {
+                // Track was removed!
+                clearCurrentTrack()
+            }
+        }
+
+        // Always update the shuffle/playback queue after tracks change
+        updatePlaybackQueue()
+    }
+
+    private func clearCurrentTrack() {
+        audioManager.pause()
+        currentTrackIndex = nil
+        currentTime = 0
+        duration = 0
+        isPlaying = false
     }
 
     // MARK: - File Management
