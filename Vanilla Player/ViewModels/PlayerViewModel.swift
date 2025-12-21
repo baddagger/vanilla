@@ -372,7 +372,7 @@ class PlayerViewModel: NSObject, ObservableObject {
         else {
             return
         }
-        
+
         if !FileManager.default.fileExists(atPath: urlString) {
             return
         }
