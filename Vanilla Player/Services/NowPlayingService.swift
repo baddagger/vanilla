@@ -82,27 +82,47 @@ class NowPlayingService {
         }
     }
 
+    private var currentTrackID: UUID?
+
     func update(track: Track?, isPlaying: Bool, currentTime: Double, duration: Double) {
+        // Update current track ID to track validity of async operations
+        currentTrackID = track?.id
+
         var info: [String: Any] = [:]
 
         if let track {
             info[MPMediaItemPropertyTitle] = track.title
             info[MPMediaItemPropertyArtist] = track.artist
             info[MPMediaItemPropertyAlbumTitle] = track.album
-
-            if let artworkImage = track.loadArtwork() {
-                let artwork = MPMediaItemArtwork(boundsSize: artworkImage.size) { _ in
-                    artworkImage
-                }
-                info[MPMediaItemPropertyArtwork] = artwork
-            }
         }
 
         info[MPNowPlayingInfoPropertyElapsedPlaybackTime] = currentTime
         info[MPMediaItemPropertyPlaybackDuration] = duration
         info[MPNowPlayingInfoPropertyPlaybackRate] = isPlaying ? 1.0 : 0.0
 
+        // Set basic info first (synchronously on caller thread, usually main)
         MPNowPlayingInfoCenter.default().nowPlayingInfo = info
+
+        // Then load artwork asynchronously and update again
+        if let track {
+            let requestID = track.id
+            Task {
+                if let artworkImage = await track.loadArtwork() {
+                    let artwork = MPMediaItemArtwork(boundsSize: artworkImage.size) { _ in
+                        artworkImage
+                    }
+                    await MainActor.run {
+                        // Guard: Only update if we are still playing the same track
+                        guard self.currentTrackID == requestID else { return }
+
+                        // Re-fetch current info to avoid overwriting recent updates
+                        var updatedInfo = MPNowPlayingInfoCenter.default().nowPlayingInfo ?? info
+                        updatedInfo[MPMediaItemPropertyArtwork] = artwork
+                        MPNowPlayingInfoCenter.default().nowPlayingInfo = updatedInfo
+                    }
+                }
+            }
+        }
     }
 
     func clear() {

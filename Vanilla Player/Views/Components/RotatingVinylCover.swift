@@ -77,9 +77,15 @@ class RotatingImageView: NSView {
             return
         }
 
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            let artwork = track.loadArtwork()
-            DispatchQueue.main.async {
+        // Capture requested track to verify identity later
+        let requestedTrack = track
+
+        Task { [weak self] in
+            let artwork = await requestedTrack.loadArtwork()
+            await MainActor.run {
+                // Only update if the view's current track matches the one we requested
+                guard self?.currentTrack?.url == requestedTrack.url else { return }
+
                 self?.imageLayer.contents = artwork
             }
         }
