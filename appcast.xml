@@ -6,24 +6,26 @@
         <description>Most recent updates to Vanilla Player</description>
         <language>en</language>
         <item>
-            <title>Version 0.1.11</title>
-            <pubDate>Sun, 21 Dec 2025 07:25:34 +0000</pubDate>
+            <title>Version 0.1.12</title>
+            <pubDate>Sun, 21 Dec 2025 11:35:32 +0000</pubDate>
             <description><![CDATA[<ul>
-<li>Fix crash when launching the app</li>
+<li>Improve artwork management</li>
+<li>Improve handling of track removal</li>
+<li>Persist and restore volume and bass settings</li>
 </ul>]]></description>
-            <sparkle:version>12</sparkle:version>
-            <sparkle:shortVersionString>0.1.11</sparkle:shortVersionString>
+            <sparkle:version>13</sparkle:version>
+            <sparkle:shortVersionString>0.1.12</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.11/VanillaPlayer-0.1.11-arm64.dmg"
-                       length="5876969"
+            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.12/VanillaPlayer-0.1.12-arm64.dmg"
+                       length="5895266"
                        type="application/octet-stream"
                        sparkle:cpu="arm64"
-                       sparkle:edSignature="sIW1nwiOlH6tDRLtTwuHQfiRCco5cDIf9CoUR1SOy6zASYnTdYBn97tIDVo6FWUxABF8+oTNDQEM/jQV590EAw==" />
-            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.11/VanillaPlayer-0.1.11-x86_64.dmg"
-                       length="5907274"
+                       sparkle:edSignature="mGbgdnnoTN4knuBDrIyxT2pwLF+kU6w8StKB9709PkkQVI6cxBlx6svNCbxYcWuzfivSQR6TSRak4vpULBhlDw==" />
+            <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.12/VanillaPlayer-0.1.12-x86_64.dmg"
+                       length="5922163"
                        type="application/octet-stream"
                        sparkle:cpu="x86_64"
-                       sparkle:edSignature="UOKvo0OL7wVWPMPun91XpRRlftPY0lS/GZRSX6xiL1FZ0pfR5VIEF5LBiMWunkflP5gyltdPOSipjgtlDNgwAQ==" />
+                       sparkle:edSignature="kPxq8BR3MU7zXg9MIhOyaOo2n9FyBzwQM8fRRAQPUfgrgIl70ouaUcFRKBOrkXBWAFwAl8+IMD1QoYaBjyqLAA==" />
         </item>
     </channel>
 </rss>
