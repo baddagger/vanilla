@@ -1,5 +1,5 @@
 {
-  "originHash" : "e721da7f9826abdffcb6185e886155efa2514bd6234475f1afa893e29eb258d6",
+  "originHash" : "bcd42b9afd8c18964add17680ec6504e30d2f9570d98e946c62f1c13f8189c02",
   "pins" : [
     {
       "identity" : "sparkle",
@@ -8,6 +8,15 @@
       "state" : {
         "revision" : "5581748cef2bae787496fe6d61139aebe0a451f6",
         "version" : "2.8.1"
+      }
+    },
+    {
+      "identity" : "swift-taglib",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Phisto/swift-taglib",
+      "state" : {
+        "revision" : "3ed517bdfe55eb1b68cfffb920ca7a2452a954df",
+        "version" : "2.0.2"
       }
     }
   ],

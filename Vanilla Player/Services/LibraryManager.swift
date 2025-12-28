@@ -243,6 +243,16 @@ class LibraryManager: ObservableObject {
         ArtworkCache.cleanup(keeping: allURLs)
     }
 
+    /// Refresh a single track's metadata (e.g., after editing tags)
+    @MainActor
+    func refreshTrack(_ track: Track) async {
+        guard let index = tracks.firstIndex(where: { $0.id == track.id }) else { return }
+
+        let refreshed = await track.refreshing()
+        tracks[index] = refreshed
+        saveLibrary()
+    }
+
     /// Scans a source and returns newly created Tracks (with valid bookmarks) and all found URLs.
     /// - Parameters:
     ///   - source: The source to scan.

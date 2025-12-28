@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F6178762F00F0DA0087A1D2 /* TagLib in Frameworks */ = {isa = PBXBuildFile; productRef = 1F6178752F00F0DA0087A1D2 /* TagLib */; };
 		1FSPARKLE012EE0181800C236 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 1FSPARKLE022EE0181800C236 /* Sparkle */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +58,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FSPARKLE012EE0181800C236 /* Sparkle in Frameworks */,
+				1F6178762F00F0DA0087A1D2 /* TagLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,6 +120,7 @@
 			name = "Vanilla Player";
 			packageProductDependencies = (
 				1FSPARKLE022EE0181800C236 /* Sparkle */,
+				1F6178752F00F0DA0087A1D2 /* TagLib */,
 			);
 			productName = "Vanilla Player";
 			productReference = 1F3154F42EE0181700C236E4 /* Vanilla Player.app */;
@@ -204,6 +207,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				1FSPARKLE002EE0181800C236 /* XCRemoteSwiftPackageReference "Sparkle" */,
+				1F6178742F00F0DA0087A1D2 /* XCRemoteSwiftPackageReference "swift-taglib" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1F3154F52EE0181700C236E4 /* Products */;
@@ -286,7 +290,7 @@
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++23";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -338,6 +342,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Vanilla Player/Vanilla Player-Bridging-Header.h";
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -349,7 +355,7 @@
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++23";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -394,6 +400,8 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_BRIDGING_HEADER = "Vanilla Player/Vanilla Player-Bridging-Header.h";
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
 			};
 			name = Release;
 		};
@@ -419,6 +427,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -445,6 +454,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -555,6 +565,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1F6178742F00F0DA0087A1D2 /* XCRemoteSwiftPackageReference "swift-taglib" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Phisto/swift-taglib";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.2;
+			};
+		};
 		1FSPARKLE002EE0181800C236 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sparkle-project/Sparkle";
@@ -566,6 +584,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1F6178752F00F0DA0087A1D2 /* TagLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1F6178742F00F0DA0087A1D2 /* XCRemoteSwiftPackageReference "swift-taglib" */;
+			productName = TagLib;
+		};
 		1FSPARKLE022EE0181800C236 /* Sparkle */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1FSPARKLE002EE0181800C236 /* XCRemoteSwiftPackageReference "Sparkle" */;
