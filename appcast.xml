@@ -7,7 +7,7 @@
         <language>en</language>
         <item>
             <title>Version 0.1.13</title>
-            <pubDate>Sun, 28 Dec 2025 09:10:46 +0000</pubDate>
+            <pubDate>Sun, 28 Dec 2025 09:36:09 +0000</pubDate>
             <description><![CDATA[<ul>
 <li>Add tags editor</li>
 </ul>]]></description>
@@ -15,15 +15,15 @@
             <sparkle:shortVersionString>0.1.13</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
             <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.13/VanillaPlayer-0.1.13-arm64.dmg"
-                       length="6715475"
+                       length="6720906"
                        type="application/octet-stream"
                        sparkle:cpu="arm64"
-                        />
+                       sparkle:edSignature="GOQl/PgHYaUy6uHxoGSkp8pBEFHJRZHe8udLeNYuawelZhs7ArMU3epQEJkGoqT1SARCDF0C/cgoH0EXUgsWAQ==" />
             <enclosure url="https://github.com/baddagger/vanilla/releases/download/v0.1.13/VanillaPlayer-0.1.13-x86_64.dmg"
-                       length="6753714"
+                       length="6750327"
                        type="application/octet-stream"
                        sparkle:cpu="x86_64"
-                        />
+                       sparkle:edSignature="lnehFLk4DEVE1XHNNtIDZVW7Ga/kyGvrF59srg7EbMttZQZyAUVihbWoQ1cu4GxzonRfAws4+ztwa3O0agySDQ==" />
         </item>
     </channel>
 </rss>
