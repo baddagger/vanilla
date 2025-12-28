@@ -1,3 +1,7 @@
+### [0.1.13] - 2025-12-28
+
+- Add tags editor
+
 ### [0.1.12] - 2025-12-21
 
 - Improve artwork management
