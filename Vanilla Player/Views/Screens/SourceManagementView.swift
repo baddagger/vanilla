@@ -8,7 +8,10 @@ struct SourceManagementView: View {
             // Top Control Bar
             HStack(spacing: 12) {
                 Button(action: addFolder) {
-                    Label(NSLocalizedString("ADD_FOLDER", comment: ""), systemImage: "folder.badge.plus")
+                    Label(
+                        NSLocalizedString("ADD_FOLDER", comment: ""),
+                        systemImage: "folder.badge.plus",
+                    )
                 }
 
                 Button(action: addFile) {
