@@ -103,7 +103,7 @@ struct TonearmView: View {
             let isIdle = newValue < 0
 
             // Check if we are physically close to idle position, implying we were idle
-            let wasIdle = abs(currentAngle - idleAngle) < 0.001
+            let wasIdle = Swift.abs(currentAngle - idleAngle) < 0.001
 
             // Animate only when detecting a logical state change between idle and playing
             if isIdle != wasIdle, !isDragging {
@@ -169,7 +169,8 @@ struct TonearmView: View {
 
         // Check if inside the handle bounds (with tolerance for easier targeting)
         let tolerance = 1.5
-        return abs(unrotatedX) <= handleWidth / 2 * tolerance && abs(unrotatedY) <= handleHeight /
+        return Swift.abs(unrotatedX) <= handleWidth / 2 * tolerance && Swift
+            .abs(unrotatedY) <= handleHeight /
             2 * tolerance
     }
 

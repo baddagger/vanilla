@@ -1,24 +1,24 @@
-"VOLUME" = "VOLUME";
-"BASS" = "BASS";
-"Now Playing" = "Now Playing";
-"Songs" = "Songs";
-"Search %d song..." = "Search %d song...";
-"Search %d songs..." = "Search %d songs...";
-"Add Song" = "Add Song";
-"Add Folder" = "Add Folder";
-"Rescan" = "Rescan";
-"Source Management" = "Source Management";
-"Add Source" = "Add Source";
-"Scan" = "Scan";
-"Full Scan" = "Full Scan";
-"Remove" = "Remove";
-"No Sources" = "No Sources";
-"Add file or folder sources." = "Add file or folder sources.";
-"Ready to Play" = "Ready to Play";
-"Add Song..." = "Add Song...";
-"Add Folder..." = "Add Folder...";
-"Manage Sources..." = "Manage Sources...";
-"Check for Updates..." = "Check for Updates...";
+"TAB_NOW_PLAYING" = "Now Playing";
+"TAB_SONGS" = "Songs";
+"SEARCH_PLACEHOLDER_SINGULAR" = "Search %d song...";
+"SEARCH_PLACEHOLDER_PLURAL" = "Search %d songs...";
+"ADD_SONG_BUTTON" = "Add Song";
+"ADD_FOLDER_BUTTON" = "Add Folder";
+"RESCAN_MENU_ITEM" = "Rescan";
+"SOURCE_MANAGEMENT_WINDOW_TITLE" = "Source Management";
+"ADD_SOURCE_BUTTON" = "Add Source";
+"SCAN_BUTTON" = "Scan";
+"FULL_SCAN_HELP" = "Full Scan";
+"REMOVE_BUTTON" = "Remove";
+"NO_SOURCES_TITLE" = "No Sources";
+"NO_SOURCES_DESCRIPTION" = "Add file or folder sources.";
+"READY_TO_PLAY" = "Ready to Play";
+"ADD_SONG_DOTS_MENU_ITEM" = "Add Song...";
+"ADD_FOLDER_DOTS_MENU_ITEM" = "Add Folder...";
+"MANAGE_SOURCES_MENU_ITEM" = "Manage Sources...";
+"CHECK_FOR_UPDATES_MENU_ITEM" = "Check for Updates...";
+"SOURCE_MANAGEMENT_MENU_ITEM" = "Source Management";
+"ADD_SONG_MENU_ITEM" = "Add Song";
 
 /* Settings */
 "SETTINGS_WINDOW_TITLE" = "Settings";
@@ -26,3 +26,16 @@
 "SETTINGS_SPECTRUM_STYLE_LABEL" = "Spectrum Style";
 "SPECTRUM_STYLE_BARS" = "Bars";
 "SPECTRUM_STYLE_SEGMENTED" = "Segmented Bars";
+
+/* Tags Editor */
+"TAGS_EDITOR_TITLE" = "Title";
+"TAGS_EDITOR_ARTIST" = "Artist";
+"TAGS_EDITOR_ALBUM" = "Album";
+"TAGS_EDITOR_TRACK_NUMBER" = "Track #";
+"TAGS_EDITOR_YEAR" = "Year";
+"TAGS_EDITOR_GENRE" = "Genre";
+"TAGS_EDITOR_COMMENT" = "Comment";
+"TAGS_EDITOR_WINDOW_TITLE" = "Edit Tags";
+"TAGS_EDITOR_SAVE_BUTTON" = "Save";
+"TAGS_EDITOR_NO_TRACK_TITLE" = "No Track Selected";
+"TAGS_EDITOR_NO_TRACK_DESCRIPTION" = "Right-click a track and select 'Edit Tags'";

@@ -37,10 +37,10 @@ struct TrackListView: View {
                         ZStack(alignment: .leading) {
                             let count = viewModel.tracks.count
                             let format = count == 1 ? NSLocalizedString(
-                                "Search %d song...",
+                                "SEARCH_PLACEHOLDER_SINGULAR",
                                 comment: "Search Placeholder Singular",
                             ) : NSLocalizedString(
-                                "Search %d songs...",
+                                "SEARCH_PLACEHOLDER_PLURAL",
                                 comment: "Search Placeholder Plural",
                             )
                             Text(String(format: format, count))
@@ -119,6 +119,10 @@ struct TrackListView: View {
                                         viewModel.playTrack(at: index)
                                     }
                                 },
+                                onEditTags: {
+                                    viewModel.trackToEdit = track
+                                    openWindow(id: "tags-editor")
+                                },
                             )
                         }
                     }
@@ -177,6 +181,7 @@ struct TrackRowView: View {
     let showRemoveButton: Bool
     let onRemove: () -> Void
     let onPlay: () -> Void
+    let onEditTags: () -> Void
     @EnvironmentObject var viewModel: PlayerViewModel
     @State private var isHovered = false
 
@@ -233,6 +238,29 @@ struct TrackRowView: View {
                 NSCursor.pointingHand.push()
             } else {
                 NSCursor.pop()
+            }
+        }
+        .contextMenu {
+            Button {
+                onEditTags()
+            } label: {
+                Label(
+                    NSLocalizedString("Edit Tags", comment: "Context Menu"),
+                    systemImage: "tag",
+                )
+            }
+
+            Divider()
+
+            Button {
+                if let url = track.resolvedURL() ?? Optional(track.url) {
+                    NSWorkspace.shared.activateFileViewerSelecting([url])
+                }
+            } label: {
+                Label(
+                    NSLocalizedString("Show in Finder", comment: "Context Menu"),
+                    systemImage: "folder",
+                )
             }
         }
         .overlay(
@@ -371,7 +399,7 @@ struct MoreMenuButton: View {
                 VStack(alignment: .leading, spacing: 0) {
                     MenuItem(
                         icon: "doc.badge.plus",
-                        title: NSLocalizedString("Add Song", comment: "Menu Item"),
+                        title: NSLocalizedString("ADD_SONG_MENU_ITEM", comment: "Menu Item"),
                         color: color,
                     ) {
                         addFile()
@@ -399,7 +427,7 @@ struct MoreMenuButton: View {
 
                     MenuItem(
                         icon: "arrow.clockwise",
-                        title: NSLocalizedString("Rescan", comment: "Menu Item"),
+                        title: NSLocalizedString("RESCAN_MENU_ITEM", comment: "Menu Item"),
                         color: color,
                     ) {
                         libraryManager.startFullScan()
@@ -413,7 +441,10 @@ struct MoreMenuButton: View {
 
                     MenuItem(
                         icon: "gearshape",
-                        title: NSLocalizedString("Source Management", comment: "Menu Item"),
+                        title: NSLocalizedString(
+                            "SOURCE_MANAGEMENT_MENU_ITEM",
+                            comment: "Menu Item",
+                        ),
                         color: color,
                     ) {
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
@@ -450,7 +481,7 @@ struct MoreMenuButton: View {
         panel.canChooseFiles = false
         panel.canChooseDirectories = true
         panel.allowsMultipleSelection = true
-        panel.prompt = NSLocalizedString("Add Source", comment: "Panel Button")
+        panel.prompt = NSLocalizedString("ADD_SOURCE_BUTTON", comment: "Panel Button")
 
         if panel.runModal() == .OK {
             let urls = panel.urls
@@ -468,7 +499,7 @@ struct MoreMenuButton: View {
         panel.canChooseDirectories = false
         panel.allowsMultipleSelection = true
         panel.allowedContentTypes = [.audio]
-        panel.prompt = NSLocalizedString("Add Song", comment: "Panel Button")
+        panel.prompt = NSLocalizedString("ADD_SONG_BUTTON", comment: "Panel Button")
 
         if panel.runModal() == .OK {
             let urls = panel.urls
