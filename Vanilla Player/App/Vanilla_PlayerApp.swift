@@ -44,19 +44,19 @@ struct Vanilla_PlayerApp: App {
         .handlesExternalEvents(matching: ["*"])
         .commands {
             CommandGroup(replacing: .newItem) {
-                Button(NSLocalizedString("ADD_SONG_DOTS_MENU_ITEM", comment: "")) {
+                Button(NSLocalizedString("ADD_SONG_DOTS", comment: "")) {
                     addFile()
                 }
                 .keyboardShortcut("O", modifiers: [.command])
 
-                Button(NSLocalizedString("ADD_FOLDER_DOTS_MENU_ITEM", comment: "")) {
+                Button(NSLocalizedString("ADD_FOLDER_DOTS", comment: "")) {
                     addFolder()
                 }
                 .keyboardShortcut("O", modifiers: [.command, .shift])
 
                 Divider()
 
-                Button(NSLocalizedString("MANAGE_SOURCES_MENU_ITEM", comment: "")) {
+                Button(NSLocalizedString("MANAGE_SOURCES_DOTS", comment: "")) {
                     openWindow(id: "source-management")
                 }
                 .keyboardShortcut("S", modifiers: [.command, .control])
@@ -64,21 +64,21 @@ struct Vanilla_PlayerApp: App {
 
             // Add Check for Updates menu item
             CommandGroup(after: .appInfo) {
-                Button(NSLocalizedString("CHECK_FOR_UPDATES_MENU_ITEM", comment: "Menu item")) {
+                Button(NSLocalizedString("CHECK_FOR_UPDATES_DOTS", comment: "Menu item")) {
                     updaterController.checkForUpdates(nil)
                 }
             }
         }
 
         Window(
-            NSLocalizedString("SOURCE_MANAGEMENT_WINDOW_TITLE", comment: ""),
+            NSLocalizedString("SOURCE_MANAGEMENT", comment: ""),
             id: "source-management",
         ) {
             SourceManagementView(libraryManager: playerViewModel.libraryManager)
         }
         .defaultSize(width: 400, height: 500)
 
-        Window("Edit Tags", id: "tags-editor") {
+        Window(NSLocalizedString("EDIT_TAGS", comment: ""), id: "tags-editor") {
             TagsEditorWrapper()
                 .environmentObject(playerViewModel)
         }
@@ -96,7 +96,7 @@ struct Vanilla_PlayerApp: App {
         panel.canChooseFiles = false
         panel.canChooseDirectories = true
         panel.allowsMultipleSelection = true
-        panel.prompt = NSLocalizedString("ADD_SOURCE_BUTTON", comment: "")
+        panel.prompt = NSLocalizedString("ADD_SOURCE", comment: "")
 
         if panel.runModal() == .OK {
             let urls = panel.urls
@@ -114,7 +114,7 @@ struct Vanilla_PlayerApp: App {
         panel.canChooseDirectories = false
         panel.allowsMultipleSelection = true
         panel.allowedContentTypes = [.audio]
-        panel.prompt = NSLocalizedString("ADD_SONG_BUTTON", comment: "")
+        panel.prompt = NSLocalizedString("ADD_SONG", comment: "")
 
         if panel.runModal() == .OK {
             let urls = panel.urls

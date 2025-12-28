@@ -16,7 +16,7 @@ struct DigitalNowPlayingView: View {
             let textColor = Color(hex: "#c0a06c")
 
             Text(viewModel.currentTrack?.title ?? NSLocalizedString(
-                "Ready to Play",
+                "READY_TO_PLAY",
                 comment: "Placeholder Title",
             ))
             .font(.system(size: 36, weight: .light, design: .serif))

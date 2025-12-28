@@ -8,12 +8,12 @@ struct SourceManagementView: View {
             // Top Control Bar
             HStack(spacing: 12) {
                 Button(action: addFolder) {
-                    Label("Add Folder", systemImage: "folder.badge.plus")
+                    Label(NSLocalizedString("ADD_FOLDER", comment: ""), systemImage: "folder.badge.plus")
                 }
 
                 Button(action: addFile) {
                     Label(
-                        NSLocalizedString("ADD_SONG_BUTTON", comment: ""),
+                        NSLocalizedString("ADD_SONG", comment: ""),
                         systemImage: "doc.badge.plus",
                     )
                 }
@@ -24,12 +24,12 @@ struct SourceManagementView: View {
                     libraryManager.startFullScan()
                 } label: {
                     Label(
-                        NSLocalizedString("SCAN_BUTTON", comment: ""),
+                        NSLocalizedString("SCAN", comment: ""),
                         systemImage: "arrow.clockwise",
                     )
                 }
                 .disabled(libraryManager.isScanning)
-                .help(NSLocalizedString("FULL_SCAN_HELP", comment: ""))
+                .help(NSLocalizedString("FULL_SCAN", comment: ""))
             }
             .padding(8)
 
@@ -62,7 +62,7 @@ struct SourceManagementView: View {
                         .buttonStyle(.plain)
                     }
                     .contextMenu {
-                        Button(NSLocalizedString("REMOVE_BUTTON", comment: "")) {
+                        Button(NSLocalizedString("REMOVE", comment: "")) {
                             libraryManager.removeSource(source)
                         }
                     }
@@ -73,9 +73,9 @@ struct SourceManagementView: View {
         .overlay {
             if libraryManager.sources.isEmpty {
                 ContentUnavailableView(
-                    NSLocalizedString("NO_SOURCES_TITLE", comment: ""),
+                    NSLocalizedString("NO_SOURCES", comment: ""),
                     systemImage: "folder.badge.questionmark",
-                    description: Text(NSLocalizedString("NO_SOURCES_DESCRIPTION", comment: "")),
+                    description: Text(NSLocalizedString("NO_SOURCES_HELP", comment: "")),
                 )
             }
         }
@@ -86,7 +86,7 @@ struct SourceManagementView: View {
         panel.canChooseFiles = false
         panel.canChooseDirectories = true
         panel.allowsMultipleSelection = true
-        panel.prompt = NSLocalizedString("ADD_SOURCE_BUTTON", comment: "Panel Button")
+        panel.prompt = NSLocalizedString("ADD_SOURCE", comment: "Panel Button")
 
         if panel.runModal() == .OK {
             let urls = panel.urls
@@ -104,7 +104,7 @@ struct SourceManagementView: View {
         panel.canChooseDirectories = false
         panel.allowsMultipleSelection = true
         panel.allowedContentTypes = [.audio]
-        panel.prompt = NSLocalizedString("ADD_SONG_BUTTON", comment: "Panel Button")
+        panel.prompt = NSLocalizedString("ADD_SONG", comment: "Panel Button")
 
         if panel.runModal() == .OK {
             let urls = panel.urls

@@ -37,10 +37,10 @@ struct TrackListView: View {
                         ZStack(alignment: .leading) {
                             let count = viewModel.tracks.count
                             let format = count == 1 ? NSLocalizedString(
-                                "SEARCH_PLACEHOLDER_SINGULAR",
+                                "SEARCH_SINGULAR_DOTS",
                                 comment: "Search Placeholder Singular",
                             ) : NSLocalizedString(
-                                "SEARCH_PLACEHOLDER_PLURAL",
+                                "SEARCH_PLURAL_DOTS",
                                 comment: "Search Placeholder Plural",
                             )
                             Text(String(format: format, count))
@@ -245,7 +245,7 @@ struct TrackRowView: View {
                 onEditTags()
             } label: {
                 Label(
-                    NSLocalizedString("Edit Tags", comment: "Context Menu"),
+                    NSLocalizedString("EDIT_TAGS", comment: "Context Menu"),
                     systemImage: "tag",
                 )
             }
@@ -258,7 +258,7 @@ struct TrackRowView: View {
                 }
             } label: {
                 Label(
-                    NSLocalizedString("Show in Finder", comment: "Context Menu"),
+                    NSLocalizedString("SHOW_IN_FINDER", comment: "Context Menu"),
                     systemImage: "folder",
                 )
             }
@@ -399,7 +399,7 @@ struct MoreMenuButton: View {
                 VStack(alignment: .leading, spacing: 0) {
                     MenuItem(
                         icon: "doc.badge.plus",
-                        title: NSLocalizedString("ADD_SONG_MENU_ITEM", comment: "Menu Item"),
+                        title: NSLocalizedString("ADD_SONG", comment: "Menu Item"),
                         color: color,
                     ) {
                         addFile()
@@ -413,7 +413,7 @@ struct MoreMenuButton: View {
 
                     MenuItem(
                         icon: "folder.badge.plus",
-                        title: NSLocalizedString("Add Folder", comment: "Menu Item"),
+                        title: NSLocalizedString("ADD_FOLDER", comment: "Menu Item"),
                         color: color,
                     ) {
                         addFolder()
@@ -427,7 +427,7 @@ struct MoreMenuButton: View {
 
                     MenuItem(
                         icon: "arrow.clockwise",
-                        title: NSLocalizedString("RESCAN_MENU_ITEM", comment: "Menu Item"),
+                        title: NSLocalizedString("RESCAN", comment: "Menu Item"),
                         color: color,
                     ) {
                         libraryManager.startFullScan()
@@ -442,7 +442,7 @@ struct MoreMenuButton: View {
                     MenuItem(
                         icon: "gearshape",
                         title: NSLocalizedString(
-                            "SOURCE_MANAGEMENT_MENU_ITEM",
+                            "SOURCE_MANAGEMENT",
                             comment: "Menu Item",
                         ),
                         color: color,
@@ -481,7 +481,7 @@ struct MoreMenuButton: View {
         panel.canChooseFiles = false
         panel.canChooseDirectories = true
         panel.allowsMultipleSelection = true
-        panel.prompt = NSLocalizedString("ADD_SOURCE_BUTTON", comment: "Panel Button")
+        panel.prompt = NSLocalizedString("ADD_SOURCE", comment: "Panel Button")
 
         if panel.runModal() == .OK {
             let urls = panel.urls
@@ -499,7 +499,7 @@ struct MoreMenuButton: View {
         panel.canChooseDirectories = false
         panel.allowsMultipleSelection = true
         panel.allowedContentTypes = [.audio]
-        panel.prompt = NSLocalizedString("ADD_SONG_BUTTON", comment: "Panel Button")
+        panel.prompt = NSLocalizedString("ADD_SONG", comment: "Panel Button")
 
         if panel.runModal() == .OK {
             let urls = panel.urls

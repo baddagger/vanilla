@@ -14,8 +14,8 @@ struct DigitalPlayerView: View {
 
             CenteredTabView(
                 tabs: [
-                    NSLocalizedString("TAB_NOW_PLAYING", comment: "Tab Title"),
-                    NSLocalizedString("Songs", comment: "Tab Title"),
+                    NSLocalizedString("NOW_PLAYING", comment: "Tab Title"),
+                    NSLocalizedString("SONGS", comment: "Tab Title"),
                 ],
                 selectedIndex: $selectedTab,
                 selectedTextColor: textColor,

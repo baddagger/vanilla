@@ -15,19 +15,19 @@ struct TagsEditorView: View {
                 Grid(alignment: .trailing, horizontalSpacing: 15, verticalSpacing: 12) {
                     // Main Metadata
                     GridRow {
-                        Text(NSLocalizedString("TAGS_EDITOR_TITLE", comment: "Label"))
+                        Text(NSLocalizedString("TITLE", comment: "Label"))
                         TextField("", text: $viewModel.title)
                             .textFieldStyle(.roundedBorder)
                             .autocorrectionDisabled(true)
                     }
                     GridRow {
-                        Text(NSLocalizedString("TAGS_EDITOR_ARTIST", comment: "Label"))
+                        Text(NSLocalizedString("ARTIST", comment: "Label"))
                         TextField("", text: $viewModel.artist)
                             .textFieldStyle(.roundedBorder)
                             .autocorrectionDisabled(true)
                     }
                     GridRow {
-                        Text(NSLocalizedString("TAGS_EDITOR_ALBUM", comment: "Label"))
+                        Text(NSLocalizedString("ALBUM", comment: "Label"))
                         TextField("", text: $viewModel.album)
                             .textFieldStyle(.roundedBorder)
                             .autocorrectionDisabled(true)
@@ -37,19 +37,19 @@ struct TagsEditorView: View {
 
                     // Secondary Metadata
                     GridRow {
-                        Text(NSLocalizedString("TAGS_EDITOR_TRACK_NUMBER", comment: "Label"))
+                        Text(NSLocalizedString("TRACK_NUMBER", comment: "Label"))
                         TextField("", text: $viewModel.trackNumber)
                             .textFieldStyle(.roundedBorder)
                             .autocorrectionDisabled(true)
                     }
                     GridRow {
-                        Text(NSLocalizedString("TAGS_EDITOR_YEAR", comment: "Label"))
+                        Text(NSLocalizedString("YEAR", comment: "Label"))
                         TextField("", text: $viewModel.year)
                             .textFieldStyle(.roundedBorder)
                             .autocorrectionDisabled(true)
                     }
                     GridRow {
-                        Text(NSLocalizedString("TAGS_EDITOR_GENRE", comment: "Label"))
+                        Text(NSLocalizedString("GENRE", comment: "Label"))
                         TextField("", text: $viewModel.genre)
                             .textFieldStyle(.roundedBorder)
                             .autocorrectionDisabled(true)
@@ -59,7 +59,7 @@ struct TagsEditorView: View {
 
                     // Comment (Spanning row)
                     GridRow {
-                        Text(NSLocalizedString("TAGS_EDITOR_COMMENT", comment: "Label"))
+                        Text(NSLocalizedString("COMMENT", comment: "Label"))
                         TextField("", text: $viewModel.comment, axis: .vertical)
                             .lineLimit(3 ... 6)
                             .textFieldStyle(.roundedBorder)
@@ -77,10 +77,10 @@ struct TagsEditorView: View {
                 Spacer()
             }
         }
-        .navigationTitle(NSLocalizedString("TAGS_EDITOR_WINDOW_TITLE", comment: "Navigation Title"))
+        .navigationTitle(NSLocalizedString("EDIT_TAGS", comment: "Navigation Title"))
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
-                Button(NSLocalizedString("TAGS_EDITOR_SAVE_BUTTON", comment: "Button")) {
+                Button(NSLocalizedString("SAVE", comment: "Button")) {
                     viewModel.save()
                     if viewModel.isSaved {
                         // Refresh the track in library
@@ -110,10 +110,10 @@ struct TagsEditorWrapper: View {
                 }
         } else {
             ContentUnavailableView(
-                NSLocalizedString("TAGS_EDITOR_NO_TRACK_TITLE", comment: "Empty State Title"),
+                NSLocalizedString("NO_TRACK_SELECTED", comment: "Empty State Title"),
                 systemImage: "music.note",
                 description: Text(NSLocalizedString(
-                    "TAGS_EDITOR_NO_TRACK_DESCRIPTION",
+                    "EDIT_TAGS_HELP",
                     comment: "Empty State Description",
                 )),
             )

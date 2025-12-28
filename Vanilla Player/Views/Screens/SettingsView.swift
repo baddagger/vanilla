@@ -27,11 +27,11 @@ struct SettingsView: View {
     var body: some View {
         Form {
             Section(NSLocalizedString(
-                "SETTINGS_VISUALIZER_SECTION",
+                "VISUALIZER_SETTINGS",
                 comment: "Visualizer Settings section title",
             )) {
                 Picker(
-                    NSLocalizedString("SETTINGS_SPECTRUM_STYLE_LABEL",
+                    NSLocalizedString("SPECTRUM_STYLE",
                                       comment: "Spectrum Style picker label"),
                     selection: $spectrumStyle,
                 ) {
@@ -44,7 +44,7 @@ struct SettingsView: View {
         }
         .formStyle(.grouped)
         .navigationTitle(NSLocalizedString(
-            "SETTINGS_WINDOW_TITLE",
+            "SETTINGS",
             comment: "Settings window title",
         ))
         .frame(width: 350, height: 150)
