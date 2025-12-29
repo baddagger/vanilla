@@ -26,8 +26,8 @@ struct RotatingVinylCover: NSViewRepresentable {
             nsView.stopSpinning()
         }
 
-        // Update artwork if track changed
-        if nsView.currentTrack?.url != track?.url {
+        // Update artwork if track changed (metadata or url)
+        if nsView.currentTrack != track {
             nsView.currentTrack = track
             nsView.updateArtwork(for: track)
         }

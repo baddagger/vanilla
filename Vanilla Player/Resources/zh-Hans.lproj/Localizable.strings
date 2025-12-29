@@ -35,6 +35,16 @@
 "GENRE" = "流派";
 "COMMENT" = "注释";
 "EDIT_TAGS" = "编辑标签";
+"TRACK_DETAILS" = "歌曲详情";
+"FILE_INFO" = "文件信息";
+"FILE_PATH" = "路径";
+"FILE_SIZE" = "大小";
+"FILE_FORMAT" = "格式";
+"FILE_BITRATE" = "比特率";
+"FILE_BITDEPTH" = "位深";
+"FILE_SAMPLERATE" = "采样率";
+"FILE_DURATION" = "时长";
+"DETAILS" = "详细信息";
 "SAVE" = "保存";
 "NO_TRACK_SELECTED" = "未选择歌曲";
-"EDIT_TAGS_HELP" = "右键点击歌曲并选择“编辑标签”";
+"EDIT_TAGS_HELP" = "右键点击歌曲并选择“歌曲详情”";

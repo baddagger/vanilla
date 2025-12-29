@@ -4,7 +4,6 @@ import SwiftUI
 
 class PlayerViewModel: NSObject, ObservableObject {
     @Published var tracks: [Track] = []
-    @Published var trackToEdit: Track?
     @Published var currentTrackIndex: Int?
 
     // Exposed properties synced from AudioEngineManager
@@ -135,6 +134,7 @@ class PlayerViewModel: NSObject, ObservableObject {
             if let newIndex = tracks.firstIndex(where: { $0.id == trackToFind.id }) {
                 // Track still exists, update its index
                 currentTrackIndex = newIndex
+                updateNowPlayingInfo()
             } else {
                 // Track was removed!
                 clearCurrentTrack()

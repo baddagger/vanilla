@@ -35,6 +35,16 @@
 "GENRE" = "Genre";
 "COMMENT" = "Comment";
 "EDIT_TAGS" = "Edit Tags";
+"TRACK_DETAILS" = "Track Details";
+"FILE_INFO" = "File Info";
+"FILE_PATH" = "Path";
+"FILE_SIZE" = "Size";
+"FILE_FORMAT" = "Format";
+"FILE_BITRATE" = "Bitrate";
+"FILE_BITDEPTH" = "Bit Depth";
+"FILE_SAMPLERATE" = "Sample Rate";
+"FILE_DURATION" = "Duration";
+"DETAILS" = "Details";
 "SAVE" = "Save";
 "NO_TRACK_SELECTED" = "No Track Selected";
-"EDIT_TAGS_HELP" = "Right-click a track and select 'Edit Tags'";
+"EDIT_TAGS_HELP" = "Right-click a track and select 'Track Details'";
