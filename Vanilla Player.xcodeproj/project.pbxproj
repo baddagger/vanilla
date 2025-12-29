@@ -413,7 +413,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Vanilla Player/App/Vanilla_Player.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Vanilla Player/Info.plist";
@@ -422,7 +422,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.1.13;
+				MARKETING_VERSION = 0.1.14;
 				PRODUCT_BUNDLE_IDENTIFIER = "me.Vanilla-Player";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -440,7 +440,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Vanilla Player/App/Vanilla_Player.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Vanilla Player/Info.plist";
@@ -449,7 +449,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.1.13;
+				MARKETING_VERSION = 0.1.14;
 				PRODUCT_BUNDLE_IDENTIFIER = "me.Vanilla-Player";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;

@@ -1,3 +1,8 @@
+### [0.1.14] - 2025-12-29
+
+- Improve tags editor: Add artwork editing, show file info
+- Improve UX
+
 ### [0.1.13] - 2025-12-28
 
 - Add tags editor
