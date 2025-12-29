@@ -2,7 +2,7 @@ import AppKit
 import AVFoundation
 import Foundation
 
-struct Track: Identifiable, Equatable, Codable {
+struct Track: Identifiable, Equatable, Codable, Hashable {
     let id: UUID
     let url: URL
     let title: String

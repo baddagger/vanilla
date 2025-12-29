@@ -99,31 +99,37 @@ struct TrackListView: View {
                 .padding(.top, 8)
                 .zIndex(1)
 
-                CustomScrollView {
-                    LazyVStack(spacing: 4) {
-                        ForEach(filteredTracks) { track in
-                            TrackRowView(
-                                track: track,
-                                isCurrent: viewModel.currentTrack == track,
-                                newColor: newColor,
-                                disableHover: isAddMenuVisible,
-                                showRemoveButton: showRemoveFeatures,
-                                onRemove: {
-                                    // Disabled: tracks are managed via source management
-                                },
-                                onPlay: {
-                                    isSearchFocused = false
-                                    if let index = viewModel.tracks.firstIndex(
-                                        of: track,
-                                    ) {
-                                        viewModel.playTrack(at: index)
-                                    }
-                                },
-                                onEditTags: {
-                                    viewModel.trackToEdit = track
-                                    openWindow(id: "tags-editor")
-                                },
-                            )
+                ScrollViewReader { proxy in
+                    CustomScrollView {
+                        LazyVStack(spacing: 4) {
+                            ForEach(filteredTracks) { track in
+                                TrackRowView(
+                                    track: track,
+                                    isCurrent: viewModel.currentTrack == track,
+                                    newColor: newColor,
+                                    disableHover: isAddMenuVisible,
+                                    showRemoveButton: showRemoveFeatures,
+                                    onRemove: {
+                                        // Disabled: tracks are managed via source management
+                                    },
+                                    onPlay: {
+                                        isSearchFocused = false
+                                        if let index = viewModel.tracks
+                                            .firstIndex(
+                                                of: track,
+                                            )
+                                        {
+                                            viewModel.playTrack(at: index)
+                                        }
+                                    },
+                                )
+                                .id(track.id)
+                            }
+                        }
+                    }
+                    .onAppear {
+                        if let currentTrack = viewModel.currentTrack {
+                            proxy.scrollTo(currentTrack.id, anchor: .center)
                         }
                     }
                 }
@@ -181,16 +187,19 @@ struct TrackRowView: View {
     let showRemoveButton: Bool
     let onRemove: () -> Void
     let onPlay: () -> Void
-    let onEditTags: () -> Void
     @EnvironmentObject var viewModel: PlayerViewModel
     @State private var isHovered = false
 
     var body: some View {
         HStack {
-            ArtworkView(track: track)
-                .frame(width: 32, height: 32)
-                .cornerRadius(4)
-                .padding(.trailing, 8)
+            ArtworkView(
+                track: track,
+                placeholderBackground: .white.opacity(0.15),
+                placeholderIconColor: .white.opacity(0.3),
+            )
+            .frame(width: 32, height: 32)
+            .cornerRadius(4)
+            .padding(.trailing, 8)
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(track.title)
@@ -240,29 +249,7 @@ struct TrackRowView: View {
                 NSCursor.pop()
             }
         }
-        .contextMenu {
-            Button {
-                onEditTags()
-            } label: {
-                Label(
-                    NSLocalizedString("EDIT_TAGS", comment: "Context Menu"),
-                    systemImage: "tag",
-                )
-            }
-
-            Divider()
-
-            Button {
-                if let url = track.resolvedURL() ?? Optional(track.url) {
-                    NSWorkspace.shared.activateFileViewerSelecting([url])
-                }
-            } label: {
-                Label(
-                    NSLocalizedString("SHOW_IN_FINDER", comment: "Context Menu"),
-                    systemImage: "folder",
-                )
-            }
-        }
+        .trackContextMenu(for: track)
         .overlay(
             VStack {
                 Spacer()
@@ -287,6 +274,9 @@ struct TrackRowView: View {
 
 struct ArtworkView: View {
     let track: Track?
+    var placeholderBackground: Color = .primary.opacity(0.1)
+    var placeholderIconColor: Color = .primary.opacity(0.4)
+
     @State private var artwork: NSImage?
 
     var body: some View {
@@ -297,14 +287,28 @@ struct ArtworkView: View {
                     .aspectRatio(contentMode: .fill)
             } else {
                 // Placeholder
-                Rectangle()
-                    .fill(Color.white.opacity(0.1))
-                Image(systemName: "music.note")
-                    .font(.system(size: 12))
-                    .foregroundColor(.white.opacity(0.3))
+                GeometryReader { geo in
+                    ZStack {
+                        LinearGradient(
+                            gradient: Gradient(colors: [
+                                placeholderBackground,
+                                placeholderBackground.opacity(0.5),
+                            ]),
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing,
+                        )
+
+                        Image(systemName: "music.note")
+                            .font(.system(
+                                size: min(geo.size.width, geo.size.height) * 0.4,
+                                weight: .semibold,
+                            ))
+                            .foregroundColor(placeholderIconColor)
+                    }
+                }
             }
         }
-        .task(id: track?.id) {
+        .task(id: track) {
             artwork = nil
             guard let track, track.hasArtwork else { return }
             artwork = await track.loadArtwork()
@@ -355,7 +359,7 @@ struct MoreMenuButton: View {
     var body: some View {
         // More Button
         Button {
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+            withAnimation(.spring(response: 0.3, dampingFraction: 0.65)) {
                 isMenuVisible.toggle()
             }
         } label: {
@@ -388,7 +392,7 @@ struct MoreMenuButton: View {
                     .frame(width: 10000, height: 10000)
                     .contentShape(Rectangle())
                     .onTapGesture {
-                        withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.65)) {
                             isMenuVisible = false
                         }
                     }
@@ -403,7 +407,7 @@ struct MoreMenuButton: View {
                         color: color,
                     ) {
                         addFile()
-                        withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.65)) {
                             isMenuVisible = false
                         }
                     }
@@ -417,7 +421,7 @@ struct MoreMenuButton: View {
                         color: color,
                     ) {
                         addFolder()
-                        withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.65)) {
                             isMenuVisible = false
                         }
                     }
@@ -431,7 +435,7 @@ struct MoreMenuButton: View {
                         color: color,
                     ) {
                         libraryManager.startFullScan()
-                        withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.65)) {
                             isMenuVisible = false
                         }
                     }
@@ -447,7 +451,7 @@ struct MoreMenuButton: View {
                         ),
                         color: color,
                     ) {
-                        withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.65)) {
                             isMenuVisible = false
                         }
                         onSourceManagement()
@@ -469,8 +473,9 @@ struct MoreMenuButton: View {
                 .transition(.asymmetric(
                     insertion: .scale(scale: 0.8, anchor: .topTrailing)
                         .combined(with: .opacity),
-                    removal: .scale(scale: 0.8, anchor: .topTrailing)
-                        .combined(with: .opacity),
+                    removal: .scale(scale: 0.9, anchor: .topTrailing)
+                        .combined(with: .opacity)
+                        .animation(.spring(response: 0.2, dampingFraction: 0.9)),
                 ))
             }
         }

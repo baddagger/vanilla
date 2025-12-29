@@ -103,7 +103,8 @@ struct SquareCoverView: View {
             RoundedRectangle(cornerRadius: 12)
                 .stroke(Color.white.opacity(0.1), lineWidth: 1),
         )
-        .task(id: track?.id) {
+        .trackContextMenu(for: track)
+        .task(id: track) {
             artwork = nil
             guard let track else { return }
             if !track.hasArtwork { return }

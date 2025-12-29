@@ -60,6 +60,15 @@ struct Vanilla_PlayerApp: App {
                     openWindow(id: "source-management")
                 }
                 .keyboardShortcut("S", modifiers: [.command, .control])
+
+                Divider()
+
+                Button(NSLocalizedString("TRACK_DETAILS", comment: "")) {
+                    if let track = playerViewModel.currentTrack {
+                        openWindow(id: "track-info", value: track)
+                    }
+                }
+                .keyboardShortcut("I", modifiers: [.command])
             }
 
             // Add Check for Updates menu item
@@ -78,11 +87,17 @@ struct Vanilla_PlayerApp: App {
         }
         .defaultSize(width: 400, height: 500)
 
-        Window(NSLocalizedString("EDIT_TAGS", comment: ""), id: "tags-editor") {
-            TagsEditorWrapper()
-                .environmentObject(playerViewModel)
+        WindowGroup(
+            NSLocalizedString("TRACK_DETAILS", comment: ""),
+            id: "track-info",
+            for: Track.self,
+        ) { $track in
+            if let track {
+                TrackInfoView(track: track)
+                    .environmentObject(playerViewModel)
+            }
         }
-        .defaultSize(width: 450, height: 400)
+        .defaultSize(width: 450, height: 600)
 
         #if os(macOS)
             Settings {
