@@ -23,6 +23,7 @@ An opinionated music player for macOS.
 - Volume and Bass controls
 - Real-time audio spectrum
 - Audio source management
+- Support for editing track metadata and artwork
 
 # Downloading
 
